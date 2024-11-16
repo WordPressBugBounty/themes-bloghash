@@ -6247,7 +6247,7 @@ body.bloghash-menu-animation-squareboxtwo:not(.bloghash-is-mobile) #bloghash-top
 /* Sidebar Style 3 */
 
 .bloghash-sidebar-style-3 #main .bloghash-widget:not(:last-child) {
-    border-bottom: 1px solid rgba(229, 231, 235, .8);
+    border-bottom: 1px solid rgba(185, 185, 185, 0.4);
     padding-bottom: 4rem;
 }
 

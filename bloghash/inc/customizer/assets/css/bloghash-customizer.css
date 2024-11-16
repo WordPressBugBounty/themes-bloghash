@@ -10,9 +10,6 @@
 /**
  * Import configuration file with variables.
 */
-.control-section-section-pro .button-primary {
-    margin-top: -9px;
-}
 
 #accordion-section-bloghash_section_upsell_button.control-section-section-pro,
 #accordion-section-bloghash_section_docs_button.control-section-section-pro {
@@ -274,13 +271,15 @@ body:not(.wp-customizer) input[type=submit],
 }
 
 #customize-controls .control-section>h3.accordion-section-title {
-    padding: 14px 26px;
     font-size: 13px;
     font-weight: 400;
     line-height: 13px;
     border-left: none;
     border-bottom: none;
     background-color: rgba(0, 0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 #customize-controls .control-section>h3.accordion-section-title:after {
@@ -290,14 +289,31 @@ body:not(.wp-customizer) input[type=submit],
     color: inherit !important;
 }
 
-#customize-controls .control-section>h3.accordion-section-title:focus {
+#customize-controls .control-section>h3.accordion-section-title button.accordion-trigger:focus {
     color: var(--ui-accent-color) !important;
     background: rgba(255,255,255,.7) !important
 }
 
-#customize-controls .control-section:hover>h3.accordion-section-title {
+#customize-controls .control-section>h3.accordion-section-title:focus-within:after {
+    color: var(--ui-accent-color) !important;
+}
+
+#customize-controls .control-section:hover>h3.accordion-section-title button.accordion-trigger {
     color: var(--ui-accent-color) !important;
     background: rgba(255,255,255,.7) !important
+}
+
+#customize-controls .control-section>h3.accordion-section-title button.accordion-trigger {
+    padding: 14px 26px;
+}
+
+#customize-controls .current-panel .control-section > h3.accordion-section-title {
+    padding-right: 0;
+}
+
+#accordion-section-bloghash_section_upsell_button.control-section-section-pro .accordion-section-title:after,
+#accordion-section-bloghash_section_docs_button.control-section-section-pro .accordion-section-title:after {
+    display: none;
 }
 
 /*#accordion-panel-nav_menus,
@@ -616,6 +632,7 @@ body:not(.wp-customizer) input[type=submit],
 }
 
 #customize-controls .bloghash-select-wrapper select {
+    max-width: 100%;
     margin: 0 0 0 0;
 }
 

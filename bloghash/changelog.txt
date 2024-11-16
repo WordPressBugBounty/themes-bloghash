@@ -1,3 +1,7 @@
+= 1.0.18 =
+* Sidebar 3 bottom border color change.
+* WooCommerce 9.4.1 templates updated.
+
 = 1.0.17 =
 * Optimized CSS code.
 * Fixed style issues.
