@@ -1,3 +1,6 @@
+= 1.0.19 =
+* Show site Title and tagline markup on webpage for search engines.
+
 = 1.0.18 =
 * Sidebar 3 bottom border color change.
 * WooCommerce 9.4.1 templates updated.
