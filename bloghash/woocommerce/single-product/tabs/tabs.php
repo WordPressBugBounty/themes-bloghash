@@ -16,7 +16,7 @@
  * @see     https://docs.woocommerce.com/document/template-structure/
  * @author  WooThemes
  * @package WooCommerce/Templates
- * @version 3.8.0
+ * @version 9.6.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -38,8 +38,10 @@ if ( ! empty( $product_tabs ) ) : ?>
 		<ul class="tabs wc-tabs" role="tablist">
 			<div class="bloghash-container">
 				<?php foreach ( $product_tabs as $key => $product_tab ) : ?>
-					<li class="<?php echo esc_attr( $key ); ?>_tab" id="tab-title-<?php echo esc_attr( $key ); ?>" role="tab" aria-controls="tab-<?php echo esc_attr( $key ); ?>">
-						<a href="#tab-<?php echo esc_attr( $key ); ?>"><span><?php echo esc_html( apply_filters( 'woocommerce_product_' . $key . '_tab_title', esc_html( $product_tab['title'] ), $key ) ); ?></span></a>
+					<li class="<?php echo esc_attr( $key ); ?>_tab" id="tab-title-<?php echo esc_attr( $key ); ?>">
+                        <a href="#tab-<?php echo esc_attr( $key ); ?>" role="tab" aria-controls="tab-<?php echo esc_attr( $key ); ?>">
+                            <span><?php echo wp_kses_post( apply_filters( 'woocommerce_product_' . $key . '_tab_title', $product_tab['title'], $key ) ); ?></span>
+                        </a>
 					</li>
 				<?php endforeach; ?>
 			</div>

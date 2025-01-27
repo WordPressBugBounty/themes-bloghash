@@ -1,3 +1,7 @@
+= 1.0.20 =
+* WooCommerce 9.6.0 templates updated.
+* New social media icons for header added: BlueSky, GemSpace, LifeGroupChat
+
 = 1.0.19 =
 * Show site Title and tagline markup on webpage for search engines.
 

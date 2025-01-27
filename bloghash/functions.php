@@ -67,7 +67,7 @@ final class Bloghash {
 	 * @since 1.0.0
 	 * @var string
 	 */
-	public $version = '1.0.19';
+	public $version = '1.0.20';
 	/**
 	 * Main Bloghash Instance.
 	 *

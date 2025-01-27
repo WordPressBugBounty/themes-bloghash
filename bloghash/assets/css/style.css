@@ -3549,6 +3549,18 @@ input:-webkit-autofill {
     color: #6364ff;
 }
 
+.bloghash-social-nav.minimal-fill>ul>li>a>span.bluesky {
+    color: #1185fe;
+}
+
+.bloghash-social-nav.minimal-fill>ul>li>a>span.gemspace {
+    color: #FF4545;
+}
+
+.bloghash-social-nav.minimal-fill>ul>li>a>span.lifegroupchat {
+    color: #E76F0E;
+}
+
 .bloghash-social-nav.rounded-border>ul>li>a>span:not(.screen-reader-text),
 .bloghash-social-nav.rounded-fill>ul>li>a>span:not(.screen-reader-text) {
     margin-right: .8rem;
@@ -3664,6 +3676,18 @@ input:-webkit-autofill {
 
 .bloghash-social-nav.rounded-fill>ul>li>a>span.mastodon {
     background-color: #6364ff;
+}
+
+.bloghash-social-nav.rounded-fill>ul>li>a>span.bluesky {
+    background-color: #1185fe;
+}
+
+.bloghash-social-nav.rounded-fill>ul>li>a>span.gemspace {
+    background-color: #FF4545;
+}
+
+.bloghash-social-nav.rounded-fill>ul>li>a>span.lifegroupchat {
+    background-color: #E76F0E;
 }
 
 /*****************************************/
