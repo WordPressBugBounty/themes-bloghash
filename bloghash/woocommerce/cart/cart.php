@@ -14,7 +14,7 @@
  *
  * @see     https://docs.woocommerce.com/document/template-structure/
  * @package WooCommerce/Templates
- * @version 7.9.0
+ * @version 10.0.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -27,11 +27,11 @@ do_action( 'woocommerce_before_cart' ); ?>
 	<table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents" cellspacing="0">
 		<thead>
 			<tr>
-				<th class="product-name"><?php esc_html_e( 'Product', 'bloghash' ); ?>  <?php echo '(' . count( WC()->cart->get_cart() ) . ')'; ?></th>
-				<th class="product-price"><?php esc_html_e( 'Price', 'bloghash' ); ?></th>
-				<th class="product-quantity"><?php esc_html_e( 'Quantity', 'bloghash' ); ?></th>
-				<th class="product-subtotal"><?php esc_html_e( 'Total', 'bloghash' ); ?></th>
-				<th class="product-remove"></th>
+				<th  scope="col" class="product-name"><?php esc_html_e( 'Product', 'bloghash' ); ?>  <?php echo '(' . count( WC()->cart->get_cart() ) . ')'; ?></th>
+				<th  scope="col" class="product-price"><?php esc_html_e( 'Price', 'bloghash' ); ?></th>
+				<th  scope="col" class="product-quantity"><?php esc_html_e( 'Quantity', 'bloghash' ); ?></th>
+				<th  scope="col" class="product-subtotal"><?php esc_html_e( 'Total', 'bloghash' ); ?></th>
+				<th  scope="col" class="product-remove"></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -47,7 +47,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 					?>
 					<tr class="woocommerce-cart-form__cart-item <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
 
-						<td class="product-name" data-title="<?php esc_attr_e( 'Product', 'bloghash' ); ?>">
+						<td scope="row" class="product-name" data-title="<?php esc_attr_e( 'Product', 'bloghash' ); ?>">
 						<?php
 						$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
 
@@ -116,7 +116,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 								echo apply_filters( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 									'woocommerce_cart_item_remove_link',
 									sprintf(
-										'<a href="%s" class="remove" aria-label="%s" data-product_id="%s" data-product_sku="%s">' . bloghash()->icons->get_svg( 'x' ) . '</a>',
+										'<a  role="button" href="%s" class="remove" aria-label="%s" data-product_id="%s" data-product_sku="%s">' . bloghash()->icons->get_svg( 'x' ) . '</a>',
 										esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
 										esc_html__( 'Remove this item', 'bloghash' ),
 										esc_attr( $product_id ),

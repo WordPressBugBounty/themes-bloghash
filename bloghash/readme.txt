@@ -6,7 +6,7 @@ Tested up to: 6.8
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.0.21
+Stable tag: 1.0.23
 
 A lightweight and highly customizable multi-purpose theme that makes it easy for anyone to create their perfect website.
 
@@ -19,10 +19,16 @@ BlogHash is the perfect pick for bloggers seeking a lightweight, customizable th
 
 1. Log into your WordPress Dashboard and go to Appearance » Themes and click the "Add New" button.
 2. Type in "Bloghash" in the search field and press the "Enter" key on your keyboard.
-3. Click the ""Install" and then "Activate" button to activate BlogHash theme on your site.
+3. Click the "Install" and then "Activate" button to activate BlogHash theme on your site.
 4. Navigate to Appearance » Customize to access theme options.
 
 == Changelog ==
+
+= 1.0.23 =
+* No code changes. Re-uploaded due to deployment error with version 1.0.22 (gateway timeout).
+
+= 1.0.22 =
+* WooCommerce 10.0.0 templates updated.
 
 = 1.0.21 =
 * WooCommerce 9.7.0 templates updated.

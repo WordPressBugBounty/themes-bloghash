@@ -1,3 +1,9 @@
+= 1.0.23 =
+* No code changes. Re-uploaded due to deployment error with version 1.0.22 (gateway timeout).
+
+= 1.0.22 =
+* WooCommerce 10.0.0 templates updated.
+
 = 1.0.21 =
 * WooCommerce 9.7.0 templates updated.
 
