@@ -396,7 +396,7 @@ if ( ! class_exists( 'Bloghash_Customizer_WooCommerce' ) ) :
 				),
 			);
 
-			$options['setting'] = hester_array_insert( $options['setting'], $sidebar_options, 'bloghash_archive_sidebar_position' );
+			$options['setting'] = bloghash_array_insert( $options['setting'], $sidebar_options, 'bloghash_archive_sidebar_position' );
 
 			return $options;
 		}

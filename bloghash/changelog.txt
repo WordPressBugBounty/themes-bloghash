@@ -1,3 +1,7 @@
+= 1.0.24 =
+* Critial error fixed when usinng customizer.
+* Footer widget style issue fixed.
+
 = 1.0.23 =
 * No code changes. Re-uploaded due to deployment error with version 1.0.22 (gateway timeout).
 

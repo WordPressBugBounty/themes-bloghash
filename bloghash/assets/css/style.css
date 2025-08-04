@@ -9671,6 +9671,17 @@ svg.bloghash-animate-arrow.right-arrow .arrow-handle {
     text-align: center;
 }
 
+#page #colophon .center-text .widget-title::after {
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
+#page #colophon .center-text .wp-block-latest-posts__featured-image {
+    float: none;
+    margin: 0 0 1em;
+}
+
 #page .mr-20 {
     margin-right: 2rem;
 }
