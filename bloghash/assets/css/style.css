@@ -2273,16 +2273,17 @@ body:not(.bloghash-layout__boxed-separated) .bloghash-article.post.sticky {
 }
 
 .alignwide {
-    margin-right: -3rem;
-    margin-left: -3rem;
+    margin-right: -5rem;
+    margin-left: -5rem;
     max-width: unset;
     width: unset;
 }
 
-.alignfull,
-.alignwide {
-    max-width: unset;
-    width: unset;
+.alignfull {
+    margin-left: calc(-100vw / 2 + 100% / 2);
+    margin-right: calc(-100vw / 2 + 100% / 2);
+    max-width: 100vw;
+    width: 100vw;
 }
 
 .alignfull,

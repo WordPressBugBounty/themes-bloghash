@@ -14,7 +14,7 @@
  *
  * @see     https://docs.woocommerce.com/document/template-structure/
  * @package WooCommerce/Templates
- * @version 10.0.0
+ * @version 10.1.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -47,7 +47,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 					?>
 					<tr class="woocommerce-cart-form__cart-item <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
 
-						<td scope="row" class="product-name" data-title="<?php esc_attr_e( 'Product', 'bloghash' ); ?>">
+						<td scope="row" role="rowheader" class="product-name" data-title="<?php esc_attr_e( 'Product', 'bloghash' ); ?>">
 						<?php
 						$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
 

@@ -1,3 +1,7 @@
+= 1.0.25 =
+* WooCommerce 10.1 templates updated.
+* Fixed custom meta checkbox style issue.
+
 = 1.0.24 =
 * Critial error fixed when usinng customizer.
 * Footer widget style issue fixed.

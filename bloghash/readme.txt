@@ -6,7 +6,7 @@ Tested up to: 6.8
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.0.24
+Stable tag: 1.0.25
 
 A lightweight and highly customizable multi-purpose theme that makes it easy for anyone to create their perfect website.
 
@@ -23,6 +23,10 @@ BlogHash is the perfect pick for bloggers seeking a lightweight, customizable th
 4. Navigate to Appearance » Customize to access theme options.
 
 == Changelog ==
+
+= 1.0.25 =
+* WooCommerce 10.1 templates updated.
+* Fixed custom meta checkbox style issue.
 
 = 1.0.24 =
 * Critial error fixed when usinng customizer.
