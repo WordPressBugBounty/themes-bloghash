@@ -215,12 +215,12 @@
 				var data = {
 					action: 'bloghash_remove_wc_cart_item',
 					/* eslint-disable camelcase */
-					_ajax_nonce: bloghashVars.nonce,
+					_ajax_nonce: bloghash_vars.nonce,
 					product_key: $this.data( 'product_key' )
 					/* eslint-enable camelcase */
 				};
 
-				$.post( bloghashVars.ajaxurl, data, function( response ) {
+				$.post( bloghash_vars.ajaxurl, data, function( response ) {
 					if ( response.success ) {
 						$body.trigger( 'wc_fragment_refresh' );
 					} else {

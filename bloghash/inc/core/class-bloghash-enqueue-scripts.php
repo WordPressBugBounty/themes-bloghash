@@ -64,53 +64,6 @@ class Bloghash_Enqueue_Scripts {
 			'all'
 		);
 
-		// Enqueue IE specific styles.
-		wp_enqueue_style(
-			'bloghash-ie',
-			BLOGHASH_THEME_URI . '/assets/css/compatibility/ie' . $bloghash_suffix . '.css',
-			false,
-			BLOGHASH_THEME_VERSION,
-			'all'
-		);
-
-		wp_style_add_data( 'bloghash-ie', 'conditional', 'IE' );
-
-		// Enqueue HTML5 shiv.
-		wp_register_script(
-			'html5shiv',
-			BLOGHASH_THEME_URI . '/assets/js/' . $bloghash_dir . 'vendors/html5' . $bloghash_suffix . '.js',
-			array(),
-			'3.7.3',
-			true
-		);
-
-		// Load only on < IE9.
-		wp_script_add_data(
-			'html5shiv',
-			'conditional',
-			'lt IE 9'
-		);
-
-		// Flexibility.js for crossbrowser flex support.
-		wp_enqueue_script(
-			'bloghash-flexibility',
-			BLOGHASH_THEME_URI . '/assets/js/' . $bloghash_dir . 'vendors/flexibility' . $bloghash_suffix . '.js',
-			array(),
-			BLOGHASH_THEME_VERSION,
-			false
-		);
-
-		wp_add_inline_script(
-			'bloghash-flexibility',
-			'flexibility(document.documentElement);'
-		);
-
-		wp_script_add_data(
-			'bloghash-flexibility',
-			'conditional',
-			'IE'
-		);
-
 		// Register Bloghash slider.
 		wp_register_script(
 			'bloghash-slider',
@@ -127,6 +80,10 @@ class Bloghash_Enqueue_Scripts {
 			BLOGHASH_THEME_VERSION,
 			true
 		);
+
+        if ( wp_script_is("wc-cart-fragments", "registered") && !is_cart() && !is_checkout() && !wp_script_is("wc-cart-fragments", "enqueued") ) {
+            wp_enqueue_script("wc-cart-fragments");
+        }
 
 		if ( bloghash()->options->get( 'bloghash_blog_masonry' ) ) {
 			wp_enqueue_script( 'masonry' );

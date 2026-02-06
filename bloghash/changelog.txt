@@ -1,9 +1,15 @@
+= 1.0.27 =
+* Fixed: Header cart widget not updating on cart item removed.
+
+= 1.0.26 =
+* WP-6.9 compatible.
+
 = 1.0.25 =
 * WooCommerce 10.1 templates updated.
 * Fixed custom meta checkbox style issue.
 
 = 1.0.24 =
-* Critial error fixed when usinng customizer.
+* Critical error fixed when using customizer.
 * Footer widget style issue fixed.
 
 = 1.0.23 =
