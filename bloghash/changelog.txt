@@ -1,3 +1,13 @@
+= 1.0.28 =
+* Updated legacy customizer settings—such as categories—to use IDs instead of slugs for improved consistency and reliability.
+* Added required attribute to search input field in searchform.php
+* Updated tax query logic to filter by category in pyml-1.php
+* Updated tax query logic to filter by category in ticker.php
+* Remove unnecessary attributes variable in related-posts.php
+* Remove unnecessary text alignment CSS rule for sub-menu links in RTL navigation.
+* Refactor RTL styles for improved layout and navigation.
+* "Related Posts" feature added in Custommizer > Blog > Single Post.
+
 = 1.0.27 =
 * Fixed: Header cart widget not updating on cart item removed.
 

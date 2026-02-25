@@ -109,6 +109,17 @@ if ( ! class_exists( 'Bloghash_Customizer_Single_Post' ) ) :
 				),
 			);
 
+			// Enable related posts.
+			$options['setting']['bloghash_related_posts_enable'] = array(
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'bloghash_sanitize_toggle',
+				'control'           => array(
+					'type'     => 'bloghash-toggle',
+					'label'    => esc_html__( 'Related posts', 'bloghash' ),
+					'section'  => 'bloghash_section_blog_single_post',
+				),
+			);
+
 			return $options;
 		}
 	}

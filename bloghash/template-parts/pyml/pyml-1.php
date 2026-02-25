@@ -19,23 +19,32 @@ $bloghash_args = array(
 	'order'               => $bloghash_pyml_order[1],
 	'orderby'             => $bloghash_pyml_order[0],
 	'ignore_sticky_posts' => true,
-	'tax_query'           => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
-		array(
-			'taxonomy' => 'post_format',
-			'field'    => 'slug',
-			'terms'    => array( 'post-format-quote' ),
-			'operator' => 'NOT IN',
-		),
+);
+
+$tax_query = array(
+	array(
+		'taxonomy' => 'post_format',
+		'field'    => 'slug',
+		'terms'    => array( 'post-format-quote' ),
+		'operator' => 'NOT IN',
 	),
 );
 
-$bloghash_pyml_categories = bloghash_option( 'pyml_category' );
+$bloghash_pyml_categories = array_filter( array_map( 'absint', (array) bloghash_option( 'pyml_category' ) ) );
 
+// If categories are specified
 if ( ! empty( $bloghash_pyml_categories ) ) {
-	$bloghash_args['category_name'] = implode( ', ', $bloghash_pyml_categories );
+	$tax_query[] = array(
+		'taxonomy' => 'category',
+		'field'    => 'term_id',
+		'terms'    => $bloghash_pyml_categories,
+		'operator' => 'IN',
+	);
 }
 
-$bloghash_args = apply_filters( 'bloghash_pyml_query_args', $bloghash_args );
+$bloghash_args['tax_query'] = $tax_query;
+
+$bloghash_args  = apply_filters( 'bloghash_pyml_query_args', $bloghash_args );
 
 $bloghash_posts = new WP_Query( $bloghash_args );
 
@@ -49,7 +58,7 @@ $bloghash_pyml_items_html = '';
 
 $bloghash_pyml_elements = (array) bloghash_option( 'pyml_elements' );
 
-$bloghash_posts_per_page = 'col-md-' . ceil( esc_attr( 12 / $bloghash_args['posts_per_page'] ) ) . ' col-sm-6 col-xs-12';
+$bloghash_classes = bloghash_template_part_column_classes( $bloghash_args['posts_per_page'] );
 
 while ( $bloghash_posts->have_posts() ) :
 	$bloghash_posts->the_post();
@@ -57,7 +66,7 @@ while ( $bloghash_posts->have_posts() ) :
 	// Post items HTML markup.
 	ob_start();
 	?>
-	<div class="<?php echo esc_attr( $bloghash_posts_per_page ); ?>">
+	<div class="<?php echo esc_attr( $bloghash_classes ); ?>">
 		<div class="bloghash-post-item style-1 end rounded">
 			<div class="bloghash-post-thumb">
 				<a href="<?php echo esc_url( bloghash_entry_get_permalink() ); ?>" tabindex="0"></a>

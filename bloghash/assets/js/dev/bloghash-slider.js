@@ -3,34 +3,34 @@
  *
  * @since 1.0.0
  */
-let bloghashHeroSlider = function( el ) {
+let bloghashHeroSlider = function (el) {
 
-	let spinner = el.querySelector( '.bloghash-spinner' );
+	let spinner = el.querySelector('.bloghash-spinner');
 
 	// Hide spinner
-	let hideSpinner = function() {
+	let hideSpinner = function () {
 
-		spinner.classList.remove( 'visible' );
+		spinner.classList.remove('visible');
 
-		setTimeout( function() {
+		setTimeout(function () {
 			spinner.style.display = 'none';
-		}, 300 );
+		}, 300);
 
-		el.classList.add( 'loaded' );
+		el.classList.add('loaded');
 	};
 
 	// Wait for images to load
-	imagesLoaded( el, function() {
+	imagesLoaded(el, function () {
 
-		let preloader = document.getElementById( 'bloghash-preloader' );
+		let preloader = document.getElementById('bloghash-preloader');
 
 		// Wait for preloader to finish before we show fade in animation
-		if ( preloader && ! document.body.classList.contains( 'bloghash-loaded' ) ) {
-			document.body.addEventListener( 'bloghash-preloader-done', function() {
-				setTimeout( hideSpinner, 300 );
+		if (preloader && !document.body.classList.contains('bloghash-loaded')) {
+			document.body.addEventListener('bloghash-preloader-done', function () {
+				setTimeout(hideSpinner, 300);
 			});
 		} else {
-			setTimeout( hideSpinner, 300 );
+			setTimeout(hideSpinner, 300);
 		}
 	});
 
@@ -38,14 +38,15 @@ let bloghashHeroSlider = function( el ) {
 };
 
 // Main
-( function() {
+(function () {
 
+	window.bloghashHeroSlider = bloghashHeroSlider;
 	// On ready event
-	document.addEventListener('DOMContentLoaded', function() {
+	document.addEventListener('DOMContentLoaded', function () {
 		// Initialize hero sliders
 		document.querySelectorAll('.bloghash-hero-slider').forEach((item) => {
 			bloghashHeroSlider(item);
 		});
 	});
 
-}() );
+}());

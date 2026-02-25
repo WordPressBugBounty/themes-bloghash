@@ -88,7 +88,7 @@ $bloghash_related_posts_title = bloghash_option( 'related_posts_heading' );
 
 ?>
 <div id="related_posts" class="mt-5">
-	<div class="bloghash-rp slider-overlay-1 <?php echo esc_attr( $bloghash_classes ); ?>">
+	<div class="bloghash-rp slider-overlay-1">
 		<div class="bloghash-rp-container">
 			<div class="bloghash-flex-row">
 				<div class="col-xs-12">

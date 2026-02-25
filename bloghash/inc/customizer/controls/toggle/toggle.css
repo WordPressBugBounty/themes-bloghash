@@ -51,9 +51,9 @@
 }
 
 .rtl .bloghash-toggle input[type="checkbox"]:checked + label .bloghash-toggle-switch:after {
-  -webkit-transform: translateX(0);
-  -ms-transform: translateX(0);
-  transform: translateX(0);
+  -webkit-transform: translateX(-14px);
+  -ms-transform: translateX(-14px);
+  transform: translateX(-14px);
 }
 
 .bloghash-toggle .bloghash-toggle-switch {

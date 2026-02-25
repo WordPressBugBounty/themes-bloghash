@@ -125,6 +125,7 @@ function bloghash_social_links_icons() {
 		'youtube.com'       => 'youtube',
 		'yelp.com'          => 'yelp',
 		'wa.me'             => 'whatsapp',
+		'whatsapp.com'		=> 'whatsapp',
 		'tiktok.com'        => 'tiktok',
 		'stackoverflow.com' => 'stackoverflow',
 		'rss.com'           => 'rss',

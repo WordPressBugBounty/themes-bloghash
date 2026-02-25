@@ -14,21 +14,31 @@ $bloghash_args = array(
 	'post_status'         => 'publish',
 	'posts_per_page'      => bloghash_option( 'ticker_post_number' ), // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page
 	'ignore_sticky_posts' => true,
-	'tax_query'           => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
-		array(
-			'taxonomy' => 'post_format',
-			'field'    => 'slug',
-			'terms'    => array( 'post-format-quote' ),
-			'operator' => 'NOT IN',
-		),
+);
+
+$tax_query = array(
+	array(
+		'taxonomy' => 'post_format',
+		'field'    => 'slug',
+		'terms'    => array( 'post-format-quote' ),
+		'operator' => 'NOT IN',
 	),
 );
 
-$bloghash_ticker_categories = bloghash_option( 'ticker_category' );
+$bloghash_ticker_categories = array_filter( array_map( 'absint', (array) bloghash_option( 'ticker_category' ) ) );
 
+
+// If categories are specified
 if ( ! empty( $bloghash_ticker_categories ) ) {
-	$bloghash_args['category_name'] = implode( ', ', $bloghash_ticker_categories );
+	$tax_query[] = array(
+		'taxonomy' => 'category',
+		'field'    => 'term_id',
+		'terms'    => $bloghash_ticker_categories,
+		'operator' => 'IN',
+	);
 }
+
+$bloghash_args['tax_query'] = $tax_query;
 
 $bloghash_args = apply_filters( 'bloghash_ticker_query_args', $bloghash_args );
 

@@ -761,6 +761,7 @@ body:not(.wp-customizer) input[type=submit],
 }
 
 .bloghash-tooltip {
+    white-space: normal;
     max-width: 180px;
     font-weight: 300;
     font-size: 12px;
@@ -1772,4 +1773,45 @@ button.bloghash-btn:disabled {
 
 .repeatable-customize-control .item-alignment .bloghash-tooltip {
     left: -86px;
+}
+
+.rtl .bloghash-checkbox .bloghash-label {
+    padding-left: 0;
+    padding-right: 11px;
+}
+
+.rtl .bloghash-add-widget::before {
+    left: unset;
+    right: -4px;
+}
+
+.rtl .bloghash-typography-wrapper .bloghash-range-wrapper .bloghash-control-unit {
+    right: unset;
+    left: 0;
+}
+
+.rtl .bloghash-control-wrapper .reset-defaults {
+    margin-right: 0;
+    margin-left: 10px;
+}
+
+.rtl .bloghash-heading-wrapper .bloghash-control-heading {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.rtl .bloghash-info-icon {
+    margin-left: auto;
+    margin-right: 6px;
+}
+
+.rtl .bloghash-heading-toggle {
+    margin-right: auto;
+}
+
+.rtl .bloghash-tooltip:after {
+    left: unset;
+    right: var(--tooltip-left);
+    margin-left: 0;
+    margin-right: 14px;
 }

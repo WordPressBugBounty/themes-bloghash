@@ -217,6 +217,36 @@ function bloghash_option( $id, $prefix = 'bloghash_', $type = 'theme_mod' ) {
 }
 
 /**
+ * Return column classes for template parts based on posts per row.
+ *
+ * @since 1.0.28
+ * 
+ * @param int $post_count
+ * @return void
+ */
+function bloghash_template_part_column_classes( $post_count ) {
+	$post_count = max( 1, (int) $post_count );
+
+	if ( $post_count <= 2 ) {
+		$md = 6;  // 2 columns
+	} elseif ( $post_count <= 3 ) {
+		$md = 4;  // 3 columns
+	} else {
+		// Prefer 4 columns when divisible by 4 (fewer rows). Otherwise use 3 columns if divisible by 3.
+		if ( 0 === $post_count % 4 ) {
+			$md = 3; // 4 columns
+		} elseif ( 0 === $post_count % 3 ) {
+			$md = 4; // 3 columns
+		} else {
+			$md = 3; // Default to 4 columns for fewer rows.
+		}
+	}
+
+	return 'col-md-' . $md . ' col-sm-6 col-xs-12';
+}
+
+
+/**
  * Get default for option.
  *
  * @since 1.0.0

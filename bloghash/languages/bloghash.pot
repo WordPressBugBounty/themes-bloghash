@@ -15,7 +15,7 @@ msgstr ""
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
@@ -496,16 +496,6 @@ msgctxt "weekly archives date format"
 msgid "W"
 msgstr ""
 
-#: inc/compatibility/back-compat.php:46 inc/compatibility/back-compat.php:74
-#, php-format
-msgid "BlogHash theme requires at least WordPress version 5.4. You are running version %s. Please upgrade and try again."
-msgstr ""
-
-#: inc/compatibility/back-compat.php:59
-#, php-format
-msgid "BlogHash theme requires at least WordPress version 5.4. You are running version %s. Please upgrade your WordPress and try again."
-msgstr ""
-
 #: inc/compatibility/class-bloghash-beaver-themer.php:144
 #: inc/customizer/settings/class-bloghash-customizer-advertisement.php:64
 msgid "Before Header"
@@ -848,20 +838,20 @@ msgid_plural "%s products"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/core/class-bloghash-enqueue-scripts.php:158
+#: inc/core/class-bloghash-enqueue-scripts.php:115
 #: inc/customizer/controls/repeater/class-bloghash-customizer-control-repeater.php:1026
 msgid "Close"
 msgstr ""
 
-#: inc/core/class-bloghash-enqueue-scripts.php:159 inc/helpers.php:197
+#: inc/core/class-bloghash-enqueue-scripts.php:116 inc/helpers.php:197
 msgid "No results found"
 msgstr ""
 
-#: inc/core/class-bloghash-enqueue-scripts.php:160
+#: inc/core/class-bloghash-enqueue-scripts.php:117
 msgid "More results"
 msgstr ""
 
-#: inc/core/class-bloghash-enqueue-scripts.php:168
+#: inc/core/class-bloghash-enqueue-scripts.php:126
 #: template-parts/entry/entry-show-comments.php:20
 #, php-format
 msgid "Show %s Comment"
@@ -869,12 +859,12 @@ msgid_plural "Show %s Comments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/core/class-bloghash-enqueue-scripts.php:168
+#: inc/core/class-bloghash-enqueue-scripts.php:126
 #: template-parts/entry/entry-show-comments.php:16
 msgid "Leave a Comment"
 msgstr ""
 
-#: inc/core/class-bloghash-enqueue-scripts.php:169
+#: inc/core/class-bloghash-enqueue-scripts.php:127
 msgid "Hide Comments"
 msgstr ""
 
@@ -998,30 +988,31 @@ msgstr ""
 msgid "Google Fonts"
 msgstr ""
 
-#: inc/core/class-bloghash-options.php:636
+#: inc/core/class-bloghash-options.php:637
 #: inc/customizer/settings/class-bloghash-customizer-hero.php:220
 #: inc/customizer/settings/class-bloghash-customizer-hero.php:285
 #: inc/helpers.php:1508
 msgid "Continue Reading"
 msgstr ""
 
-#: inc/core/class-bloghash-options.php:642
+#: inc/core/class-bloghash-options.php:643
 msgid "Today Best Trending Topics"
 msgstr ""
 
-#: inc/core/class-bloghash-options.php:670
+#: inc/core/class-bloghash-options.php:672
 msgid "You May Have Missed"
 msgstr ""
 
-#: inc/core/class-bloghash-options.php:693
+#: inc/core/class-bloghash-options.php:695
 msgid "Top Stories"
 msgstr ""
 
-#: inc/core/class-bloghash-options.php:724
+#: inc/core/class-bloghash-options.php:726
+#: inc/customizer/settings/class-bloghash-customizer-single-post.php:118
 msgid "Related posts"
 msgstr ""
 
-#: inc/core/class-bloghash-options.php:740
+#: inc/core/class-bloghash-options.php:742
 #: inc/customizer/settings/class-bloghash-customizer-blog-page.php:99
 msgid "Read More"
 msgstr ""
@@ -1596,6 +1587,7 @@ msgstr ""
 
 #: inc/customizer/controls/typography/class-bloghash-customizer-control-typography.php:156
 #: inc/customizer/controls/typography/class-bloghash-customizer-control-typography.php:163
+#: inc/customizer/settings/class-bloghash-customizer-colors.php:89
 msgid "None"
 msgstr ""
 
@@ -1881,7 +1873,19 @@ msgstr ""
 msgid "Enable dark mode."
 msgstr ""
 
+#: inc/customizer/settings/class-bloghash-customizer-colors.php:84
+msgid "Body Animation"
+msgstr ""
+
 #: inc/customizer/settings/class-bloghash-customizer-colors.php:85
+msgid "Choose Body Animation."
+msgstr ""
+
+#: inc/customizer/settings/class-bloghash-customizer-colors.php:90
+msgid "Glassmorphism"
+msgstr ""
+
+#: inc/customizer/settings/class-bloghash-customizer-colors.php:102
 msgid "Body Background"
 msgstr ""
 
@@ -2108,7 +2112,7 @@ msgid "1/3 + 1/3 + 1/3"
 msgstr ""
 
 #: inc/customizer/settings/class-bloghash-customizer-main-footer.php:78
-#: inc/template-tags.php:591
+#: inc/template-tags.php:595
 msgid "1"
 msgstr ""
 
@@ -2790,89 +2794,89 @@ msgid_plural "%s results found"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/template-tags.php:341
+#: inc/template-tags.php:345
 msgid "Menu"
 msgstr ""
 
-#: inc/template-tags.php:378
+#: inc/template-tags.php:382
 msgid "Previous page"
 msgstr ""
 
-#: inc/template-tags.php:379
+#: inc/template-tags.php:383
 msgid "Next page"
 msgstr ""
 
-#: inc/template-tags.php:399
+#: inc/template-tags.php:403
 msgid "Pages"
 msgstr ""
 
-#: inc/template-tags.php:494
+#: inc/template-tags.php:498
 msgid "Posted by"
 msgstr ""
 
-#: inc/template-tags.php:503
+#: inc/template-tags.php:507
 #, php-format
 msgid "View all posts by %1$s"
 msgstr ""
 
-#: inc/template-tags.php:525
+#: inc/template-tags.php:529
 msgid "Last updated on"
 msgstr ""
 
-#: inc/template-tags.php:591
+#: inc/template-tags.php:595
 msgid "No Comments"
 msgstr ""
 
-#: inc/template-tags.php:591
+#: inc/template-tags.php:595
 msgid "%"
 msgstr ""
 
-#: inc/template-tags.php:647
+#: inc/template-tags.php:651
 msgid "Posted in"
 msgstr ""
 
-#: inc/template-tags.php:695
+#: inc/template-tags.php:699
 msgid "Tags:"
 msgstr ""
 
-#: inc/template-tags.php:839 inc/template-tags.php:1063
+#: inc/template-tags.php:843 inc/template-tags.php:1067
 msgid "Menu not assigned"
 msgstr ""
 
-#: inc/template-tags.php:842 inc/template-tags.php:1066
+#: inc/template-tags.php:846 inc/template-tags.php:1070
 msgid "Assign a menu"
 msgstr ""
 
-#: inc/template-tags.php:966
+#: inc/template-tags.php:970
 msgid "Add Button Text"
 msgstr ""
 
-#: inc/template-tags.php:1130 sidebar.php:41
+#: inc/template-tags.php:1134 sidebar.php:41
 msgid "Click here to assign a widget."
 msgstr ""
 
-#: inc/template-tags.php:1223
+#: inc/template-tags.php:1227
 msgid "Pingback: "
 msgstr ""
 
-#: inc/template-tags.php:1223
+#: inc/template-tags.php:1227
 msgid "(Edit)"
 msgstr ""
 
-#: inc/template-tags.php:1242
+#: inc/template-tags.php:1246
 msgid "The post author"
 msgstr ""
 
-#: inc/template-tags.php:1242
+#: inc/template-tags.php:1246
 msgctxt "Post author badge on comments"
 msgid "A"
 msgstr ""
 
-#: inc/template-tags.php:1267
+#: inc/template-tags.php:1271
 msgid "Edit"
 msgstr ""
 
-#: inc/template-tags.php:1295
+#: inc/template-tags.php:1299
 msgid "Your comment is awaiting moderation."
 msgstr ""
 
@@ -3118,25 +3122,25 @@ msgstr ""
 msgid "You must be logged in to checkout."
 msgstr ""
 
-#: woocommerce/checkout/form-checkout.php:50
+#: woocommerce/checkout/form-checkout.php:49
 msgid "Your order"
 msgstr ""
 
-#: woocommerce/single-product/meta.php:33
+#: woocommerce/single-product/meta.php:35
 msgid "SKU:"
 msgstr ""
 
-#: woocommerce/single-product/meta.php:33
+#: woocommerce/single-product/meta.php:35
 msgid "N/A"
 msgstr ""
 
-#: woocommerce/single-product/meta.php:37
+#: woocommerce/single-product/meta.php:39
 msgid "Category:"
 msgid_plural "Categories:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: woocommerce/single-product/meta.php:39
+#: woocommerce/single-product/meta.php:41
 msgid "Tag:"
 msgid_plural "Tags:"
 msgstr[0] ""

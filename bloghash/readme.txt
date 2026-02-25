@@ -6,7 +6,7 @@ Tested up to: 6.9
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.0.27
+Stable tag: 1.0.28
 
 A lightweight and highly customizable multi-purpose theme that makes it easy for anyone to create their perfect website.
 
@@ -23,6 +23,16 @@ BlogHash is the perfect pick for bloggers seeking a lightweight, customizable th
 4. Navigate to Appearance » Customize to access theme options.
 
 == Changelog ==
+
+= 1.0.28 =
+* Updated legacy customizer settings—such as categories—to use IDs instead of slugs for improved consistency and reliability.
+* Added required attribute to search input field in searchform.php
+* Updated tax query logic to filter by category in pyml-1.php
+* Updated tax query logic to filter by category in ticker.php
+* Remove unnecessary attributes variable in related-posts.php
+* Remove unnecessary text alignment CSS rule for sub-menu links in RTL navigation.
+* Refactor RTL styles for improved layout and navigation.
+* "Related Posts" feature added in Custommizer > Blog > Single Post.
 
 = 1.0.27 =
 * Fixed: Header cart widget not updating on cart item removed.

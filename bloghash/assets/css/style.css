@@ -6221,6 +6221,10 @@ body.bloghash-menu-animation-squareboxtwo:not(.bloghash-is-mobile) #bloghash-top
     color: #fff;
 }
 
+.bloghash-swiper-buttons .swiper-button-lock {
+    display: none;
+}
+
 .bloghash-card-items .h4.widget-title,
 .is-section-heading-init-s1 #secondary .wp-block-search .wp-block-search__label,
 .is-section-heading-init-s1 #secondary .wp-block-heading,
@@ -6774,10 +6778,12 @@ body:not(.single-post) .bloghash-article .entry-media {
 }
 
 .bloghash-blog-horizontal .bloghash-article .entry-media .entry-image-link,
-.bloghash-blog-horizontal .bloghash-article .entry-media img {
+.bloghash-blog-horizontal .bloghash-article .entry-media img,
+.bloghash-blog-horizontal .bloghash-article .entry-media .entry-media {
     min-height: 30rem;
 }
 
+.bloghash-blog-layout-1 .bloghash-article .entry-thumb-image .entry-image-link,
 .bloghash-blog-layout-1 .bloghash-article .entry-thumb-image img,
 .bloghash-blog-layout-1 .bloghash-article .entry-thumb-image .entry-media {
     min-height: 24rem;
@@ -8194,7 +8200,7 @@ body:not(.single-post) .bloghash-article .entry-media {
 .entry-meta .bloghash-icon {
     height: 1.827rem;
     margin-right: .7rem;
-    vertical-align: text-bottom;
+    vertical-align: middle;
 }
 
 .entry-meta .entry-meta-elements>span {

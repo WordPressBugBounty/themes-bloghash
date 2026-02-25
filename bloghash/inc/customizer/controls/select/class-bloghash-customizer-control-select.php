@@ -97,7 +97,7 @@ if ( ! class_exists( 'Bloghash_Customizer_Control_Select' ) ) :
 								if ( ! is_object( $category ) ) {
 									continue;
 								}
-								$choices[ $category->slug ] = $category->name;
+								$choices[ $category->term_id ] = $category->name;
 							}
 						}
 
@@ -111,7 +111,7 @@ if ( ! class_exists( 'Bloghash_Customizer_Control_Select' ) ) :
 						if ( ! empty( $pages ) ) {
 
 							foreach ( $pages as $page ) {
-								$choices[ $page->post_name ] = $page->post_title;
+								$choices[ $page->ID ] = $page->post_title;
 							}
 						}
 
@@ -134,7 +134,7 @@ if ( ! class_exists( 'Bloghash_Customizer_Control_Select' ) ) :
 								$title_words = explode(' ', $post->post_title);
 								$limited_title = implode(' ', array_slice($title_words, 0, 3)) . '...';
 				
-								$choices[ $post->post_name ] = $limited_title;
+								$choices[ $post->ID ] = $limited_title;
 							}
 						}
 				
@@ -239,10 +239,11 @@ if ( ! class_exists( 'Bloghash_Customizer_Control_Select' ) ) :
 
 					<# if ( data.is_select2 ) { #>
 
+						<# var selectedChoices = data.value ? data.value.toString().split( ',' ) : []; #>
 						<# _.each( data.choices, function( label, choice ) {
 							if(data.value) { #>
 
-							<option title="{{ label }}" value="{{ choice }}" <# if ( -1 !== data.value.indexOf( choice ) ) { #> selected="selected" <# } #>>{{ label }}</option>
+							<option title="{{ label }}" value="{{ choice }}" <# if ( -1 !== selectedChoices.indexOf( choice.toString() ) ) { #> selected="selected" <# } #>>{{ label }}</option>
 
 						<# } } ) #>
 

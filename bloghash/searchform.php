@@ -23,7 +23,7 @@ $bloghash_post_type = 'all' !== $bloghash_post_type ? '<input type="hidden" name
 
 <form role="search" <?php echo $bloghash_aria_label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above. ?> method="get" class="bloghash-search-form search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
 	<div>
-		<input type="search" class="bloghash-input-search search-field" aria-label="<?php esc_attr_e( 'Enter search keywords', 'bloghash' ); ?>" placeholder="<?php esc_attr_e( 'Search', 'bloghash' ); ?>" value="<?php echo get_search_query(); ?>" name="s" />
+		<input type="search" class="bloghash-input-search search-field" aria-label="<?php esc_attr_e( 'Enter search keywords', 'bloghash' ); ?>" placeholder="<?php esc_attr_e( 'Search', 'bloghash' ); ?>" value="<?php echo get_search_query(); ?>" name="s" required/>
 		<?php echo $bloghash_post_type; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		
 		<?php if( !isset( $args['icon'] ) ): ?>

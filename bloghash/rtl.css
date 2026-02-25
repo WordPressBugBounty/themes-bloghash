@@ -61,12 +61,9 @@ body {
     margin-left: 0 !important;
 }
 
-.rtl .bloghash-social-nav.rounded>ul>li>a {
-    margin-right: 0.8rem;
-}
-
-.rtl .bloghash-social-nav.rounded>ul>li:first-child>a {
+.rtl .bloghash-social-nav:not([class*="rounded"])>ul>li:not(:last-child)>a {
     margin-right: 0;
+    margin-left: 1.6rem;
 }
 
 .rtl .bloghash-social-nav.rounded-border>ul>li:first-of-type>a>span:not(.screen-reader-text),
@@ -130,11 +127,6 @@ body {
     padding-right: 0 !important;
 }
 
-.rtl #pyml .bloghash-card-items .bloghash-swiper-buttons .swiper-button-prev,
-.rtl #pyml .bloghash-card-items .bloghash-swiper-buttons .swiper-button-next {
-    --swiper-navigation-sides-offset: -4rem;
-}
-
 .rtl.bloghash-sidebar-style-2 #pyml .pyml-slider-items .widget-title::before {
     right: 2rem;
 }
@@ -143,15 +135,17 @@ body {
     right: 9rem;
 }
 
-.rtl .bloghash-card-items .bloghash-swiper-buttons {
+.rtl .bloghash-card-items .bloghash-swiper-buttons:not(.ticker-slider-controls) {
     float: left;
     margin-left: 0;
     margin-right: -100%;
-}
-
-.rtl #pyml .bloghash-card-items .bloghash-swiper-buttons {
     padding-left: 0;
     padding-right: 1.6rem;
+}
+
+.rtl .bloghash-card-items .bloghash-swiper-buttons:not(.ticker-slider-controls) .swiper-button-prev,
+.rtl .bloghash-card-items .bloghash-swiper-buttons:not(.ticker-slider-controls) .swiper-button-next {
+    --swiper-navigation-sides-offset: -4rem;
 }
 
 .rtl .hester-posts-list-widget-init-s1 .hester-posts-list-widget-thumb {
@@ -202,8 +196,8 @@ body {
 .rtl.bloghash-sidebar-style-2 #secondary .wp-block-search .wp-block-search__label::after,
 .rtl.bloghash-sidebar-style-2 #secondary .wp-block-heading::after,
 .rtl.bloghash-sidebar-style-2 #secondary .widget-title::after {
-    right: 9.5rem;
-    left: 0;
+    right: 0;
+    left: unset;
 }
 
 .rtl .bloghash-vertical-slider .bloghash-entry-content-wrapper .bloghash-btn.btn-text-1::after,
@@ -222,6 +216,13 @@ body {
     transform: rotate(180deg);
 }
 
+.rtl .bloghash-header-widget:after {
+    right: unset;
+    left: -.5rem;
+    margin-right: 8px;
+    margin-left: 8px;
+}
+
 .rtl .bloghash-header-widgets .bloghash-search-simple {
     right: unset;
     left: -1.5rem;
@@ -230,6 +231,16 @@ body {
 .rtl .bloghash-header-widgets .bloghash-search-simple:after {
     right: unset;
     left: 1.6rem;
+}
+
+.rtl .bloghash-header-widgets.bloghash-widget-location-left .bloghash-search-simple {
+    right: -1.5rem;
+    left: unset;
+}
+
+.rtl .bloghash-header-widgets.bloghash-widget-location-left .bloghash-search-simple:after {
+    right: 1.6rem;
+    left: unset;
 }
 
 .rtl .bloghash-header-widgets .bloghash-search-simple .bloghash-search-form input {
@@ -258,10 +269,6 @@ body {
 .rtl.using-keyboard .widget.widget_nav_menu ul:not(.sub-menu)>li>a:focus::before {
     margin-right: 0;
     margin-left: 1.2rem;
-}
-
-.rtl .bloghash-nav .sub-menu a {
-    text-align: end;
 }
 
 .rtl .bloghash-nav .menu-item-has-children>a>.bloghash-icon,
@@ -361,4 +368,65 @@ body {
 .rtl .bloghash-live-search-container .wrapper .close {
     left: 10px;
     right: unset;
+}
+
+.rtl .ticker-slide-item .ticker-slider-backgrounds {
+    margin-right: 0;
+    margin-left: 1rem;
+}
+
+.rtl .style-4.bloghash-post-item .bloghash-post-thumb {
+    margin-right: 0;
+    margin-left: 2rem;
+}
+
+.rtl .breadcrumb-trail .trail-items li:after {
+    transform: rotateY(180deg);
+}
+
+.rtl .author-box .author-box-avatar {
+    margin-right: 0;
+    margin-left: 2.5rem;
+}
+
+.rtl.single .post-nav .nav-next .nav-content img {
+    margin-left: 0;
+    margin-right: 2rem;
+}
+
+.rtl.single .post-nav .nav-next .nav-content span:not(.ss-on-media-image-wrap) {
+    padding-left: 0;
+    padding-right: 2rem;
+}
+
+.rtl.single .post-nav .nav-previous .nav-content img {
+    margin-right: 0;
+    margin-left: 2rem;
+}
+
+.rtl.single .post-nav .nav-previous .nav-content span:not(.ss-on-media-image-wrap) {
+    padding-right: 0;
+    padding-left: 2rem;
+}
+
+.rtl .bloghash-post-list .entry-title a,
+.rtl .ticker-slide-item .slide-inner h6 a,
+.rtl .bloghash-post-item .entry-header a,
+.rtl #main .bloghash-article .entry-header .entry-title a {
+    background-image: -webkit-gradient(linear, right top, right bottom, from(currentColor), color-stop(98%, currentColor));
+    background-image: linear-gradient(to bottom, currentColor 0%, currentColor 98%);
+    background-position: right 100%;
+}
+
+.rtl .bloghash-post-list .entry-title a:hover,
+.rtl .bloghash-hero-slider .swiper-bottom .bloghash-post-list .entry-title a:focus,
+.rtl .ticker-slide-item .slide-inner h6 a:hover,
+.rtl .ticker-slide-item .slide-inner h6 a:focus,
+.rtl .bloghash-post-item:hover .entry-header .entry-title a,
+.rtl.using-keyboard .bloghash-post-item:focus-within .entry-header .entry-title a,
+.rtl #main .bloghash-article:hover .entry-header .entry-title a,
+.rtl.using-keyboard #main .bloghash-article:focus-within .entry-header .entry-title a {
+    background-image: -webkit-gradient(linear, right top, right bottom, from(currentColor), color-stop(98%, currentColor));
+    background-image: linear-gradient(to bottom, currentColor 0%, currentColor 98%);
+    background-position: right 100%;
 }

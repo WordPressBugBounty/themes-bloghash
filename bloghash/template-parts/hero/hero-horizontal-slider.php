@@ -19,21 +19,30 @@ $bloghash_args = array(
 	'order'               => $bloghash_hero_slider_order[1],
 	'orderby'             => $bloghash_hero_slider_order[0],
 	'ignore_sticky_posts' => true,
-	'tax_query'           => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
-		array(
-			'taxonomy' => 'post_format',
-			'field'    => 'slug',
-			'terms'    => array( 'post-format-quote' ),
-			'operator' => 'NOT IN',
-		),
+);
+
+$tax_query = array(
+	array(
+		'taxonomy' => 'post_format',
+		'field'    => 'slug',
+		'terms'    => array( 'post-format-quote' ),
+		'operator' => 'NOT IN',
 	),
 );
 
-$bloghash_hero_categories = bloghash_option( 'hero_slider_category' );
+$bloghash_hero_categories = array_filter( array_map( 'absint', (array) bloghash_option( 'hero_slider_category' ) ) );
 
+// If categories are specified
 if ( ! empty( $bloghash_hero_categories ) ) {
-	$bloghash_args['category_name'] = implode( ', ', $bloghash_hero_categories );
+	$tax_query[] = array(
+		'taxonomy' => 'category',
+		'field'    => 'term_id',
+		'terms'    => $bloghash_hero_categories,
+		'operator' => 'IN',
+	);
 }
+
+$bloghash_args['tax_query'] = $tax_query;
 
 $bloghash_args = apply_filters( 'bloghash_hero_slider_query_args', $bloghash_args );
 
