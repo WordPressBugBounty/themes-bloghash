@@ -181,6 +181,142 @@ if ( ! class_exists( 'Bloghash_Customizer_Control_Repeater' ) ) :
 				$value = $this->merge_data( $value, $this->defined_values );
 			}
 
+			// For select2 fields with a data source inside the repeater, load labels for the currently selected values.
+			foreach ( $this->fields as $field_id => $field ) {
+				if ( isset( $field['type'] ) && 'select' === $field['type'] && ! empty( $field['is_select2'] ) && ! empty( $field['data_source'] ) ) {
+					$selected_values = array();
+					if ( is_array( $value ) ) {
+						foreach ( $value as $item ) {
+							if ( isset( $item[ $field['id'] ] ) ) {
+								$val = $item[ $field['id'] ];
+								if ( is_array( $val ) ) {
+									$selected_values = array_merge( $selected_values, $val );
+								} elseif ( is_string( $val ) ) {
+									$selected_values = array_merge( $selected_values, explode( ',', $val ) );
+								} else {
+									$selected_values[] = $val;
+								}
+							}
+						}
+					}
+
+					$selected_values = array_filter( array_map( 'trim', $selected_values ) );
+					$selected_values = array_unique( $selected_values );
+
+					$choices = array();
+
+					if ( ! empty( $selected_values ) ) {
+						$selected_ids = array_map( 'strval', $selected_values );
+						if ( 'post_types' !== $field['data_source'] && 'post_type' !== $field['data_source'] ) {
+							$selected_ids = array_map( 'intval', $selected_values );
+						}
+
+						switch ( $field['data_source'] ) {
+							case 'category':
+								$args  = array(
+									'taxonomy'   => $field['data_source_name'] ?? 'category',
+									'hide_empty' => false,
+									'include'    => $selected_ids,
+								);
+								$terms = get_terms( $args );
+
+								if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
+									foreach ( $terms as $term ) {
+										$choices[ $term->term_id ] = $term->name;
+									}
+								}
+
+								break;
+
+							case 'tags':
+								$args  = array(
+									'taxonomy'   => 'post_tag',
+									'hide_empty' => false,
+									'include'    => $selected_ids,
+								);
+								$terms = get_terms( $args );
+
+								if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
+									foreach ( $terms as $term ) {
+										$choices[ $term->term_id ] = $term->name;
+									}
+								}
+
+								break;
+
+							case 'page':
+								$pages = get_posts(
+									array(
+										'post_type'      => 'page',
+										'post_status'    => 'publish',
+										'posts_per_page' => count( $selected_ids ),
+										'post__in'       => $selected_ids,
+										'orderby'        => 'post__in',
+									)
+								);
+
+								if ( ! empty( $pages ) ) {
+									foreach ( $pages as $page ) {
+										$choices[ $page->ID ] = $page->post_title;
+									}
+								}
+								break;
+							case 'post':
+								$posts = get_posts(
+									array(
+										'post_type'      => 'post',
+										'post_status'    => 'publish',
+										'posts_per_page' => count( $selected_ids ),
+										'post__in'       => $selected_ids,
+										'orderby'        => 'post__in',
+									)
+								);
+
+								if ( ! empty( $posts ) ) {
+									foreach ( $posts as $post ) {
+										$choices[ $post->ID ] = $post->post_title;
+									}
+								}
+
+								break;
+							case 'post_types':
+							case 'post_type':
+								global $wp_post_types;
+
+								foreach ( $selected_ids as $name ) {
+									if ( isset( $wp_post_types[ $name ]->labels->menu_name ) ) {
+										$choices[ $name ] = $wp_post_types[ $name ]->labels->menu_name;
+									} else {
+										$choices[ $name ] = ucfirst( $name );
+									}
+								}
+								break;
+
+							default:
+								if ( post_type_exists( $field['data_source'] ) ) {
+									$posts = get_posts(
+										array(
+											'post_type'   => $field['data_source'],
+											'post_status' => 'publish',
+											'posts_per_page' => count( $selected_ids ),
+											'post__in'    => $selected_ids,
+											'orderby'     => 'post__in',
+										)
+									);
+
+									if ( ! empty( $posts ) ) {
+										foreach ( $posts as $post ) {
+											$choices[ $post->ID ] = $post->post_title;
+										}
+									}
+								}
+								break;
+						}
+					}
+					$this->fields[ $field_id ]['options'] = $choices;
+				}
+			}
+
 			$this->json['live_title_id']       = $this->live_title_id;
 			$this->json['title_format']        = $this->title_format;
 			$this->json['max_item']            = $this->max_item;
@@ -191,6 +327,7 @@ if ( ! class_exists( 'Bloghash_Customizer_Control_Repeater' ) ) :
 			$this->json['value']               = $value;
 			$this->json['id_key']              = $this->id_key;
 			$this->json['fields']              = $this->fields;
+			$this->json['nonce']               = wp_create_nonce( 'bloghash_customizer_nonce' );
 
 			$this->json['l10n'] = array(
 				'image' => array(
@@ -201,7 +338,6 @@ if ( ! class_exists( 'Bloghash_Customizer_Control_Repeater' ) ) :
 					'use_image'    => __( 'Use This Image', 'bloghash' ),
 				),
 			);
-
 		}
 
 		/**
@@ -241,6 +377,39 @@ if ( ! class_exists( 'Bloghash_Customizer_Control_Repeater' ) ) :
 					false,
 					BLOGHASH_THEME_VERSION,
 					'all'
+				);
+			}
+
+			// Enqueue select2 stylesheet and script if any field uses select2.
+			$has_select2 = false;
+			foreach ( $this->fields as $field ) {
+				if ( isset( $field['type'] ) && 'select' === $field['type'] && ! empty( $field['is_select2'] ) ) {
+					$has_select2 = true;
+					break;
+				}
+			}
+
+			if ( $has_select2 ) {
+				/**
+				 * Enqueue select2 stylesheet.
+				 */
+				wp_enqueue_style(
+					'bloghash-select2-style',
+					BLOGHASH_THEME_URI . '/inc/admin/assets/css/select2' . $bloghash_suffix . '.css',
+					false,
+					BLOGHASH_THEME_VERSION,
+					'all'
+				);
+
+				/**
+				 * Enqueue select2 script.
+				 */
+				wp_enqueue_script(
+					'bloghash-select2-js',
+					BLOGHASH_THEME_URI . '/inc/admin/assets/js/libs/select2' . $bloghash_suffix . '.js',
+					array( 'jquery' ),
+					BLOGHASH_THEME_VERSION,
+					true
 				);
 			}
 		}

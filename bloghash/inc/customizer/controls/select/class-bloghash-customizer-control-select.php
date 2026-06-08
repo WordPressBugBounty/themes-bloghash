@@ -78,73 +78,112 @@ if ( ! class_exists( 'Bloghash_Customizer_Control_Select' ) ) :
 
 			parent::__construct( $manager, $id, $args );
 
-			if ( $this->is_select2 ) {
+			// For select2 controls with a data source, only load labels for the currently selected values.
+			// All other options are loaded on demand via AJAX.
+			if ( $this->is_select2 && $this->data_source ) {
+				$selected_values = $this->value();
 
-				switch ( $this->data_source ) {
+				if ( ! is_array( $selected_values ) ) {
+					$selected_values = $selected_values ? explode( ',', (string) $selected_values ) : array();
+				}
 
-					case 'category':
-						$args       = array(
-							'hide_empty' => true,
-							'taxonomy'   => $this->data_source_name ?? 'category',
-						);
-						$categories = get_terms( $args );
+				$selected_values = array_filter( array_map( 'trim', $selected_values ) );
+				$selected_values = array_unique( $selected_values );
 
-						$choices = array();
+				if ( ! empty( $selected_values ) ) {
+					$selected_ids = array_map( 'intval', $selected_values );
+					$choices      = array();
 
-						if ( ! empty( $categories ) ) {
+					switch ( $this->data_source ) {
+						case 'category':
+							$args  = array(
+								'taxonomy'   => $this->data_source_name ?? 'category',
+								'hide_empty' => false,
+								'include'    => $selected_ids,
+							);
+							$terms = get_terms( $args );
 
-							foreach ( $categories as $category ) {
-								if ( ! is_object( $category ) ) {
-									continue;
+							if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
+								foreach ( $terms as $term ) {
+									$choices[ $term->term_id ] = $term->name;
 								}
-								$choices[ $category->term_id ] = $category->name;
 							}
-						}
 
-						$this->choices = $choices;
+							break;
 
-						break;
-					case 'page':
-						$pages = get_pages();
+						case 'tags':
+							$args  = array(
+								'taxonomy'   => 'post_tag',
+								'hide_empty' => false,
+								'include'    => $selected_ids,
+							);
+							$terms = get_terms( $args );
 
-						$choices = array();
-						if ( ! empty( $pages ) ) {
-
-							foreach ( $pages as $page ) {
-								$choices[ $page->ID ] = $page->post_title;
+							if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
+								foreach ( $terms as $term ) {
+									$choices[ $term->term_id ] = $term->name;
+								}
 							}
-						}
 
-						$this->choices = $choices;
+							break;
 
-						break;
+						case 'page':
+							$pages = get_posts(
+								array(
+									'post_type'      => 'page',
+									'post_status'    => 'publish',
+									'posts_per_page' => count( $selected_ids ),
+									'post__in'       => $selected_ids,
+									'orderby'        => 'post__in',
+								)
+							);
 
-					case 'post':
-						$args = array(
-							'post_type' => 'post',
-							'posts_per_page' => -1, // Get all posts
-							'post_status' => 'publish', // Only get published posts
-						);
-						$posts = get_posts( $args );
-				
-						$choices = array();
-						if ( ! empty( $posts ) ) {
-							foreach ( $posts as $post ) {
-								// Limit the post title to 3 words
-								$title_words = explode(' ', $post->post_title);
-								$limited_title = implode(' ', array_slice($title_words, 0, 3)) . '...';
-				
-								$choices[ $post->ID ] = $limited_title;
+							if ( ! empty( $pages ) ) {
+								foreach ( $pages as $page ) {
+									$choices[ $page->ID ] = $page->post_title;
+								}
 							}
-						}
-				
-						$this->choices = $choices;
-				
-						break;
+							break;
+						case 'post':
+							$posts = get_posts(
+								array(
+									'post_type'      => 'post',
+									'post_status'    => 'publish',
+									'posts_per_page' => count( $selected_ids ),
+									'post__in'       => $selected_ids,
+									'orderby'        => 'post__in',
+								)
+							);
 
-					default:
-						// code...
-						break;
+							if ( ! empty( $posts ) ) {
+								foreach ( $posts as $post ) {
+									$choices[ $post->ID ] = $post->post_title;
+								}
+							}
+
+							break;
+
+						default:
+							if ( post_type_exists( $this->data_source ) ) {
+								$posts = get_posts(
+									array(
+										'post_type'      => $this->data_source,
+										'post_status'    => 'publish',
+										'posts_per_page' => count( $selected_ids ),
+										'post__in'       => $selected_ids,
+										'orderby'        => 'post__in',
+									)
+								);
+
+								if ( ! empty( $posts ) ) {
+									foreach ( $posts as $post ) {
+										$choices[ $post->ID ] = $post->post_title;
+									}
+								}
+							}
+							break;
+					}
+					$this->choices = $choices;
 				}
 			}
 		}
@@ -157,10 +196,13 @@ if ( ! class_exists( 'Bloghash_Customizer_Control_Select' ) ) :
 		public function to_json() {
 			parent::to_json();
 
-			$this->json['choices']     = $this->choices;
-			$this->json['placeholder'] = $this->placeholder;
-			$this->json['is_select2']  = $this->is_select2;
-			$this->json['multiple']    = $this->multiple ? ' multiple="multiple"' : '';
+			$this->json['choices']          = $this->choices;
+			$this->json['placeholder']      = $this->placeholder;
+			$this->json['is_select2']       = $this->is_select2;
+			$this->json['multiple']         = $this->multiple ? ' multiple="multiple"' : '';
+			$this->json['data_source']      = $this->data_source;
+			$this->json['data_source_name'] = $this->data_source_name;
+			$this->json['nonce']            = wp_create_nonce( 'bloghash_customizer_nonce' );
 
 			if ( $this->multiple ) {
 				$this->json['value'] = implode( ',', (array) $this->json['value'] );
@@ -237,27 +279,28 @@ if ( ! class_exists( 'Bloghash_Customizer_Control_Select' ) ) :
 
 				<select class="bloghash-select-control" {{{ data.link }}}{{{ data.multiple }}}>
 
-					<# if ( data.is_select2 ) { #>
-
-						<# var selectedChoices = data.value ? data.value.toString().split( ',' ) : []; #>
-						<# _.each( data.choices, function( label, choice ) {
-							if(data.value) { #>
-
-							<option title="{{ label }}" value="{{ choice }}" <# if ( -1 !== selectedChoices.indexOf( choice.toString() ) ) { #> selected="selected" <# } #>>{{ label }}</option>
-
-						<# } } ) #>
-
-					<#  } else { #>
+					<# if ( ! data.is_select2 ) { #>
+						<!-- Regular select: render all choices -->
 						<# for ( key in data.choices ) { #>
-							<option title="{{ data.choices[ key ] }}" value="{{ key }}" <# if ( key === data.value ) { #> checked="checked" <# } #>>{{ data.choices[ key ] }}</option>
+							<option title="{{ data.choices[ key ] }}" value="{{ key }}" <# if ( key === data.value ) { #> selected="selected" <# } #>>{{ data.choices[ key ] }}</option>
+						<# } #>
+					<# } else { #>
+						<!-- Select2: render selected values only (rest loaded via AJAX or static) -->
+						<# if ( data.value ) { #>
+							<# var selectedChoices = data.value ? data.value.toString().split( ',' ) : []; #>
+							<# _.each( selectedChoices, function( choice ) { #>
+								<# var label = data.choices && data.choices[ choice ] ? data.choices[ choice ] : choice; #>
+								<option value="{{ choice }}" selected="selected">{{ label }}</option>
+							<# } ) #>
 						<# } #>
 					<# } #>
+
 				</select>
 
 			</label>
 
 			</div><!-- END .bloghash-control-wrapper -->
-																							<?php
+			<?php
 		}
 	}
 endif;

@@ -109,33 +109,31 @@ if ( ! function_exists( 'bloghash_get_the_title' ) ) {
 				// Yith wishlist title.
 				$title = apply_filters( 'bloghash_yith_wishlist_title', esc_html( $wishlist_title ) );
 			}
-		} else {
-			if ( is_front_page() && is_home() ) {
+		} elseif ( is_front_page() && is_home() ) {
 				// Homepage.
 				$title = apply_filters( 'bloghash_home_page_title', esc_html__( 'Home', 'bloghash' ) );
-			} elseif ( is_home() ) {
-				// Blog page.
-				$title = apply_filters( 'bloghash_blog_page_title', get_the_title( get_option( 'page_for_posts', true ) ) );
-			} elseif ( is_404() ) {
-				// 404 page - title always display.
-				$title = apply_filters( 'bloghash_404_page_title', esc_html__( 'This page doesn&rsquo;t seem to exist.', 'bloghash' ) );
-			} elseif ( is_search() ) {
-				// Search page - title always display.
-				/* translators: 1: search string */
-				$title = apply_filters( 'bloghash_search_page_title', sprintf( __( 'Search results for: %s', 'bloghash' ), get_search_query() ) );
-			} elseif ( class_exists( 'WooCommerce' ) && is_shop() ) {
-				// Woocommerce.
-				$title = woocommerce_page_title( false );
-			} elseif ( is_author() ) {
-				// Author post archive.
-				$title = apply_filters( 'bloghash_author_page_title', esc_html__( 'Posts by', 'bloghash' ) . ' ' . esc_html( get_the_author() ) );
-			} elseif ( is_category() || is_tag() || is_tax() ) {
-				// Category, tag and custom taxonomy archive.
-				$title = single_term_title( '', false );
-			} elseif ( is_archive() ) {
-				// Archive.
-				$title = get_the_archive_title();
-			}
+		} elseif ( is_home() ) {
+			// Blog page.
+			$title = apply_filters( 'bloghash_blog_page_title', get_the_title( get_option( 'page_for_posts', true ) ) );
+		} elseif ( is_404() ) {
+			// 404 page - title always display.
+			$title = apply_filters( 'bloghash_404_page_title', esc_html__( 'This page doesn&rsquo;t seem to exist.', 'bloghash' ) );
+		} elseif ( is_search() ) {
+			// Search page - title always display.
+			/* translators: 1: search string */
+			$title = apply_filters( 'bloghash_search_page_title', sprintf( __( 'Search results for: %s', 'bloghash' ), get_search_query() ) );
+		} elseif ( class_exists( 'WooCommerce' ) && is_shop() ) {
+			// Woocommerce.
+			$title = woocommerce_page_title( false );
+		} elseif ( is_author() ) {
+			// Author post archive.
+			$title = apply_filters( 'bloghash_author_page_title', esc_html__( 'Posts by', 'bloghash' ) . ' ' . esc_html( get_the_author() ) );
+		} elseif ( is_category() || is_tag() || is_tax() ) {
+			// Category, tag and custom taxonomy archive.
+			$title = single_term_title( '', false );
+		} elseif ( is_archive() ) {
+			// Archive.
+			$title = get_the_archive_title();
 		}
 		if ( $echo ) {
 			echo wp_kses( $title, bloghash_get_allowed_html_tags() );
@@ -1604,7 +1602,7 @@ if ( ! function_exists( 'bloghash_algorithm_to_push_ads_in_archive' ) ) :
 
 		$ad_widgets = array_filter(
 			bloghash_option( 'ad_widgets' ),
-			function( $widget ) {
+			function ( $widget ) {
 				return isset( $widget['values']['display_area'] ) && in_array( 'random_post_archives', $widget['values']['display_area'] );
 			}
 		);
@@ -1631,15 +1629,15 @@ if ( ! function_exists( 'bloghash_algorithm_to_push_ads_in_archive' ) ) :
 						if ( ! in_array( $ads_id, $ads_to_render ) ) {
 							$ads_to_render[] = $ads_id;
 						}
-						$ads_id++;
+						++$ads_id;
 					endfor;
 					$ads_to_render_in_current_page[ $loop_var ] = $ads_to_render;
 				else :
 					$ads_to_render_in_current_page[ $loop_var ] = $ads_id;
-					$ads_id++;
+					++$ads_id;
 				endif;
-				$count++;
-				$loop_var++;
+				++$count;
+				++$loop_var;
 			endif;
 		endfor;
 		$current_page_count  = absint( $wp_query->post_count );
@@ -1660,4 +1658,168 @@ if ( ! function_exists( 'bloghash_algorithm_to_push_ads_in_archive' ) ) :
 	}
 
 
- endif;
+endif;
+
+/**
+ * Static AJAX callback to load select2 data dynamically.
+ *
+ * @since 1.0.29
+ */
+function bloghash_ajax_load_select2_data_static() {
+	check_ajax_referer( 'bloghash_customizer_nonce', 'nonce' );
+
+	$page             = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
+	$search           = isset( $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : '';
+	$data_source      = isset( $_POST['data_source'] ) ? sanitize_text_field( $_POST['data_source'] ) : '';
+	$data_source_name = isset( $_POST['data_source_name'] ) ? sanitize_text_field( $_POST['data_source_name'] ) : null;
+
+	$results  = array();
+	$per_page = 25; // Items per page.
+
+	if ( empty( $data_source ) ) {
+		wp_send_json_error( 'Invalid data source' );
+	}
+
+	switch ( $data_source ) {
+
+		case 'category':
+			$args = array(
+				'hide_empty' => true,
+				'taxonomy'   => '' !== $data_source_name ? $data_source_name : 'category',
+				'search'     => $search,
+				'number'     => $per_page,
+				'offset'     => ( $page - 1 ) * $per_page,
+			);
+
+			$categories = get_terms( $args );
+			$total      = wp_count_terms(
+				array(
+					'taxonomy' => '' !== $data_source_name ? $data_source_name : 'category',
+					'search'   => $search,
+				)
+			);
+
+			if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
+				foreach ( $categories as $category ) {
+					$results[] = array(
+						'id'   => $category->term_id,
+						'text' => $category->name,
+					);
+				}
+			}
+
+			break;
+
+		case 'tags':
+			$args = array(
+				'hide_empty' => true,
+				'taxonomy'   => 'post_tag',
+				'search'     => $search,
+				'number'     => $per_page,
+				'offset'     => ( $page - 1 ) * $per_page,
+			);
+
+			$tags  = get_terms( $args );
+			$total = wp_count_terms(
+				array(
+					'taxonomy' => 'post_tag',
+					'search'   => $search,
+				)
+			);
+
+			if ( ! is_wp_error( $tags ) && ! empty( $tags ) ) {
+				foreach ( $tags as $tag ) {
+					$results[] = array(
+						'id'   => $tag->term_id,
+						'text' => $tag->name,
+					);
+				}
+			}
+
+			break;
+
+		case 'page':
+			$args = array(
+				'post_type'      => 'page',
+				'posts_per_page' => $per_page,
+				'paged'          => $page,
+				'post_status'    => 'publish',
+				's'              => $search,
+			);
+
+			$query = new WP_Query( $args );
+			$total = $query->found_posts;
+
+			if ( ! empty( $query->posts ) ) {
+				foreach ( $query->posts as $post ) {
+					$results[] = array(
+						'id'   => $post->ID,
+						'text' => $post->post_title,
+					);
+				}
+			}
+
+			wp_reset_postdata();
+			break;
+
+		case 'post':
+			$args = array(
+				'post_type'      => 'post',
+				'posts_per_page' => $per_page,
+				'paged'          => $page,
+				'post_status'    => 'publish',
+				's'              => $search,
+			);
+
+			$query = new WP_Query( $args );
+			$total = $query->found_posts;
+
+			if ( ! empty( $query->posts ) ) {
+				foreach ( $query->posts as $post ) {
+					$results[] = array(
+						'id'   => $post->ID,
+						'text' => $post->post_title,
+					);
+				}
+			}
+
+			wp_reset_postdata();
+			break;
+
+		default:
+			$args = array(
+				'post_type'      => $data_source,
+				'posts_per_page' => $per_page,
+				'paged'          => $page,
+				'post_status'    => 'publish',
+				's'              => $search,
+				'orderby'        => 'title',
+				'order'          => 'ASC',
+			);
+
+			$query = new WP_Query( $args );
+			$total = $query->found_posts;
+
+			if ( ! empty( $query->posts ) ) {
+				foreach ( $query->posts as $post ) {
+					$results[] = array(
+						'id'   => $post->ID,
+						'text' => $post->post_title ?? __( 'No Title', 'bloghash' ),
+					);
+				}
+			}
+
+			wp_reset_postdata();
+			break;
+	}
+
+	wp_send_json_success(
+		array(
+			'results'    => $results,
+			'pagination' => array(
+				'more' => ( $page * $per_page ) < $total,
+			),
+		)
+	);
+}
+add_action( 'wp_ajax_bloghash_load_select2_data', 'bloghash_ajax_load_select2_data_static' );

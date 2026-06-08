@@ -6215,6 +6215,22 @@ body.bloghash-menu-animation-squareboxtwo:not(.bloghash-is-mobile) #bloghash-top
     background: var(--bloghash-white);
 }
 
+.bloghash-swiper-buttons .swiper-button-prev,
+.rtl .bloghash-swiper-buttons .swiper-button-next,
+.swiper .swiper-button-prev,
+.swiper.swiper-rtl .swiper-button-next {
+    left: var(--swiper-navigation-sides-offset, 10px);
+    right: auto;
+}
+
+.bloghash-swiper-buttons .swiper-button-next,
+.rtl .bloghash-swiper-buttons .swiper-button-prev,
+.swiper .swiper-button-next,
+.swiper.swiper-rtl .swiper-button-prev {
+    right: var(--swiper-navigation-sides-offset, 10px);
+    left: auto;
+}
+
 .bloghash-swiper-buttons .swiper-button-prev:hover,
 .bloghash-swiper-buttons .swiper-button-next:hover {
     background: var(--bloghash-primary);

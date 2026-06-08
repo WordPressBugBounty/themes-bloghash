@@ -2,11 +2,11 @@
 Contributors: Peregrinethemes
 Tags: two-columns, right-sidebar, left-sidebar, footer-widgets, blog, news, entertainment, custom-background, custom-menu, custom-logo, post-formats, sticky-post, editor-style, threaded-comments, translation-ready, custom-colors, featured-images, full-width-template, microformats, theme-options, flexible-header, wide-blocks
 Requires at least: 5.4
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.0.28
+Stable tag: 1.0.29
 
 A lightweight and highly customizable multi-purpose theme that makes it easy for anyone to create their perfect website.
 
@@ -23,6 +23,13 @@ BlogHash is the perfect pick for bloggers seeking a lightweight, customizable th
 4. Navigate to Appearance » Customize to access theme options.
 
 == Changelog ==
+
+= 1.0.29 =
+* Select control for posts/categories/tags in customizer are now uses Ajax loading to improve user experience in customizer.
+* Updated WooCommerce cart template.
+* Updated Migration script for legacy customizer settings such as categories to use IDs instead of slugs.
+* RTL issue fixed in PYML.
+* Customizer control style issue fixed.
 
 = 1.0.28 =
 * Updated legacy customizer settings—such as categories—to use IDs instead of slugs for improved consistency and reliability.

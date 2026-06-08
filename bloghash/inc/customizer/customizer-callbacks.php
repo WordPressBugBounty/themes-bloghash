@@ -63,10 +63,18 @@ function bloghash_sanitize_checkbox( $input ) {
  */
 function bloghash_sanitize_select( $input, $setting ) {
 
-	$multiple = isset( $setting->manager->get_control( $setting->id )->multiple ) ? $setting->manager->get_control( $setting->id )->multiple : false;
+	$control  = $setting->manager->get_control( $setting->id );
+	$multiple = isset( $control->multiple ) ? $control->multiple : false;
+	$choices  = isset( $control->choices ) ? $control->choices : array();
 
-	// Get list of choices from the control associated with the setting.
-	$choices = $setting->manager->get_control( $setting->id )->choices;
+	// For AJAX-backed Select2 controls we cannot validate only against the current
+	// preloaded choices, because a new selection may not be part of those choices.
+	if ( $control && ! empty( $control->is_select2 ) && ! empty( $control->data_source ) ) {
+		$dynamic = bloghash_sanitize_select_dynamic_source( $input, $setting, $control );
+		if ( false !== $dynamic ) {
+			return $dynamic;
+		}
+	}
 
 	if ( $multiple ) {
 
@@ -101,9 +109,128 @@ function bloghash_sanitize_select( $input, $setting ) {
 		// If the input is a valid key, return it; otherwise, return the default.
 		return ( array_key_exists( $input, $choices ) ? $input : $setting->default );
 	}
-
 }
 
+/**
+ * Validate dynamic AJAX select values against the configured data source.
+ *
+ * @param mixed  $input   Submitted value or array of values.
+ * @param object $setting Setting object.
+ * @param object $control Customizer control.
+ *
+ * @since 1.0.29
+ *
+ * @return mixed False when not handled, otherwise sanitized input.
+ */
+function bloghash_sanitize_select_dynamic_source( $input, $setting, $control ) {
+	$data_source      = $control->data_source;
+	$data_source_name = $control->data_source_name;
+	$multiple         = isset( $control->multiple ) ? $control->multiple : false;
+
+	if ( $multiple ) {
+		if ( ! is_array( $input ) || empty( $input ) ) {
+			return array();
+		}
+
+		$input = array_map( 'sanitize_key', $input );
+		$input = array_filter( array_map( 'trim', $input ), 'strlen' );
+		if ( empty( $input ) ) {
+			return array();
+		}
+
+		$valid_ids = bloghash_sanitize_select2_valid_ids( $input, $data_source, $data_source_name );
+		if ( empty( $valid_ids ) ) {
+			return array();
+		}
+
+		$valid_ids = array_map( 'strval', $valid_ids );
+		return array_values( array_intersect( $input, $valid_ids ) );
+	}
+
+	$input = sanitize_key( $input );
+	if ( '' === $input ) {
+		return $setting->default;
+	}
+
+	$valid_ids = bloghash_sanitize_select2_valid_ids( array( $input ), $data_source, $data_source_name );
+	$valid_ids = array_map( 'strval', $valid_ids );
+
+	return in_array( $input, $valid_ids, true ) ? $input : $setting->default;
+}
+
+/**
+ * Return valid IDs for AJAX select2 choices from the configured source.
+ *
+ * @param array       $input_ids Submitted IDs.
+ * @param string      $data_source Data source identifier.
+ * @param string|null $data_source_name Optional taxonomy name.
+ *
+ * @since 1.0.29
+ * @return array Valid IDs.
+ */
+function bloghash_sanitize_select2_valid_ids( $input_ids, $data_source, $data_source_name = null ) {
+	$ids = array_map( 'absint', $input_ids );
+	$ids = array_filter( $ids );
+	if ( empty( $ids ) ) {
+		return array();
+	}
+
+	switch ( $data_source ) {
+		case 'category':
+			$args = array(
+				'taxonomy'   => $data_source_name ?? 'category',
+				'hide_empty' => false,
+				'include'    => $ids,
+				'fields'     => 'ids',
+			);
+			return get_terms( $args );
+
+		case 'tags':
+			$args = array(
+				'taxonomy'   => 'post_tag',
+				'hide_empty' => false,
+				'include'    => $ids,
+				'fields'     => 'ids',
+			);
+			return get_terms( $args );
+
+		case 'page':
+			$args = array(
+				'post_type'      => 'page',
+				'post_status'    => 'publish',
+				'post__in'       => $ids,
+				'posts_per_page' => count( $ids ),
+				'orderby'        => 'post__in',
+				'fields'         => 'ids',
+			);
+			return get_posts( $args );
+
+		case 'post':
+			$args = array(
+				'post_type'      => 'post',
+				'post_status'    => 'publish',
+				'post__in'       => $ids,
+				'posts_per_page' => count( $ids ),
+				'orderby'        => 'post__in',
+				'fields'         => 'ids',
+			);
+			return get_posts( $args );
+
+		default:
+			if ( ! post_type_exists( $data_source ) ) {
+				return array();
+			}
+			$args = array(
+				'post_type'      => $data_source,
+				'post_status'    => 'publish',
+				'post__in'       => $ids,
+				'posts_per_page' => count( $ids ),
+				'orderby'        => 'post__in',
+				'fields'         => 'ids',
+			);
+			return get_posts( $args );
+	}
+}
 /**
  * Textarea field sanitization callback.
  *
@@ -255,7 +382,7 @@ function bloghash_sanitize_widget( $widgets, $setting ) {
 			if ( $widget_uses[ $widget['type'] ] > 0 ) {
 
 				// Widget count still good.
-				$widget_uses[ $widget['type'] ]--;
+				--$widget_uses[ $widget['type'] ];
 			} else {
 
 				// Exceeded widget max usage.

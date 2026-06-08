@@ -202,7 +202,6 @@ if ( ! class_exists( 'Bloghash_Customizer' ) ) :
 				$customizer->get_control( $field )->section  = 'bloghash_section_colors';
 				$customizer->get_control( $field )->priority = 50;
 			}
-
 		}
 
 		/**
@@ -430,7 +429,7 @@ if ( ! class_exists( 'Bloghash_Customizer' ) ) :
 					'checkbox-group'      => 'Bloghash_Customizer_Control_Checkbox_Group',
 					'repeater'            => 'Bloghash_Customizer_Control_Repeater',
 					'editor'              => 'Bloghash_Customizer_Control_Editor',
-					'section-pro'    	  => 'Bloghash_Customizer_Control_Section_Pro',
+					'section-pro'         => 'Bloghash_Customizer_Control_Section_Pro',
 					'generic-notice'      => 'Bloghash_Customizer_Control_Generic_Notice',
 					'gallery'             => 'Bloghash_Customizer_Control_Gallery',
 					'datetime'            => 'Bloghash_Customizer_Control_Datetime',
@@ -547,7 +546,8 @@ if ( ! class_exists( 'Bloghash_Customizer' ) ) :
 				'color_palette'           => array( '#ffffff', '#000000', '#e4e7ec', '#F43676', '#f7b40b', '#e04b43', '#30373e', '#8a63d4' ),
 				'preview_url_for_section' => $this->get_preview_urls_for_section(),
 				'strings'                 => array(
-					'selectCategory' => esc_html__( 'Select a category', 'bloghash' ),
+					'select_category'    => esc_html__( 'Select a category', 'bloghash' ),
+					'error_loading_data' => esc_html__( 'Error loading data', 'bloghash' ),
 				),
 			);
 

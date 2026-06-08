@@ -143,9 +143,9 @@ body {
     padding-right: 1.6rem;
 }
 
-.rtl .bloghash-card-items .bloghash-swiper-buttons:not(.ticker-slider-controls) .swiper-button-prev,
-.rtl .bloghash-card-items .bloghash-swiper-buttons:not(.ticker-slider-controls) .swiper-button-next {
-    --swiper-navigation-sides-offset: -4rem;
+.rtl .bloghash-swiper-buttons .swiper-button-prev,
+.rtl .bloghash-swiper-buttons .swiper-button-next {
+    --swiper-navigation-sides-offset: 40px;
 }
 
 .rtl .hester-posts-list-widget-init-s1 .hester-posts-list-widget-thumb {

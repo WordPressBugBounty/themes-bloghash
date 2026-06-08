@@ -20,7 +20,8 @@
     border-top: 1px solid #ddd;
 }
 
-input[type="checkbox"], input[type="radio"] {
+input[type="checkbox"],
+input[type="radio"] {
     height: 1.6rem;
     width: 1.6rem;
     min-width: 1.6rem;
@@ -108,8 +109,8 @@ body:not(.wp-customizer) input[type=submit],
 .woocommerce div.product form.cart .button,
 .woocommerce #review_form #respond .form-submit input,
 #infinite-handle span {
-    -webkit-transition: all 0.35s cubic-bezier(0.645,0.045,0.355,1);
-    transition: all 0.35s cubic-bezier(0.645,0.045,0.355,1);
+    -webkit-transition: all 0.35s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: all 0.35s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .bloghash-btn,
@@ -291,7 +292,7 @@ body:not(.wp-customizer) input[type=submit],
 
 #customize-controls .control-section>h3.accordion-section-title button.accordion-trigger:focus {
     color: var(--ui-accent-color) !important;
-    background: rgba(255,255,255,.7) !important
+    background: rgba(255, 255, 255, .7) !important
 }
 
 #customize-controls .control-section>h3.accordion-section-title:focus-within:after {
@@ -300,14 +301,14 @@ body:not(.wp-customizer) input[type=submit],
 
 #customize-controls .control-section:hover>h3.accordion-section-title button.accordion-trigger {
     color: var(--ui-accent-color) !important;
-    background: rgba(255,255,255,.7) !important
+    background: rgba(255, 255, 255, .7) !important
 }
 
 #customize-controls .control-section>h3.accordion-section-title button.accordion-trigger {
     padding: 14px 26px;
 }
 
-#customize-controls .current-panel .control-section > h3.accordion-section-title {
+#customize-controls .current-panel .control-section>h3.accordion-section-title {
     padding-right: 0;
 }
 
@@ -315,17 +316,6 @@ body:not(.wp-customizer) input[type=submit],
 #accordion-section-bloghash_section_docs_button.control-section-section-pro .accordion-section-title:after {
     display: none;
 }
-
-/*#accordion-panel-nav_menus,
-#accordion-section-bloghash_section_help .accordion-section-title,
-#accordion-panel-bloghash_panel_blog,
-#accordion-panel-bloghash_panel_header,
-#accordion-section-bloghash_section_hero,
-#accordion-section-bloghash_section_sidebar,
-#accordion-section-bloghash_section_transparent_header,
-#accordion-section-bloghash_section_page_header {
-    margin-top: 12px;
-}*/
 
 #customize-control-bloghash_h1_font:after,
 #customize-control-bloghash_h2_font:after,
@@ -880,6 +870,11 @@ body:not(.wp-customizer) input[type=submit],
     box-shadow: none;
 }
 
+.select2-container--default .select2-search--inline .select2-search__field {
+    min-height: 35px;
+    top: 0;
+}
+
 .wp-pointer.bloghash-pointer {
     z-index: 500000 !important;
 }
@@ -1055,8 +1050,8 @@ body:not(.wp-customizer) input[type=submit],
 .woocommerce div.product form.cart .button,
 .woocommerce #review_form #respond .form-submit input,
 #infinite-handle span {
-    -webkit-transition: all 0.35s cubic-bezier(0.645,0.045,0.355,1);
-    transition: all 0.35s cubic-bezier(0.645,0.045,0.355,1);
+    -webkit-transition: all 0.35s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: all 0.35s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .bloghash-btn,
@@ -1601,10 +1596,10 @@ button.bloghash-btn:disabled {
 
 .btn-left-icon.btn-reveal>svg,
 .btn-right-icon.btn-reveal>svg {
-    -webkit-transition: opacity 0.1s ease, -webkit-transform 0.35s cubic-bezier(0.645,0.045,0.355,1);
-    transition: opacity 0.1s ease, -webkit-transform 0.35s cubic-bezier(0.645,0.045,0.355,1);
-    transition: transform 0.35s cubic-bezier(0.645,0.045,0.355,1), opacity 0.1s ease;
-    transition: transform 0.35s cubic-bezier(0.645,0.045,0.355,1), opacity 0.1s ease, -webkit-transform 0.35s cubic-bezier(0.645,0.045,0.355,1);
+    -webkit-transition: opacity 0.1s ease, -webkit-transform 0.35s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: opacity 0.1s ease, -webkit-transform 0.35s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: transform 0.35s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.1s ease;
+    transition: transform 0.35s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.1s ease, -webkit-transform 0.35s cubic-bezier(0.645, 0.045, 0.355, 1);
     opacity: 0;
     position: absolute;
     top: 50%;
@@ -1614,8 +1609,8 @@ button.bloghash-btn:disabled {
 
 .btn-left-icon.btn-reveal>span,
 .btn-right-icon.btn-reveal>span {
-    -webkit-transition: padding 0.35s cubic-bezier(0.645,0.045,0.355,1), margin 0.35s cubic-bezier(0.645,0.045,0.355,1);
-    transition: padding 0.35s cubic-bezier(0.645,0.045,0.355,1), margin 0.35s cubic-bezier(0.645,0.045,0.355,1);
+    -webkit-transition: padding 0.35s cubic-bezier(0.645, 0.045, 0.355, 1), margin 0.35s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: padding 0.35s cubic-bezier(0.645, 0.045, 0.355, 1), margin 0.35s cubic-bezier(0.645, 0.045, 0.355, 1);
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
     -webkit-backface-visibility: hidden;
@@ -1745,10 +1740,10 @@ button.bloghash-btn:disabled {
     -webkit-transform: scale(0, 1);
     -ms-transform: scale(0, 1);
     transform: scale(0, 1);
-    -webkit-transition: -webkit-transform 0.35s cubic-bezier(0.645,0.045,0.355,1);
-    transition: -webkit-transform 0.35s cubic-bezier(0.645,0.045,0.355,1);
-    transition: transform 0.35s cubic-bezier(0.645,0.045,0.355,1);
-    transition: transform 0.35s cubic-bezier(0.645,0.045,0.355,1), -webkit-transform 0.35s cubic-bezier(0.645,0.045,0.355,1);
+    -webkit-transition: -webkit-transform 0.35s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: -webkit-transform 0.35s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: transform 0.35s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: transform 0.35s cubic-bezier(0.645, 0.045, 0.355, 1), -webkit-transform 0.35s cubic-bezier(0.645, 0.045, 0.355, 1);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     will-change: scale;

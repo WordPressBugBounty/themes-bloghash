@@ -1,3 +1,10 @@
+= 1.0.29 =
+* Select control for posts/categories/tags in customizer are now uses Ajax loading to improve user experience in customizer.
+* Updated WooCommerce cart template.
+* Updated Migration script for legacy customizer settings such as categories to use IDs instead of slugs.
+* RTL issue fixed in PYML.
+* Customizer control style issue fixed.
+
 = 1.0.28 =
 * Updated legacy customizer settings—such as categories—to use IDs instead of slugs for improved consistency and reliability.
 * Added required attribute to search input field in searchform.php
