@@ -780,8 +780,8 @@ function bloghash_advertisement_part( $arg = '' ) {
 		foreach ( $arr_widgets as $widget ) {
 			if ( function_exists( 'bloghash_ad_widget_' . $widget['type'] ) ) {
 				$classes   = array();
-				$classes[] = 'bloghash-ad-widget__' . esc_attr( $widget['type'] );
-				$classes[] = 'bloghash-ad-widget';
+				$classes[] = 'bloghash-promo-widget__' . bloghash_get_promo_widget_type_class( $widget['type'] );
+				$classes[] = 'bloghash-promo-widget';
 
 				if ( isset( $widget['values']['visibility'] ) && $widget['values']['visibility'] ) {
 					$classes[] = 'bloghash-' . esc_attr( $widget['values']['visibility'] );

@@ -1168,13 +1168,17 @@ class Bloghash_Breadcrumb_Trail {
 
 			$term = get_term( $terms[0], $taxonomy );
 
-			// If the category has a parent, add the hierarchy to the trail.
-			if ( 0 < $term->parent ) {
-				$this->add_term_parents( $term->parent, $taxonomy );
-			}
+			// Bail if the term couldn't be found.
+			if ( $term && ! is_wp_error( $term ) ) {
 
-			// Add the category archive link to the trail.
-			$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_term_link( $term, $taxonomy ) ), $term->name );
+				// If the category has a parent, add the hierarchy to the trail.
+				if ( 0 < $term->parent ) {
+					$this->add_term_parents( $term->parent, $taxonomy );
+				}
+
+				// Add the category archive link to the trail.
+				$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_term_link( $term, $taxonomy ) ), $term->name );
+			}
 		}
 	}
 
@@ -1255,6 +1259,11 @@ class Bloghash_Breadcrumb_Trail {
 
 			// Get the parent term.
 			$term = get_term( $term_id, $taxonomy );
+
+			// Bail out of the loop if the term couldn't be found.
+			if ( ! $term || is_wp_error( $term ) ) {
+				break;
+			}
 
 			// Add the formatted term link to the array of parent terms.
 			$parents[] = sprintf( '<a href="%s">%s</a>', esc_url( get_term_link( $term, $taxonomy ) ), $term->name );

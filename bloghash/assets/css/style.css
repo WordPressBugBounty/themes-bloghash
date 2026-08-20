@@ -4499,12 +4499,12 @@ html[data-darkmode="dark"] .bloghash-header-widgets .bloghash-header-widget .blo
     justify-content: flex-end;
 }
 
-.bloghash-header-layout-4 .bloghash-logo-container .bloghash-ad-widget__advertisements {
+.bloghash-header-layout-4 .bloghash-logo-container .bloghash-promo-widget__banner {
     flex: 1;
     z-index: 5;
 }
 
-.bloghash-header-layout-4 .bloghash-logo-container .bloghash-ad-widget__advertisements .ads-banner {
+.bloghash-header-layout-4 .bloghash-logo-container .bloghash-promo-widget__banner .bloghash-promo-banner {
     text-align: end;
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -13058,39 +13058,39 @@ div.wpforms-container-full .wpforms-form .wpforms-field select {
     display: block;
 }
 
-#content .bloghash-article .ads-banner,
-.ads-banner {
+#content .bloghash-article .bloghash-promo-banner,
+.bloghash-promo-banner {
     padding-top: 1.8rem;
     padding-bottom: 1.8rem;
     text-align: center;
 }
 
-.ads-banner > a {
+.bloghash-promo-banner > a {
     display: inline-block;
 }
 
-.bloghash-ad-widget + #ticker .bloghash-card-items {
+.bloghash-promo-widget + #ticker .bloghash-card-items {
     margin-top: 0;
 }
 
-#content .ads-banner {
+#content .bloghash-promo-banner {
     max-width: 100%;
     padding: 0;
 }
 
-#content .ads-banner img {
+#content .bloghash-promo-banner img {
     border-radius: var(--bloghash-radius);
 }
 
-#content .bloghash-article .ads-banner img {
+#content .bloghash-article .bloghash-promo-banner img {
     border-radius: 0;
 }
 
-#main + .bloghash-ad-widget .ads-banner {
+#main + .bloghash-promo-widget .bloghash-promo-banner {
     padding-top: 0;
 }
 
-#main>.bloghash-container>.bloghash-ad-widget:first-child .ads-banner {
+#main>.bloghash-container>.bloghash-promo-widget:first-child .bloghash-promo-banner {
     padding-top: 5rem;
     padding-right: 0;
     padding-bottom: 0;

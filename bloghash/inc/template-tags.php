@@ -637,7 +637,8 @@ if ( ! function_exists( 'bloghash_entry_meta_category' ) ) :
 				function( $matches ) {
 					$category_id = get_cat_ID( $matches[2] );
 					$term        = get_term( $category_id );
-					return sprintf( '<a href="%s" class="cat-%d" rel="' . $term->taxonomy . '" >%s</a>', $matches[1], $category_id, $matches[2] );
+					$taxonomy    = ( $term && ! is_wp_error( $term ) ) ? $term->taxonomy : 'category';
+					return sprintf( '<a href="%s" class="cat-%d" rel="' . $taxonomy . '" >%s</a>', $matches[1], $category_id, $matches[2] );
 				},
 				$categories_list
 			);
@@ -1156,7 +1157,7 @@ if ( ! function_exists( 'bloghash_ad_widget_advertisement' ) ) :
 	 */
 	function bloghash_ad_widget_advertisements( $options ) {
 		?>
-			<div class="ads-banner bloghash-container">
+			<div class="bloghash-promo-banner bloghash-container">
 			<?php
 			if ( isset( $options['url'] ) && $options['url'] !== '' ) {
 				printf(
@@ -1170,11 +1171,30 @@ if ( ! function_exists( 'bloghash_ad_widget_advertisement' ) ) :
 			}
 
 			?>
-			</div><!-- .ads-banner -->
+			</div><!-- .bloghash-promo-banner -->
 		<?php
 	}
 endif;
 
+if ( ! function_exists( 'bloghash_get_promo_widget_type_class' ) ) :
+	/**
+	 * Maps a widget type slug to an ad-blocker-safe class fragment.
+	 *
+	 * Front-end class names avoid the words "ad"/"advertisement" so the
+	 * widget markup isn't hidden by browser ad blockers' cosmetic filters.
+	 *
+	 * @since 1.0.30
+	 * @param string $type Widget type slug.
+	 * @return string
+	 */
+	function bloghash_get_promo_widget_type_class( $type ) {
+		$safe_types = array(
+			'advertisements' => 'banner',
+		);
+
+		return isset( $safe_types[ $type ] ) ? $safe_types[ $type ] : sanitize_html_class( $type );
+	}
+endif;
 
 if ( ! function_exists( 'bloghash_random_post_archive_advertisement_part' ) ) :
 	function bloghash_random_post_archive_advertisement_part( $ads_rendered ) {
@@ -1188,8 +1208,8 @@ if ( ! function_exists( 'bloghash_random_post_archive_advertisement_part' ) ) :
 		if ( ! empty( $ad_widgets ) && isset( $ad_widgets[ $ads_rendered ] ) ) :
 
 			$classes   = array();
-			$classes[] = 'bloghash-ad-widget__' . esc_attr( $ad_widgets[ $ads_rendered ]['type'] );
-			$classes[] = 'bloghash-ad-widget';
+			$classes[] = 'bloghash-promo-widget__' . bloghash_get_promo_widget_type_class( $ad_widgets[ $ads_rendered ]['type'] );
+			$classes[] = 'bloghash-promo-widget';
 
 			if ( isset( $ad_widgets[ $ads_rendered ]['values']['visibility'] ) && $ad_widgets[ $ads_rendered ]['values']['visibility'] ) {
 				$classes[] = 'bloghash-' . esc_attr( $ad_widgets[ $ads_rendered ]['values']['visibility'] );

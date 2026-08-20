@@ -1,3 +1,8 @@
+= 1.0.30 =
+* Hardened category/term lookups in breadcrumbs and post meta to prevent errors when a term is missing or invalid.
+* Updated WooCommerce cart template.
+* Ad banner HTML markup classes updated to bypass AdBlocker.
+
 = 1.0.29 =
 * Select control for posts/categories/tags in customizer are now uses Ajax loading to improve user experience in customizer.
 * Updated WooCommerce cart template.

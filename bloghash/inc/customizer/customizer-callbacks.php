@@ -902,7 +902,38 @@ function bloghash_repeater_sanitize( $input, $setting ) {
 						break;
 					case 'select':
 						$data[ $i ][ $id ] = '';
-						if ( is_array( $fields[ $id ]['options'] ) && ! empty( $fields[ $id ]['options'] ) ) {
+						$is_select2        = ! empty( $fields[ $id ]['is_select2'] );
+						$data_source       = ! empty( $fields[ $id ]['data_source'] ) ? $fields[ $id ]['data_source'] : false;
+						$data_source_name  = ! empty( $fields[ $id ]['data_source_name'] ) ? $fields[ $id ]['data_source_name'] : null;
+
+						if ( $is_select2 && $data_source ) {
+							$multiple = ! empty( $fields[ $id ]['multiple'] );
+							if ( $multiple ) {
+								if ( is_array( $value ) && ! empty( $value ) ) {
+									$value = array_map( 'sanitize_key', $value );
+									$value = array_filter( array_map( 'trim', $value ), 'strlen' );
+									if ( ! empty( $value ) ) {
+										$valid_ids = bloghash_sanitize_select2_valid_ids( $value, $data_source, $data_source_name );
+										if ( ! empty( $valid_ids ) ) {
+											$valid_ids         = array_map( 'strval', $valid_ids );
+											$data[ $i ][ $id ] = array_values( array_intersect( $value, $valid_ids ) );
+										}
+									}
+								}
+							} else {
+								if ( is_array( $value ) ) {
+									$value = ! empty( $value ) ? reset( $value ) : '';
+								}
+								$value = sanitize_key( $value );
+								if ( '' !== $value ) {
+									$valid_ids = bloghash_sanitize_select2_valid_ids( array( $value ), $data_source, $data_source_name );
+									$valid_ids = array_map( 'strval', $valid_ids );
+									if ( in_array( $value, $valid_ids, true ) ) {
+										$data[ $i ][ $id ] = $value;
+									}
+								}
+							}
+						} elseif ( isset( $fields[ $id ]['options'] ) && is_array( $fields[ $id ]['options'] ) && array() !== $fields[ $id ]['options'] ) {
 							// if is multiple choices.
 							if ( is_array( $value ) ) {
 								foreach ( $value as $k => $v ) {
@@ -910,12 +941,10 @@ function bloghash_repeater_sanitize( $input, $setting ) {
 										$value[ $k ] = $v;
 									}
 								}
+
 								$data[ $i ][ $id ] = $value;
-							} else {
-								// is single choice.
-								if ( isset( $fields[ $id ]['options'][ $value ] ) ) {
-									$data[ $i ][ $id ] = $value;
-								}
+							} elseif ( isset( $fields[ $id ]['options'][ $value ] ) ) {
+								$data[ $i ][ $id ] = $value;
 							}
 						}
 						break;
