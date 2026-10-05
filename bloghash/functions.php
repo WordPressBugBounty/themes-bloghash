@@ -67,7 +67,7 @@ final class Bloghash {
 	 * @since 1.0.0
 	 * @var string
 	 */
-	public $version = '1.0.30';
+	public $version = '1.0.31';
 	/**
 	 * Main Bloghash Instance.
 	 *
@@ -135,6 +135,7 @@ final class Bloghash {
 		require_once BLOGHASH_THEME_PATH . '/inc/compatibility/class-bloghash-elementor.php';
 		require_once BLOGHASH_THEME_PATH . '/inc/compatibility/class-bloghash-elementor-pro.php';
 		require_once BLOGHASH_THEME_PATH . '/inc/compatibility/class-bloghash-hfe.php';
+		require_once BLOGHASH_THEME_PATH . '/inc/compatibility/class-bloghash-buddypress.php';
 		require_once BLOGHASH_THEME_PATH . '/inc/compatibility/back-compat.php';
 
 		if ( is_admin() ) {

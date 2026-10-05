@@ -1,0 +1,4323 @@
+/* ==========================================================================
+*  Bloghash BuddyPress styles (Nouveau template pack).
+*  ========================================================================== */
+#buddypress {
+    --bp-bh-border: rgba(185, 185, 185, 0.4);
+    --bp-bh-soft: rgba(190, 190, 190, 0.20);
+    --bp-bh-primary: var(--bloghash-primary, #F43676);
+    --bp-bh-primary-soft: var(--bloghash-primary_10, rgba(244, 54, 118, 0.1));
+    --bp-bh-text: inherit;
+    --bp-bh-muted: #66717f;
+    /* Neutral tones derived from the theme's secondary colour, so utility UI stays calm and primary stays an accent. */
+    --bp-bh-tint: rgba(17, 24, 39, 0.06);
+    --bp-bh-line: rgba(17, 24, 39, 0.14);
+    --bp-bh-line-strong: rgba(17, 24, 39, 0.28);
+    --bp-bh-danger: #d63638;
+    color: inherit;
+    font-family: inherit;
+}
+
+/* Long unbroken content (URLs, long words) must never widen the layout and push the sidebar down. */
+.buddypress .bloghash-container > *,
+.buddypress #primary,
+.buddypress #content,
+.buddypress .site-content,
+.buddypress .bloghash-entry,
+.buddypress .entry-content {
+    min-width: 0;
+    max-width: 100%;
+}
+
+#buddypress {
+    /* Content width no longer feeds the flex item's max-content size, so the sidebar stays beside it. */
+    contain: inline-size;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-wrap: break-word;
+}
+
+#buddypress .activity-inner,
+#buddypress .activity-inner *,
+#buddypress .acomment-content,
+#buddypress .message-content,
+#buddypress .group-desc,
+#buddypress .bp-list .item {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+#buddypress .activity-inner pre,
+#buddypress .acomment-content pre {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+/* "Read more" is a plain link, not a boxed button. */
+#buddypress .activity-read-more {
+    display: inline;
+    margin-left: .4rem;
+}
+
+#buddypress .activity-read-more a {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-weight: 600;
+}
+
+/* Keep BuddyPress inside the theme content card (cancel .alignwide offsets). */
+#buddypress.alignwide,
+#buddypress.alignfull {
+    width: auto;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+@supports (color: color-mix(in srgb, red 10%, transparent)) {
+    #buddypress {
+        --bp-bh-tint: color-mix(in srgb, var(--bloghash-secondary, #111827) 7%, transparent);
+        --bp-bh-line: color-mix(in srgb, var(--bloghash-secondary, #111827) 15%, transparent);
+        --bp-bh-line-strong: color-mix(in srgb, var(--bloghash-secondary, #111827) 30%, transparent);
+    }
+}
+
+#buddypress *,
+#buddypress *:before,
+#buddypress *:after {
+    box-sizing: border-box;
+}
+
+/* Align the content card with the top of the sidebar on BuddyPress screens. */
+.buddypress #content.site-content {
+    padding-top: 0;
+}
+
+/* --------------------------------------------------------------------------
+*  Links & headings
+*  -------------------------------------------------------------------------- */
+#buddypress a {
+    color: var(--bp-bh-primary);
+    text-decoration: none;
+    transition: var(--bloghash-transition-primary);
+}
+
+#buddypress a:hover,
+#buddypress a:focus {
+    color: var(--bloghash-secondary, #111827);
+    text-decoration: none;
+}
+
+#buddypress h1,
+#buddypress h2,
+#buddypress h3,
+#buddypress h4 {
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+#buddypress .bp-screen-reader-text {
+    border: 0;
+}
+
+/* --------------------------------------------------------------------------
+*  Navigation (directory, single item, sub navs)
+*  -------------------------------------------------------------------------- */
+#buddypress .bp-navs,
+#buddypress .dir-navs,
+#buddypress .main-navs,
+#buddypress .bp-subnavs {
+    box-shadow: none;
+}
+
+#buddypress .bp-navs {
+    border-top: 0;
+    background: transparent;
+    border-bottom: .1rem solid var(--bp-bh-border);
+    margin-bottom: 2rem;
+}
+
+#buddypress .bp-navs ul,
+#buddypress .bp-navs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#buddypress .bp-navs li {
+    margin: 0;
+    background: transparent;
+}
+
+#buddypress .bp-navs li a,
+#buddypress .bp-navs li span.bp-nav-label {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    position: relative;
+    padding: 1.1rem 1.6rem;
+    font-weight: 600;
+    color: inherit;
+    background: transparent;
+    border-radius: var(--bloghash-normal-radius) var(--bloghash-normal-radius) 0 0;
+}
+
+#buddypress .bp-navs li a:before {
+    content: '';
+    position: absolute;
+    left: 1.6rem;
+    right: 1.6rem;
+    bottom: 0;
+    height: .2rem;
+    border-radius: var(--bloghash-normal-radius);
+    background: currentColor;
+    transform: scale(0, 1);
+    transform-origin: right center;
+    transition: transform .35s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+#buddypress .bp-navs li a:hover,
+#buddypress .bp-navs li a:focus {
+    color: var(--bp-bh-primary);
+    background: transparent;
+}
+
+#buddypress .bp-navs li a:hover:before {
+    transform: scale(1, 1);
+    transform-origin: left center;
+}
+
+#buddypress .bp-navs li.selected a,
+#buddypress .bp-navs li.current a,
+#buddypress .bp-navs li.selected a:focus,
+#buddypress .bp-navs li.current a:focus,
+#buddypress .bp-navs li.selected a:hover,
+#buddypress .bp-navs li.current a:hover {
+    background: var(--bp-bh-primary-soft);
+    color: var(--bp-bh-primary);
+    opacity: 1;
+}
+
+#buddypress .bp-navs li.selected a:before,
+#buddypress .bp-navs li.current a:before {
+    transform: scale(1, 1);
+}
+
+/* Avatar / cover image upload tabs and drop zone. */
+#buddypress .bp-avatar-nav,
+#buddypress .bp-avatar-nav ul,
+#buddypress ul.avatar-nav-items {
+    margin: 0 0 2rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+#buddypress ul.avatar-nav-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+    list-style: none;
+    border-bottom: .1rem solid var(--bp-bh-border);
+}
+
+#buddypress ul.avatar-nav-items li {
+    float: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+#buddypress ul.avatar-nav-items li a,
+#buddypress ul.avatar-nav-items li span {
+    opacity: 1;
+    display: inline-flex;
+    padding: 1.1rem 1.6rem;
+    font-weight: 600;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    border-radius: var(--bloghash-normal-radius) var(--bloghash-normal-radius) 0 0;
+}
+
+#buddypress ul.avatar-nav-items li.current a,
+#buddypress ul.avatar-nav-items li.current span,
+#buddypress ul.avatar-nav-items li a:hover {
+    color: var(--bp-bh-primary);
+    background: var(--bp-bh-primary-soft);
+}
+
+#buddypress #drag-drop-area,
+#buddypress .drag-drop-area {
+    color: var(--bp-bh-muted);
+    background: var(--bp-bh-soft);
+    border: .2rem dashed var(--bp-bh-border);
+    border-radius: var(--bloghash-normal-radius);
+}
+
+#buddypress .drag-drop.drag-over #drag-drop-area {
+    border-color: var(--bp-bh-primary);
+    background: var(--bp-bh-primary-soft);
+}
+
+#buddypress .drag-drop-inside {
+    text-align: center;
+}
+
+#buddypress .drag-drop-info {
+    margin: 0 0 1.2rem;
+    font-size: 1.6rem;
+}
+
+#buddypress .bp-uploader-progress,
+#buddypress .bp-progress {
+    border-radius: var(--bloghash-full-radius);
+    overflow: hidden;
+}
+
+#buddypress .bp-progress-bar,
+#buddypress .bp-bar {
+    background: var(--bp-bh-primary);
+}
+
+#buddypress .avatar-crop-management,
+#buddypress .item-body .avatar {
+    border-radius: var(--bloghash-normal-radius);
+}
+
+/* Group creation steps (nav > ol, items are spans / links). */
+#buddypress .bp-navs ol li,
+#buddypress .bp-navs li.group-create-buttons,
+#buddypress .group-create-links li {
+    border: 0;
+    background: transparent;
+    padding: 0;
+}
+
+#buddypress .group-create-buttons li > a,
+#buddypress .group-create-buttons li > span {
+    display: inline-flex;
+    padding: 1.1rem 1.6rem;
+    font-weight: 600;
+    color: inherit;
+    border-radius: var(--bloghash-normal-radius) var(--bloghash-normal-radius) 0 0;
+}
+
+#buddypress .group-create-buttons li.current > span,
+#buddypress .group-create-buttons li.current > a {
+    color: var(--bp-bh-primary);
+    background: var(--bp-bh-primary-soft);
+}
+
+#buddypress .group-create-buttons li > span {
+    opacity: .7;
+}
+
+#buddypress .group-create-buttons li.current > span {
+    opacity: 1;
+}
+
+#buddypress .bp-screen-title.creation-step-name {
+    margin: 2rem 0 1.6rem;
+    text-align: left;
+    font-size: 2rem;
+}
+
+#buddypress .bp-navs li .count {
+    display: inline-block;
+    min-width: 2.2rem;
+    padding: .2rem .7rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+    color: #fff;
+    background: var(--bp-bh-primary);
+    border: 0;
+    border-radius: var(--bloghash-full-radius);
+}
+
+#buddypress .bp-navs li .count:empty {
+    display: none;
+}
+
+#buddypress .select-wrap {
+    position: relative;
+    border: 0;
+    background: transparent;
+}
+
+#buddypress .select-wrap,
+#buddypress .select-wrap select {
+    border-radius: var(--bloghash-full-radius);
+}
+
+#buddypress .select-wrap select {
+    min-width: 18rem;
+    height: 4.5rem;
+    padding: .9rem 3.6rem .9rem 1.8rem;
+    border: .2rem solid var(--bp-bh-border);
+    background-color: var(--bloghash-white, #fff);
+}
+
+#buddypress .select-wrap select:focus {
+    border-color: var(--bp-bh-primary);
+}
+
+#buddypress .select-wrap span.select-arrow {
+    display: none;
+}
+
+#buddypress .bp-subnavs,
+#buddypress .subnav-filters {
+    margin: 0 0 2rem;
+}
+
+/* Child tabs: square, neutral and lighter than the parent tabs (which keep the primary underline). */
+#buddypress .bp-subnavs {
+    border-bottom: 0;
+}
+
+#buddypress .bp-subnavs ul {
+    gap: .6rem;
+}
+
+#buddypress .bp-subnavs li a,
+#buddypress #subnav > ul > li > a {
+    padding: .7rem 1.4rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: inherit;
+    background: transparent;
+    border: .1rem solid var(--bp-bh-line);
+    border-radius: 0;
+    opacity: 1;
+}
+
+#buddypress .bp-subnavs li a:before {
+    display: none;
+}
+
+#buddypress .bp-subnavs li a:hover,
+#buddypress .bp-subnavs li a:focus {
+    color: inherit;
+    background: var(--bp-bh-tint);
+    border-color: var(--bp-bh-line-strong);
+}
+
+#buddypress .bp-subnavs li.selected a,
+#buddypress .bp-subnavs li.current a,
+#buddypress .bp-subnavs li.selected a:hover,
+#buddypress .bp-subnavs li.current a:hover,
+#buddypress #subnav > ul > li.current > a,
+#buddypress #subnav > ul > li.selected > a {
+    font-weight: 600;
+    color: var(--bloghash-secondary, #111827);
+    background: var(--bp-bh-tint);
+    border-color: var(--bp-bh-line-strong);
+}
+
+/* Vertical child nav (group invites). */
+#buddypress .bp-invites-nav ul {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: .4rem;
+    overflow: visible;
+}
+
+#buddypress .bp-invites-nav ul,
+#buddypress nav#subnav.bp-invites-nav > ul {
+    float: none;
+    width: 100%;
+}
+
+#buddypress .bp-invites-filters {
+    justify-content: flex-start;
+}
+
+#buddypress .bp-invites-filters > div,
+#buddypress .bp-invites-filters > div > .group-invites-search {
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: none;
+}
+
+#buddypress .group-invites-column > div {
+    float: none;
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#buddypress .group-invites-column .group-invites-search,
+#buddypress .group-invites-column .group-invites-search.subnav-search,
+#buddypress .group-invites-column .group-invites-search > div {
+    float: none;
+    width: 100%;
+    max-width: none;
+    margin: 0 0 1.6rem;
+}
+
+#buddypress .bp-invites-nav li {
+    width: 100%;
+}
+
+#buddypress .bp-invites-nav li a {
+    display: flex;
+    width: 100%;
+}
+
+#buddypress .group-invites-column .bp-invites-search-form,
+#buddypress .group-invites-column form[class*="search-form"] {
+    margin: 0 0 1.6rem;
+}
+
+#buddypress .group-invites-column {
+    min-width: 0;
+    padding-left: 2.4rem;
+}
+
+/* Filter bars rendered as <ul> (group activity, messages): one aligned row, no bullets. */
+#buddypress .subnav-filters > ul {
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#buddypress .subnav-filters > ul > li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#buddypress .subnav-filters > ul > li:empty {
+    display: none;
+}
+
+#buddypress .subnav-filters > ul > li.feed a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.2rem;
+    height: 4.2rem;
+    color: var(--bp-bh-primary);
+    background: var(--bp-bh-primary-soft);
+    border-radius: 50%;
+}
+
+#buddypress .subnav-filters > ul > li.feed a:hover {
+    color: #fff;
+    background: var(--bp-bh-primary);
+}
+
+#buddypress .subnav-filters > ul > li.group-act-search,
+#buddypress .subnav-filters > ul > li.user-messages-search,
+#buddypress .subnav-filters > ul > li.bp-search {
+    flex: 1 1 24rem;
+    max-width: 36rem;
+}
+
+#buddypress .subnav-filters > ul > li .bp-search,
+#buddypress .subnav-filters > ul > li form[class*="search-form"] {
+    float: none;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+}
+
+#buddypress .subnav-filters > ul > li.user-messages-bulk-actions,
+#buddypress .subnav-filters > ul > li.group-act-filter {
+    margin-left: auto;
+}
+
+#buddypress .subnav-filters > ul > li.last:not(:has(select, input, a, button, label)) {
+    display: none;
+}
+
+/* Filter / search list used on the member management screens. */
+#buddypress ul.subnav-filters {
+    margin: 0 0 2rem;
+    padding: 0;
+    list-style: none;
+}
+
+#buddypress ul.subnav-filters > li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#buddypress ul.subnav-filters > li:empty,
+#buddypress ul.subnav-filters > li.left-menu {
+    display: none;
+}
+
+#buddypress ul.subnav-filters > li.last,
+#buddypress ul.subnav-filters > li.filter {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+}
+
+#buddypress ul.subnav-filters > li.last label,
+#buddypress ul.subnav-filters > li.filter label {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: .4rem;
+    margin: 0;
+    white-space: nowrap;
+}
+
+/* Manage members table: calm name + row actions, destructive actions in red. */
+#buddypress table.bp-list {
+    width: 100%;
+    margin: 0 0 2.4rem;
+    border: .1rem solid var(--bp-bh-border);
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: var(--bloghash-normal-radius);
+    overflow: hidden;
+}
+
+#buddypress table.bp-list .group-member a {
+    font-weight: 600;
+    color: inherit;
+}
+
+#buddypress table.bp-list .group-member a:hover {
+    color: var(--bp-bh-primary);
+}
+
+#buddypress table.bp-list .row-actions,
+#buddypress table.bp-list .group-member > span,
+#buddypress table.bp-list td span.edit,
+#buddypress table.bp-list td span.spam,
+#buddypress table.bp-list td span.delete {
+    font-size: 1.3rem;
+    color: var(--bp-bh-muted);
+}
+
+#buddypress table.bp-list td span.edit a {
+    color: var(--bp-bh-muted);
+}
+
+#buddypress table.bp-list td span.edit a:hover {
+    color: var(--bp-bh-primary);
+}
+
+#buddypress table.bp-list td span.spam a,
+#buddypress table.bp-list td span.delete a,
+#buddypress table.bp-list a.submitdelete {
+    color: var(--bp-bh-muted);
+}
+
+#buddypress table.bp-list td span.spam a:hover,
+#buddypress table.bp-list td span.delete a:hover,
+#buddypress table.bp-list a.submitdelete:hover {
+    color: var(--bp-bh-danger);
+}
+
+#buddypress ul.subnav-filters > li.bp-search {
+    margin-left: auto;
+}
+
+#buddypress .subnav-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+#buddypress .subnav-filters .subnav-search,
+#buddypress .subnav-filters .feed {
+    float: none;
+    margin: 0;
+}
+
+/* Feed icon, search and filter sit on one centered row. */
+/* Clearfix pseudo-elements would act as empty flex items and add a gap. */
+#buddypress .subnav-filters:before,
+#buddypress .subnav-filters:after,
+#buddypress .subnav-filters .subnav-search:before,
+#buddypress .subnav-filters .subnav-search:after,
+#buddypress .subnav-filters > ul:before,
+#buddypress .subnav-filters > ul:after,
+#buddypress .bp-navs ul:before,
+#buddypress .bp-navs ul:after {
+    content: none;
+    display: none;
+}
+
+#buddypress .subnav-filters {
+    padding: 0;
+    justify-content: space-between;
+    row-gap: 1.2rem;
+}
+
+#buddypress .subnav-filters .subnav-search {
+    padding: 0;
+    display: flex;
+    flex: 1 1 28rem;
+    align-items: center;
+    gap: 1.2rem;
+    width: auto;
+}
+
+#buddypress .subnav-filters .subnav-search .feed {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    width: auto;
+    line-height: 1;
+}
+
+#buddypress .subnav-filters .subnav-search .feed a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.2rem;
+    height: 4.2rem;
+    color: var(--bp-bh-primary);
+    background: var(--bp-bh-primary-soft);
+    border-radius: 50%;
+}
+
+#buddypress .subnav-filters .subnav-search .feed a:hover {
+    color: #fff;
+    background: var(--bp-bh-primary);
+}
+
+#buddypress .subnav-filters .subnav-search .dir-search,
+#buddypress .subnav-filters .subnav-search .bp-search {
+    flex: 1 1 auto;
+    float: none;
+    width: auto;
+    max-width: 36rem;
+    margin: 0;
+}
+
+#buddypress .subnav-filters .subnav-search .bp-dir-search-form {
+    float: none;
+    width: 100%;
+    max-width: none;
+}
+
+#buddypress .subnav-filters .component-filters {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    float: none;
+    width: auto;
+    margin: 0 0 0 auto;
+}
+
+#buddypress .subnav-filters .component-filters .select-wrap,
+#buddypress .subnav-filters .component-filters select {
+    margin: 0;
+}
+
+#buddypress .subnav-filters .component-filters label {
+    margin: 0 .8rem 0 0;
+}
+
+/* --------------------------------------------------------------------------
+*  Form controls
+*  -------------------------------------------------------------------------- */
+#buddypress input[type=text],
+#buddypress input[type=email],
+#buddypress input[type=password],
+#buddypress input[type=url],
+#buddypress input[type=tel],
+#buddypress input[type=number],
+#buddypress input[type=search],
+#buddypress input[type=date],
+#buddypress textarea,
+#buddypress select,
+#buddypress .standard-form input[type=text],
+#buddypress .standard-form input[type=email],
+#buddypress .standard-form input[type=password],
+#buddypress .standard-form textarea,
+#buddypress .standard-form select,
+#buddypress #whats-new {
+    width: 100%;
+    min-height: 5rem;
+    padding: .9rem 1.6rem;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-size: inherit;
+    color: #66717f;
+    background-color: var(--bloghash-white, #fff);
+    border: .2rem solid var(--bp-bh-border);
+    border-radius: var(--bloghash-normal-radius);
+    box-shadow: none;
+    line-height: 1.4;
+    transition: var(--bloghash-transition-primary);
+}
+
+#buddypress textarea,
+#buddypress #whats-new {
+    min-height: 12rem;
+    line-height: 1.5;
+}
+
+#buddypress select,
+#buddypress .standard-form select {
+    height: 4.5rem;
+    min-height: 4.5rem;
+    padding-right: 3.6rem;
+    color: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+}
+
+#buddypress input[type=text]:focus,
+#buddypress input[type=email]:focus,
+#buddypress input[type=password]:focus,
+#buddypress input[type=url]:focus,
+#buddypress input[type=tel]:focus,
+#buddypress input[type=number]:focus,
+#buddypress input[type=search]:focus,
+#buddypress textarea:focus,
+#buddypress select:focus,
+#buddypress #whats-new:focus {
+    color: var(--bloghash-black, #000);
+    border-color: var(--bp-bh-primary);
+    outline: none;
+    box-shadow: none;
+}
+
+#buddypress input[type=checkbox],
+#buddypress input[type=radio] {
+    accent-color: var(--bp-bh-primary);
+}
+
+#buddypress label,
+#buddypress .standard-form label,
+#buddypress .standard-form legend {
+    font-weight: 600;
+    margin: 1.6rem 0 .6rem;
+}
+
+#buddypress .standard-form label.bp-label-text {
+    display: block;
+}
+
+#buddypress .standard-form input[type=checkbox] + label,
+#buddypress .standard-form input[type=radio] + label,
+#buddypress .standard-form .checkbox label,
+#buddypress .standard-form .radio label {
+    font-weight: 400;
+}
+
+#buddypress .standard-form p.description,
+#buddypress .standard-form .field-visibility-settings,
+#buddypress .standard-form .field-visibility-settings-notoggle {
+    font-size: 1.4rem;
+    color: var(--bp-bh-muted);
+}
+
+#buddypress .standard-form fieldset,
+#buddypress fieldset {
+    margin: 2.4rem 0;
+    padding: 1rem 2.5rem 2rem;
+    border: .1rem solid var(--bp-bh-border);
+    border-radius: var(--bloghash-normal-radius);
+}
+
+#buddypress .standard-form hr {
+    margin: 2.4rem 0;
+    border: 0;
+    border-top: .1rem solid var(--bp-bh-border);
+}
+
+/* Directory search form. */
+#buddypress .bp-dir-search-form,
+#buddypress .bp-messages-search-form,
+#buddypress form.bp-search-form {
+    position: relative;
+    display: flex;
+    align-items: center;
+    max-width: 36rem;
+    border: .2rem solid var(--bp-bh-border);
+    border-radius: var(--bloghash-full-radius);
+    background: var(--bloghash-white, #fff);
+    overflow: hidden;
+}
+
+#buddypress .bp-dir-search-form:focus-within,
+#buddypress .bp-messages-search-form:focus-within {
+    border-color: var(--bp-bh-primary);
+}
+
+#buddypress .bp-dir-search-form input[type=search],
+#buddypress .bp-dir-search-form input[type=text],
+#buddypress .bp-messages-search-form input[type=search] {
+    flex: 1 1 auto;
+    min-height: 4.2rem;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    padding: .6rem 1.6rem;
+}
+
+#buddypress .bp-dir-search-form button[type=submit],
+#buddypress .bp-messages-search-form button[type=submit] {
+    flex: 0 0 auto;
+    width: 4.2rem;
+    min-height: 4.2rem;
+    padding: 0;
+    color: var(--bp-bh-primary);
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+}
+
+#buddypress .bp-dir-search-form button[type=submit]:hover,
+#buddypress .bp-messages-search-form button[type=submit]:hover {
+    color: var(--bloghash-secondary, #111827);
+    background: transparent;
+}
+
+#buddypress .bp-dir-search-form label {
+    margin: 0;
+}
+
+/* Invite / other search forms share the directory search pill. */
+#buddypress .bp-invites-search-form,
+#buddypress form[class*="search-form"] {
+    position: relative;
+    display: flex;
+    align-items: center;
+    float: none;
+    width: 100%;
+    max-width: 36rem;
+    margin: 0 auto;
+    border: .2rem solid var(--bp-bh-border);
+    border-radius: var(--bloghash-full-radius);
+    background: var(--bloghash-white, #fff);
+    overflow: hidden;
+}
+
+#buddypress .bp-invites-search-form:focus-within,
+#buddypress form[class*="search-form"]:focus-within {
+    border-color: var(--bp-bh-primary);
+}
+
+#buddypress .bp-invites-search-form input[type=search],
+#buddypress .bp-invites-search-form input[type=text],
+#buddypress form[class*="search-form"] input[type=search],
+#buddypress form[class*="search-form"] input[type=text] {
+    flex: 1 1 auto;
+    float: none;
+    width: auto;
+    min-height: 4.2rem;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    padding: .6rem 1.6rem;
+}
+
+#buddypress .bp-invites-search-form button,
+#buddypress .bp-invites-search-form input[type=submit],
+#buddypress form[class*="search-form"] button[type=submit] {
+    flex: 0 0 auto;
+    float: none;
+    width: 4.2rem;
+    min-width: 0;
+    min-height: 4.2rem;
+    padding: 0;
+    color: var(--bp-bh-primary);
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+}
+
+#buddypress .bp-invites-search-form button:hover,
+#buddypress form[class*="search-form"] button[type=submit]:hover {
+    color: var(--bloghash-secondary, #111827);
+    background: transparent;
+}
+
+#buddypress .subnav-filters .bp-invites-search-form,
+#buddypress .subnav-filters form[class*="search-form"] {
+    margin: 0;
+}
+
+#buddypress .group-invites-search,
+#buddypress .subnav-search.clearfix {
+    float: none;
+    width: 100%;
+    margin: 0 0 2rem;
+}
+
+/* --------------------------------------------------------------------------
+*  Buttons
+*  -------------------------------------------------------------------------- */
+#buddypress .button,
+#buddypress a.button,
+#buddypress button,
+#buddypress input[type=button],
+#buddypress input[type=reset],
+#buddypress input[type=submit],
+#buddypress .generic-button a,
+#buddypress .generic-button button,
+#buddypress .bp-list .action a,
+#buddypress .bp-list .action button,
+#buddypress .activity-meta.action .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+    min-height: 4.5rem;
+    padding: .99rem 2.3rem;
+    font-family: inherit;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #fff;
+    background: var(--bp-bh-primary);
+    border: .1rem solid rgba(0, 0, 0, 0.12);
+    border-radius: var(--bloghash-normal-radius);
+    box-shadow: none;
+    cursor: pointer;
+    text-shadow: none;
+    transition: var(--bloghash-transition-primary);
+}
+
+#buddypress .button:hover,
+#buddypress .button:focus,
+#buddypress a.button:hover,
+#buddypress a.button:focus,
+#buddypress button:hover,
+#buddypress button:focus,
+#buddypress input[type=button]:hover,
+#buddypress input[type=reset]:hover,
+#buddypress input[type=submit]:hover,
+#buddypress input[type=submit]:focus,
+#buddypress .generic-button a:hover,
+#buddypress .generic-button button:hover,
+#buddypress .bp-list .action a:hover,
+#buddypress .bp-list .action button:hover {
+    color: #fff;
+    background: var(--bloghash-secondary, #111827);
+    border-color: var(--bloghash-secondary, #111827);
+    box-shadow: none;
+    outline: none;
+}
+
+#buddypress .standard-form input[type=submit],
+#buddypress .standard-form input[type=button],
+#buddypress .standard-form input[type=reset],
+#buddypress .standard-form button,
+#buddypress .standard-form .button {
+    padding: .99rem 2.3rem;
+    color: #fff;
+    background: var(--bp-bh-primary);
+    border: .1rem solid rgba(0, 0, 0, 0.12);
+    border-radius: var(--bloghash-normal-radius);
+}
+
+#buddypress .standard-form input[type=submit]:hover,
+#buddypress .standard-form input[type=button]:hover,
+#buddypress .standard-form button:hover,
+#buddypress .standard-form .button:hover {
+    color: #fff;
+    background: var(--bloghash-secondary, #111827);
+    border-color: var(--bloghash-secondary, #111827);
+}
+
+#buddypress .standard-form,
+#buddypress #profile-edit-form,
+#buddypress .editfield {
+    background: transparent;
+    border: 0;
+    padding: 0;
+}
+
+/* Utility actions (pick a file, view, generate…) use a neutral outline; solid primary is kept for main submit actions. */
+#buddypress #bp-browse-button,
+#buddypress .standard-form #bp-browse-button,
+#buddypress .drag-drop-buttons input.button,
+#buddypress .drag-drop-buttons .button,
+#buddypress .drag-drop-inside .button,
+#buddypress .bp-uploader .button,
+#buddypress .browser.button,
+#buddypress .pwd-button,
+#buddypress .activity-inner .button,
+#buddypress .activity-inner a.button {
+    color: var(--bloghash-secondary, #111827);
+    background: transparent;
+    border: .1rem solid var(--bp-bh-line-strong);
+}
+
+#buddypress #bp-browse-button:hover,
+#buddypress .standard-form #bp-browse-button:hover,
+#buddypress .drag-drop-buttons input.button:hover,
+#buddypress .drag-drop-buttons .button:hover,
+#buddypress .drag-drop-inside .button:hover,
+#buddypress .bp-uploader .button:hover,
+#buddypress .browser.button:hover,
+#buddypress .pwd-button:hover,
+#buddypress .activity-inner .button:hover,
+#buddypress .activity-inner a.button:hover {
+    color: var(--bloghash-secondary, #111827);
+    background: var(--bp-bh-tint);
+    border-color: var(--bloghash-secondary, #111827);
+}
+
+/* Destructive actions. */
+#buddypress #bp-delete-cover-image,
+#buddypress #bp-delete-avatar,
+#buddypress .standard-form #bp-delete-cover-image,
+#buddypress .standard-form button[id*="delete-avatar"],
+#buddypress .standard-form button[id*="delete-cover"],
+#buddypress .button[href*="delete"],
+#buddypress a.button[href*="delete"],
+#buddypress .button.delete,
+#buddypress #delete-group-button,
+#buddypress input#delete-group-button,
+#buddypress .button.bp-secondary-action.delete {
+    color: var(--bp-bh-danger);
+    background: transparent;
+    border: .1rem solid var(--bp-bh-danger);
+}
+
+#buddypress #bp-delete-cover-image:hover,
+#buddypress #bp-delete-avatar:hover,
+#buddypress .standard-form #bp-delete-cover-image:hover,
+#buddypress .standard-form button[id*="delete-avatar"]:hover,
+#buddypress .standard-form button[id*="delete-cover"]:hover,
+#buddypress .button[href*="delete"]:hover,
+#buddypress a.button[href*="delete"]:hover,
+#buddypress .button.delete:hover,
+#buddypress #delete-group-button:hover,
+#buddypress input#delete-group-button:hover {
+    color: #fff;
+    background: var(--bp-bh-danger);
+    border-color: var(--bp-bh-danger);
+}
+
+/* Reset / Cancel / Back actions use the outline variant everywhere. */
+#buddypress #group-creation-previous,
+#buddypress input[type=reset],
+#buddypress .standard-form input[type=reset],
+#buddypress button.text-button,
+#buddypress .ac-reply-cancel {
+    color: var(--bp-bh-primary);
+    background: transparent;
+    border: .1rem solid var(--bp-bh-primary);
+}
+
+#buddypress #group-creation-previous:hover,
+#buddypress input[type=reset]:hover,
+#buddypress .standard-form input[type=reset]:hover,
+#buddypress button.text-button:hover,
+#buddypress .ac-reply-cancel:hover {
+    color: #fff;
+    background: var(--bloghash-secondary, #111827);
+    border-color: var(--bloghash-secondary, #111827);
+}
+
+#buddypress .submit {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Rich text editor (TinyMCE) toolbar buttons must not inherit theme button styles. */
+#buddypress .mce-container button,
+#buddypress .mce-btn button,
+#buddypress .mce-toolbar button,
+#buddypress .wp-editor-tabs button,
+#buddypress .quicktags-toolbar input[type=button] {
+    display: inline-block;
+    min-height: 0;
+    padding: 4px 6px;
+    font-size: inherit;
+    line-height: inherit;
+    color: #444;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+#buddypress .mce-btn {
+    border-radius: var(--bloghash-normal-radius);
+}
+
+#buddypress .mce-btn:hover button,
+#buddypress .mce-btn:focus button,
+#buddypress .mce-btn.mce-active button,
+#buddypress .mce-container button:hover {
+    color: var(--bp-bh-primary);
+    background: transparent;
+    border: 0;
+}
+
+#buddypress .mce-btn:hover,
+#buddypress .mce-btn.mce-active {
+    background: var(--bp-bh-primary-soft);
+    border-color: transparent;
+}
+
+#buddypress .mce-tinymce,
+#buddypress .mce-panel {
+    border-color: var(--bp-bh-border);
+    border-radius: var(--bloghash-normal-radius);
+}
+
+#buddypress .mce-toolbar-grp,
+#buddypress .mce-toolbar-grp .mce-panel {
+    background: var(--bp-bh-soft);
+}
+
+/* Secondary (outline) buttons. */
+#buddypress .button.bp-secondary-action,
+#buddypress .button.bp-primary-action.outline,
+#buddypress .generic-button .friendship-button.is_friend,
+#buddypress .generic-button .pending,
+#buddypress .generic-button .leave-group,
+#buddypress .generic-button .group-button.leave-group,
+#buddypress .bp-list .action .button.pending,
+#buddypress .bp-list .action .button.is_friend,
+#buddypress .bp-list .action .button.leave-group,
+#buddypress .button.reject,
+#buddypress .button.disabled {
+    color: var(--bloghash-secondary, #111827);
+    background: transparent;
+    border: .1rem solid var(--bp-bh-line-strong);
+}
+
+#buddypress .button.bp-secondary-action:hover,
+#buddypress .generic-button .friendship-button.is_friend:hover,
+#buddypress .generic-button .pending:hover,
+#buddypress .generic-button .leave-group:hover,
+#buddypress .bp-list .action .button.pending:hover,
+#buddypress .bp-list .action .button.is_friend:hover,
+#buddypress .bp-list .action .button.leave-group:hover,
+#buddypress .button.reject:hover {
+    color: var(--bloghash-secondary, #111827);
+    background: var(--bp-bh-tint);
+    border-color: var(--bloghash-secondary, #111827);
+}
+
+#buddypress .button.disabled,
+#buddypress button:disabled,
+#buddypress input[type=submit]:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Icon-only action buttons and small toolbars. */
+#buddypress .bp-list .action .button,
+#buddypress .bp-list .action a {
+    min-height: 3.6rem;
+    padding: .6rem 1.6rem;
+    font-size: 1.3rem;
+    border-radius: var(--bloghash-full-radius);
+}
+
+/* --------------------------------------------------------------------------
+*  Feedback / notices
+*  -------------------------------------------------------------------------- */
+#buddypress .bp-feedback,
+#buddypress .bp-feedback.info,
+#buddypress .bp-feedback.error,
+#buddypress .bp-feedback.warning,
+#buddypress .bp-feedback.success,
+#buddypress .bp-feedback.loading,
+#buddypress .info {
+    display: flex;
+    align-items: stretch;
+    margin: 0 0 2rem;
+    color: inherit;
+    background: var(--bloghash-white, #fff);
+    border: .1rem solid var(--bp-bh-border);
+    border-left-width: .4rem;
+    border-radius: var(--bloghash-normal-radius);
+    box-shadow: none;
+    overflow: hidden;
+}
+
+#buddypress .bp-feedback .bp-icon {
+    flex: 0 0 4.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.4rem;
+    height: auto;
+    font-size: 1.8rem;
+    color: #fff;
+    background: var(--bloghash-secondary, #111827);
+}
+
+#buddypress .bp-feedback p {
+    margin: 0;
+    padding: 1.2rem 1.6rem;
+    flex: 1;
+}
+
+#buddypress .bp-feedback.info { border-left-color: #0073aa; }
+#buddypress .bp-feedback.info .bp-icon { background: #0073aa; }
+#buddypress .bp-feedback.error { border-left-color: #d63638; }
+#buddypress .bp-feedback.error .bp-icon { background: #d63638; }
+#buddypress .bp-feedback.warning { border-left-color: #dba617; }
+#buddypress .bp-feedback.warning .bp-icon { background: #dba617; }
+#buddypress .bp-feedback.success,
+#buddypress .bp-feedback.updated { border-left-color: #00a32a; }
+#buddypress .bp-feedback.success .bp-icon,
+#buddypress .bp-feedback.updated .bp-icon { background: #00a32a; }
+
+#buddypress .bp-feedback .bp-help-text,
+#buddypress .bp-help-text,
+#buddypress p.info.bp-help-text {
+    display: block;
+    margin: 0 0 1.6rem;
+    padding: 0;
+    color: var(--bp-bh-muted);
+    font-family: inherit;
+    font-size: 1.4rem;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+}
+
+/* Plain status paragraphs (upload hints, legacy messages). */
+#buddypress p.warning,
+#buddypress p.info:not(.bp-help-text),
+#buddypress p.error,
+#buddypress p.success,
+#buddypress p.updated,
+#buddypress div.error,
+#buddypress div.updated,
+#buddypress #message p {
+    margin: 1.6rem 0;
+    padding: 1.2rem 1.6rem;
+    font-weight: 400;
+    color: inherit;
+    background: var(--bloghash-white, #fff);
+    border: .1rem solid var(--bp-bh-border);
+    border-left: .4rem solid #0073aa;
+    border-radius: var(--bloghash-normal-radius);
+    box-shadow: none;
+}
+
+#buddypress p.warning { border-left-color: #dba617; }
+#buddypress p.error,
+#buddypress div.error,
+#buddypress #message.error p { border-left-color: #d63638; }
+#buddypress p.success,
+#buddypress p.updated,
+#buddypress div.updated,
+#buddypress #message.updated p { border-left-color: #00a32a; }
+
+#buddypress .standard-form .bp-feedback {
+    margin-top: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+*  Activity: post form
+*  -------------------------------------------------------------------------- */
+#buddypress #bp-nouveau-activity-form,
+#buddypress .activity-update-form {
+    margin: 0 0 3rem;
+    padding: 2rem;
+    background: transparent;
+    border: .1rem solid var(--bp-bh-border);
+    border-radius: var(--bloghash-normal-radius);
+    box-shadow: none;
+}
+
+#buddypress .activity-update-form #whats-new-avatar img {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+}
+
+#buddypress .activity-update-form #whats-new-content {
+    padding: 0;
+}
+
+#buddypress .activity-update-form #whats-new-textarea textarea {
+    min-height: 12rem;
+}
+
+#buddypress .activity-update-form #whats-new-options {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+    margin-top: 1.2rem;
+}
+
+#buddypress .activity-update-form #whats-new-submit {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin: 0;
+}
+
+/* Post Update / Cancel: same size, shape and type; Cancel is the outline variant. */
+#buddypress #bp-nouveau-activity-form #whats-new-submit input[type=submit],
+#buddypress #bp-nouveau-activity-form #whats-new-submit input[type=reset],
+#buddypress #bp-nouveau-activity-form #whats-new-submit .button {
+    float: none;
+    width: auto;
+    min-width: 12rem;
+    height: 4.5rem;
+    margin: 0;
+    padding: .99rem 2.3rem;
+    font-family: inherit;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: normal;
+    text-transform: none;
+    text-decoration: none;
+    white-space: nowrap;
+    border-radius: var(--bloghash-normal-radius);
+}
+
+#buddypress #bp-nouveau-activity-form #whats-new-submit input[type=submit] {
+    color: #fff;
+    background: var(--bp-bh-primary);
+    border: .1rem solid var(--bp-bh-primary);
+}
+
+#buddypress #bp-nouveau-activity-form #whats-new-submit input[type=reset] {
+    color: var(--bp-bh-primary);
+    background: transparent;
+    border: .1rem solid var(--bp-bh-primary);
+}
+
+#buddypress #bp-nouveau-activity-form #whats-new-submit input[type=submit]:hover,
+#buddypress #bp-nouveau-activity-form #whats-new-submit input[type=submit]:focus,
+#buddypress #bp-nouveau-activity-form #whats-new-submit input[type=reset]:hover,
+#buddypress #bp-nouveau-activity-form #whats-new-submit input[type=reset]:focus {
+    color: #fff;
+    background: var(--bloghash-secondary, #111827);
+    border-color: var(--bloghash-secondary, #111827);
+}
+
+#buddypress #bp-nouveau-activity-form #whats-new-submit input[type=submit]:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+}
+
+#buddypress .activity-update-form #whats-new-post-in-box {
+    margin: 0;
+}
+
+#buddypress .activity-update-form .bp-activity-privacy-select,
+#buddypress .activity-update-form #whats-new-post-in {
+    min-width: 16rem;
+}
+
+/* --------------------------------------------------------------------------
+*  Activity: stream
+*  -------------------------------------------------------------------------- */
+#buddypress #activity-stream.activity-list,
+#buddypress .activity-list {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+#buddypress .activity-list li.activity-item,
+#buddypress .activity-list .activity-item {
+    margin: 0 0 1.6rem;
+    padding: 2.4rem;
+    background: transparent;
+    border: .1rem solid var(--bp-bh-line);
+    border-radius: var(--bloghash-normal-radius);
+    box-shadow: none;
+    list-style: none;
+    transition: var(--bloghash-transition-primary);
+}
+
+#buddypress .activity-list .activity-item:hover {
+    border-color: var(--bp-bh-line-strong);
+}
+
+/* Avatar and author line share one row; the post body spans the full width below. */
+#buddypress .activity-list li.activity-item,
+#buddypress .activity-list .activity-item {
+    display: grid;
+    grid-template-columns: 5rem minmax(0, 1fr);
+    column-gap: 1.6rem;
+    align-items: center;
+}
+
+#buddypress .activity-list .activity-item .activity-avatar {
+    grid-column: 1;
+    grid-row: 1;
+    position: static;
+    top: auto;
+    left: auto;
+    float: none;
+    width: 5rem;
+    margin: 0;
+}
+
+#buddypress .activity-list .activity-item .activity-avatar img {
+    display: block;
+    width: 5rem;
+    height: 5rem;
+}
+
+#buddypress .activity-list .activity-item .activity-content {
+    display: contents;
+}
+
+#buddypress .activity-list .activity-item .activity-header {
+    grid-column: 2;
+    grid-row: 1;
+    float: none;
+    width: auto;
+    margin: 0;
+    padding: 0;
+}
+
+#buddypress .activity-list .activity-item .activity-inner,
+#buddypress .activity-list .activity-item .activity-meta,
+#buddypress .activity-list .activity-item .activity-comments,
+#buddypress .activity-list .activity-item .ac-form {
+    grid-column: 1 / -1;
+    float: none;
+    width: auto;
+    margin-left: 0;
+}
+
+#buddypress .activity-list .activity-item .activity-inner {
+    margin-top: 1.6rem;
+}
+
+#buddypress .activity-list .activity-item .activity-avatar {
+    width: 5rem;
+    margin-right: 1.6rem;
+}
+
+#buddypress .activity-list .activity-item .activity-avatar img,
+#buddypress .activity-list .acomment-avatar img {
+    border-radius: 50%;
+}
+
+#buddypress .activity-list .activity-header,
+#buddypress .activity-list .activity-header p {
+    margin: 0;
+    font-size: 1.5rem;
+    line-height: 1.5;
+}
+
+#buddypress .activity-list .activity-header a {
+    font-weight: 600;
+}
+
+#buddypress .activity-list .activity-header a.view {
+    font-weight: 400;
+    color: var(--bp-bh-muted);
+}
+
+#buddypress .activity-list .activity-inner,
+#buddypress .activity-list .activity-content .activity-inner {
+    margin: 1.6rem 0;
+    padding: 0;
+    overflow-wrap: break-word;
+}
+
+#buddypress .activity-list .activity-inner,
+#buddypress .activity-list .activity-meta,
+#buddypress .activity-list .activity-meta.action,
+#buddypress .activity-list .activity-content,
+#buddypress .activity-list .activity-header {
+    background: transparent;
+}
+
+#buddypress .activity-list .activity-inner p {
+    margin: 0 0 1.2rem;
+}
+
+#buddypress .activity-list .activity-inner blockquote {
+    margin: 1.6rem 0;
+    padding: 1.2rem 1.8rem;
+    border-left: .4rem solid var(--bp-bh-primary);
+    border-radius: 0 var(--bloghash-normal-radius) var(--bloghash-normal-radius) 0;
+    background: var(--bp-bh-soft);
+}
+
+#buddypress .activity-list .activity-inner img,
+#buddypress .activity-list .activity-inner video {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--bloghash-normal-radius);
+}
+
+#buddypress .activity-list .activity-meta.action,
+#buddypress .activity-list .activity-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .8rem;
+    margin: 1.6rem 0 0;
+    padding-top: 1.6rem;
+    border-top: .1rem solid var(--bp-bh-border);
+}
+
+#buddypress .activity-list .activity-meta.action .button,
+#buddypress .activity-list .activity-meta.action a.button {
+    min-height: 3.6rem;
+    padding: .6rem 1.4rem;
+    font-size: 1.3rem;
+    color: inherit;
+    background: transparent;
+    border: .1rem solid var(--bp-bh-border);
+    border-radius: var(--bloghash-full-radius);
+}
+
+#buddypress .activity-list .activity-meta.action .button:hover,
+#buddypress .activity-list .activity-meta.action .button:focus,
+#buddypress .activity-list .activity-meta.action .button.unfav,
+#buddypress .activity-list .activity-meta.action .button.fav.active {
+    color: #fff;
+    background: var(--bp-bh-primary);
+    border-color: var(--bp-bh-primary);
+}
+
+#buddypress .activity-list .activity-meta.action .button .bp-screen-reader-text {
+    position: absolute;
+}
+
+/* Count text and icon follow the button colour on hover / focus / active. */
+#buddypress .activity-list .activity-meta.action .button span,
+#buddypress .activity-list .activity-meta.action .button .acomment-count,
+#buddypress .activity-list .activity-meta.action .button .bp-icon,
+#buddypress .activity-list .activity-meta.action .button:before {
+    color: inherit;
+    transition: var(--bloghash-transition-primary);
+}
+
+#buddypress .activity-list .activity-meta.action .button:hover span,
+#buddypress .activity-list .activity-meta.action .button:focus span,
+#buddypress .activity-list .activity-meta.action .button:hover:before,
+#buddypress .activity-list .activity-meta.action .button:focus:before,
+#buddypress .activity-list .activity-meta.action .button.unfav span,
+#buddypress .activity-list .activity-meta.action .button.fav.active span {
+    color: #fff;
+}
+
+/* Single activity permalink: the activity item is already a card, so drop the theme's outer card. */
+.activity-permalink .site-content > article,
+.activity-permalink #content article.page,
+.activity-permalink .bloghash-article {
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none !important;
+}
+
+.activity-permalink #buddypress .activity-list .activity-item {
+    background: var(--bloghash-white, #fff);
+    border-color: transparent;
+    box-shadow: 0 .5rem 2rem 0 rgba(69, 67, 96, 0.1);
+}
+
+.activity-permalink #buddypress .activity-list,
+.activity-permalink #buddypress .activity-list .activity-item {
+    margin-bottom: 0;
+}
+
+.activity-permalink #buddypress .activity-list .activity-item .activity-avatar {
+    position: static;
+    top: auto;
+    left: auto;
+    margin-left: 0;
+}
+
+.activity-permalink #buddypress .activity-list .activity-item .activity-avatar img {
+    box-shadow: none;
+}
+
+#buddypress .activity-list .activity-inner > :last-child,
+#buddypress .activity-list .activity-inner p:last-child {
+    margin-bottom: 0;
+}
+
+/* No empty comment area (and its margin) below posts without replies. */
+#buddypress .activity-list .activity-item > .activity-comments:not(:has(li)) {
+    display: none;
+}
+
+/* Comment: avatar and author line share a row; text and actions align under the author line. */
+#buddypress .activity-list .activity-comments ul li.comment-item,
+#buddypress .activity-list .activity-comments ul li[id^="acomment-"] {
+    display: grid;
+    grid-template-columns: 3.6rem minmax(0, 1fr);
+    column-gap: 1.2rem;
+    align-items: center;
+}
+
+#buddypress .activity-list .activity-comments .acomment-avatar {
+    grid-column: 1;
+    grid-row: 1;
+    float: none;
+    width: 3.6rem;
+    margin: 0;
+}
+
+#buddypress .activity-list .activity-comments .acomment-meta {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+    padding: 0;
+}
+
+#buddypress .activity-list .activity-comments .acomment-content,
+#buddypress .activity-list .activity-comments .activity-meta,
+#buddypress .activity-list .activity-comments .activity-meta.action {
+    grid-column: 2;
+    margin-left: 0;
+}
+
+#buddypress .activity-list .activity-comments .acomment-content {
+    margin-top: .8rem;
+}
+
+#buddypress .activity-list .activity-comments ul li > ul,
+#buddypress .activity-list .activity-comments ul li > .ac-form {
+    grid-column: 1 / -1;
+}
+
+/* Comment-level action row: no divider, text actions. */
+#buddypress .activity-list .activity-comments .activity-meta,
+#buddypress .activity-list .activity-comments .activity-meta.action {
+    margin: .4rem 0 0;
+    padding: 0;
+    border-top: 0;
+    gap: 1.6rem;
+}
+
+#buddypress .activity-list .activity-comments .activity-meta .generic-button {
+    margin: 0;
+}
+
+#buddypress .activity-list .activity-comments .activity-meta .generic-button a,
+#buddypress .activity-list .activity-comments .activity-meta .generic-button .button,
+#buddypress .activity-list .activity-comments .activity-meta a.button {
+    display: inline;
+    min-height: 0;
+    padding: 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--bp-bh-muted);
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+}
+
+#buddypress .activity-list .activity-comments .activity-meta .generic-button a:hover,
+#buddypress .activity-list .activity-comments .activity-meta .generic-button a:focus {
+    color: var(--bp-bh-primary);
+    background: transparent;
+}
+
+#buddypress .activity-list .activity-comments .activity-meta .generic-button a.acomment-delete:hover,
+#buddypress .activity-list .activity-comments .activity-meta .generic-button a.delete:hover {
+    color: var(--bp-bh-danger);
+}
+
+/* Reply / Delete under a comment are quiet text actions, not solid buttons. */
+#buddypress .activity-list .acomment-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+}
+
+#buddypress .activity-list .acomment-options a,
+#buddypress .activity-list .acomment-options .button,
+#buddypress .activity-list .acomment-options a.button {
+    display: inline;
+    min-height: 0;
+    padding: 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--bp-bh-muted);
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+}
+
+#buddypress .activity-list .acomment-options a:hover,
+#buddypress .activity-list .acomment-options a:focus {
+    color: var(--bp-bh-primary);
+    background: transparent;
+}
+
+#buddypress .activity-list .acomment-options a.acomment-delete:hover,
+#buddypress .activity-list .acomment-options a[class*="delete"]:hover {
+    color: var(--bp-bh-danger);
+}
+
+/* Activity comments. */
+#buddypress .activity-list .activity-comments {
+    margin: 1.6rem 0 0;
+    padding: 0;
+    overflow: visible;
+}
+
+#buddypress .activity-list .activity-comments ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#buddypress .activity-list .activity-comments ul li {
+    margin: 0;
+    padding: 1.6rem 0 0;
+    border-top: .1rem solid var(--bp-bh-border);
+    border-bottom: 0;
+}
+
+#buddypress .activity-list .activity-comments ul li ul {
+    margin-left: 3rem;
+}
+
+#buddypress .activity-list .acomment-avatar img {
+    width: 3.6rem;
+    height: 3.6rem;
+}
+
+#buddypress .activity-list .acomment-meta {
+    font-size: 1.4rem;
+    color: var(--bp-bh-muted);
+}
+
+#buddypress .activity-list .acomment-content {
+    margin: .8rem 0 0 4.8rem;
+    padding: 1.2rem 1.6rem;
+    background: var(--bp-bh-soft);
+    border: 0;
+    border-radius: var(--bloghash-normal-radius);
+}
+
+#buddypress .activity-list .acomment-content p {
+    margin: 0;
+}
+
+#buddypress .activity-list .acomment-options {
+    margin: .6rem 0 0 4.8rem;
+    font-size: 1.3rem;
+}
+
+#buddypress .activity-list .ac-form {
+    margin: 1.2rem 0 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+}
+
+#buddypress .activity-list .ac-form .ac-form-buttons,
+#buddypress .activity-list .ac-form .ac-reply-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.2rem;
+}
+
+/* Reply Post / Cancel: same size and shape; Cancel is the outline variant. */
+#buddypress .activity-list .ac-form input[type=submit],
+#buddypress .activity-list .ac-form button,
+#buddypress .activity-list .ac-form .ac-reply-cancel {
+    float: none;
+    width: auto;
+    min-width: 10rem;
+    height: 4.5rem;
+    margin: 0;
+    padding: .99rem 2.3rem;
+    font-family: inherit;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    text-transform: none;
+    white-space: nowrap;
+    border-radius: var(--bloghash-normal-radius);
+}
+
+#buddypress .activity-list .ac-form input[type=submit] {
+    color: #fff;
+    background: var(--bp-bh-primary);
+    border: .1rem solid var(--bp-bh-primary);
+}
+
+#buddypress .activity-list .ac-form .ac-reply-cancel {
+    color: var(--bp-bh-primary);
+    background: transparent;
+    border: .1rem solid var(--bp-bh-primary);
+}
+
+#buddypress .activity-list .ac-form input[type=submit]:hover,
+#buddypress .activity-list .ac-form .ac-reply-cancel:hover,
+#buddypress .activity-list .ac-form .ac-reply-cancel:focus {
+    color: #fff;
+    background: var(--bloghash-secondary, #111827);
+    border-color: var(--bloghash-secondary, #111827);
+}
+
+#buddypress .activity-list .ac-form .ac-reply-content {
+    padding: 0;
+}
+
+#buddypress .activity-list .ac-form textarea {
+    min-height: 8rem;
+}
+
+#buddypress .activity-list .load-more,
+#buddypress .activity-list .load-newest {
+    margin: 0 0 2.4rem;
+    text-align: center;
+    background: transparent;
+    border: 0;
+}
+
+#buddypress .activity-list .load-more a,
+#buddypress .activity-list .load-newest a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 4.5rem;
+    padding: .99rem 2.3rem;
+    color: #fff;
+    background: var(--bp-bh-primary);
+    border-radius: var(--bloghash-normal-radius);
+}
+
+#buddypress .activity-list .load-more a:hover,
+#buddypress .activity-list .load-newest a:hover {
+    color: #fff;
+    background: var(--bloghash-secondary, #111827);
+}
+
+/* --------------------------------------------------------------------------
+*  Directory lists (members, groups, blogs)
+*  -------------------------------------------------------------------------- */
+#buddypress .bp-list,
+#buddypress ul.item-list,
+#buddypress .activity-list.bp-list {
+    margin: 0 0 2.4rem;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    list-style: none;
+}
+
+#buddypress .bp-list > li,
+#buddypress ul.item-list > li {
+    margin: 0 0 1.6rem;
+    padding: 2rem;
+    background: transparent;
+    border: .1rem solid var(--bp-bh-line);
+    border-radius: var(--bloghash-normal-radius);
+    box-shadow: none;
+    transition: var(--bloghash-transition-primary);
+}
+
+#buddypress .bp-list > li:hover {
+    border-color: var(--bp-bh-line-strong);
+}
+/* Directory lists (members, groups) as a responsive tile grid inside the content card. */
+#buddypress ul.members-list,
+#buddypress ul.groups-list,
+#buddypress ul.blogs-list,
+#buddypress ul.members-group-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+    gap: 1.6rem;
+}
+#buddypress ul.members-list > li,
+#buddypress ul.groups-list > li,
+#buddypress ul.blogs-list > li,
+#buddypress ul.members-group-list > li {
+    margin: 0;
+}
+#buddypress ul.members-list .list-wrap .item-avatar,
+#buddypress ul.groups-list .list-wrap .item-avatar,
+#buddypress ul.members-group-list .list-wrap .item-avatar {
+    flex: 0 0 7rem;
+    width: 7rem;
+}
+/* Clearfix pseudo-elements would become empty grid cells. */
+#buddypress ul.members-list:before,
+#buddypress ul.members-list:after,
+#buddypress ul.groups-list:before,
+#buddypress ul.groups-list:after,
+#buddypress ul.blogs-list:before,
+#buddypress ul.blogs-list:after,
+/* Clearfix pseudo-elements would become empty grid cells. */
+#buddypress ul.members-group-list:before,
+#buddypress ul.members-group-list:after {
+    content: none;
+    display: none;
+}
+/* Member / group tile: avatar left, details stacked on the right. */
+#buddypress ul.members-list .list-wrap,
+#buddypress ul.groups-list .list-wrap,
+#buddypress ul.members-group-list .list-wrap {
+    text-align: left;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    gap: 1.6rem;
+}
+#buddypress ul.members-list .list-wrap .item,
+#buddypress ul.groups-list .list-wrap .item,
+#buddypress ul.members-group-list .list-wrap .item {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: .8rem;
+}
+#buddypress ul.members-list .list-wrap .item-block,
+#buddypress ul.groups-list .list-wrap .item-block,
+#buddypress ul.members-group-list .list-wrap .item-block {
+    flex: 0 0 auto;
+    width: 100%;
+}
+#buddypress ul.members-list .list-wrap .list-title,
+#buddypress ul.groups-list .list-wrap .list-title,
+#buddypress ul.members-group-list .list-wrap .list-title {
+    margin: 0 0 .2rem;
+    font-size: 1.7rem;
+}
+#buddypress ul.members-list .user-update,
+#buddypress ul.groups-list .group-desc,
+#buddypress ul.members-group-list .user-update {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 1.4rem;
+    font-style: normal;
+    color: var(--bp-bh-muted);
+    background: transparent;
+    border: 0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+#buddypress ul.members-list .user-update .activity-read-more,
+#buddypress ul.members-group-list .user-update .activity-read-more {
+    display: none;
+}
+#buddypress ul.members-list .list-wrap .action,
+#buddypress ul.groups-list .list-wrap .action,
+#buddypress ul.members-group-list .list-wrap .action {
+    margin-top: auto;
+}
+
+/* List view: avatar left, details right. */
+#buddypress .bp-list .list-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2rem;
+    padding: 0;
+}
+
+#buddypress .bp-list .list-wrap .item-avatar {
+    flex: 0 0 9rem;
+    float: none;
+    width: 9rem;
+    margin: 0;
+}
+
+#buddypress .bp-list .list-wrap .item {
+    display: flex;
+    flex: 1 1 24rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+    float: none;
+    width: auto;
+    margin: 0;
+}
+
+#buddypress .bp-list .list-wrap .item-block {
+    flex: 1 1 18rem;
+    float: none;
+    width: auto;
+    margin: 0;
+}
+
+#buddypress .bp-list .list-wrap .list-title {
+    float: none;
+    width: auto;
+    margin: 0 0 .4rem;
+}
+
+#buddypress .bp-list .list-wrap .list-title a {
+    color: inherit;
+}
+
+#buddypress .bp-list .list-wrap .list-title a:hover {
+    color: var(--bp-bh-primary);
+}
+
+#buddypress .bp-list .list-wrap .item-meta,
+#buddypress .bp-list .list-wrap .last-activity {
+    float: none;
+    width: auto;
+    margin: 0;
+}
+
+#buddypress .bp-list .list-wrap .member-header-actions,
+#buddypress .bp-list .list-wrap .action,
+#buddypress .bp-list .list-wrap .item-actions {
+    float: none;
+    width: auto;
+    margin: 0;
+}
+
+#buddypress .grid.bp-list .list-wrap {
+    flex-direction: column;
+    text-align: center;
+}
+
+#buddypress .grid.bp-list .list-wrap .item {
+    justify-content: center;
+}
+
+#buddypress .bp-list .item-avatar img,
+#buddypress .bp-list .item-avatar img.avatar {
+    border-radius: 50%;
+    max-width: 100%;
+    height: auto;
+}
+
+#buddypress .bp-list .list-title,
+#buddypress .bp-list .list-title a {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+#buddypress .bp-list .item-meta,
+#buddypress .bp-list .last-activity,
+#buddypress .bp-list .meta {
+    font-size: 1.4rem;
+    color: var(--bp-bh-muted);
+}
+
+#buddypress .bp-list .group-desc,
+#buddypress .bp-list .item-desc {
+    margin: 1rem 0 0;
+    font-size: 1.5rem;
+}
+
+#buddypress .bp-list .member-meta,
+#buddypress .bp-list .item-block + .action {
+    margin-top: 1.2rem;
+}
+
+#buddypress .bp-list .item-entry .list-wrap {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+/* Grid layout for directory cards. */
+#buddypress .grid.bp-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
+    gap: 2.4rem;
+}
+
+#buddypress .grid.bp-list > li {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#buddypress .grid.bp-list > li .list-wrap {
+    height: 100%;
+    padding: 2rem;
+    background: transparent;
+    border: 0;
+}
+
+/* --------------------------------------------------------------------------
+*  Single member / group header
+*  -------------------------------------------------------------------------- */
+#buddypress #item-header {
+    margin-bottom: 2.4rem;
+}
+
+#buddypress #cover-image-container {
+    border-radius: var(--bloghash-normal-radius);
+    overflow: hidden;
+}
+
+#buddypress #item-header-cover-image #item-header-avatar img.avatar {
+    border-radius: 50%;
+    border: .4rem solid var(--bloghash-white, #fff);
+    background: var(--bloghash-white, #fff);
+}
+
+#buddypress #item-header-cover-image .user-nicename,
+#buddypress #item-header-cover-image .bp-group-title,
+#buddypress #item-header h2 {
+    font-weight: 700;
+}
+
+#buddypress #item-header .activity,
+#buddypress #item-header .highlight,
+#buddypress #item-header .group-status {
+    color: var(--bp-bh-muted);
+    font-size: 1.4rem;
+}
+
+#buddypress .single-item-header .item-meta,
+#buddypress #item-header .bp-group-meta {
+    color: var(--bp-bh-muted);
+}
+
+/* Group header: description + leadership. */
+#buddypress .desc-wrap {
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+#buddypress .group-description,
+#buddypress .group-description p {
+    box-shadow: none;
+    background: transparent;
+    border: 0;
+}
+
+#buddypress .group-description {
+    margin: 2rem 0;
+    padding: 1.2rem 1.8rem;
+    border-left: .4rem solid var(--bp-bh-primary);
+    border-radius: 0 var(--bloghash-normal-radius) var(--bloghash-normal-radius) 0;
+    background: var(--bp-bh-soft);
+}
+
+#buddypress .group-description p {
+    margin: 0;
+    padding: 0;
+}
+
+#buddypress .group-item-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: .8rem;
+    padding-top: 1rem;
+    text-align: right;
+}
+
+#buddypress .group-item-actions .bp-moderators-lists,
+#buddypress .group-item-actions .moderators-lists {
+    margin: 0;
+}
+
+#buddypress .group-item-actions .bp-moderators-lists dt,
+#buddypress .group-item-actions .moderators-title,
+#buddypress .group-item-actions .moderators-lists .moderators-title {
+    margin: 0 0 .6rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: .08rem;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--bp-bh-muted);
+}
+
+#buddypress .group-item-actions .user-list ul,
+#buddypress .group-item-actions .moderators-lists ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: .6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#buddypress .group-item-actions .avatar,
+#buddypress .group-item-actions .user-list .avatar {
+    width: 3.6rem;
+    height: 3.6rem;
+    border-radius: 50%;
+}
+
+#buddypress #item-body {
+    margin-top: 2rem;
+}
+
+#buddypress #item-body h2:not(.bp-screen-reader-text),
+#buddypress #item-body h3:not(.bp-screen-reader-text),
+#buddypress h2.bp-screen-title,
+#buddypress h2.bp-subhead,
+#buddypress #item-body h2.screen-heading,
+#buddypress #item-body .bp-profile-header,
+#buddypress .profile h2 {
+    margin: 0 0 1.6rem;
+    font-size: 2rem;
+}
+
+/* Profile field tables. */
+#buddypress table.profile-fields,
+#buddypress table.bp-tables-user,
+#buddypress table.notifications,
+#buddypress table.messages-notices,
+#buddypress table.forum,
+#buddypress table.wp-profile-fields {
+    width: 100%;
+    margin: 0 0 2.4rem;
+    border: .1rem solid var(--bp-bh-border);
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: var(--bloghash-normal-radius);
+    overflow: hidden;
+}
+
+#buddypress table.notification-settings,
+#buddypress table.profile-settings,
+#buddypress table.bp-tables-user,
+#buddypress table.global-settings {
+    background: transparent;
+    width: 100%;
+    margin: 0 0 2.4rem;
+    border: .1rem solid var(--bp-bh-border);
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: var(--bloghash-normal-radius);
+    overflow: hidden;
+}
+
+#buddypress table.notification-settings th,
+#buddypress table.notification-settings thead th,
+#buddypress table.profile-settings th,
+#buddypress table.profile-settings thead th {
+    padding: 1.2rem 1.6rem;
+    font-size: 1.3rem;
+    letter-spacing: .16rem;
+    text-transform: uppercase;
+    background: var(--bp-bh-soft);
+    border: 0;
+}
+
+#buddypress table thead,
+#buddypress table thead tr,
+#buddypress table tbody,
+#buddypress table tbody tr,
+#buddypress table tr.alt,
+#buddypress table tbody tr:nth-child(odd),
+#buddypress table tbody tr:nth-child(even) {
+    background: transparent;
+}
+
+#buddypress table.notification-settings td,
+#buddypress table.profile-settings td {
+    padding: 1.2rem 1.6rem;
+    border: 0;
+    border-top: .1rem solid var(--bp-bh-border);
+    background: transparent;
+}
+
+#buddypress table.notification-settings tr.alt td,
+#buddypress table.notification-settings tbody tr:nth-child(even) td,
+#buddypress table.profile-settings tbody tr:nth-child(even) td {
+    background: transparent;
+}
+
+#buddypress table.notification-settings .yes,
+#buddypress table.notification-settings .no,
+#buddypress table.profile-settings .field-visibility {
+    text-align: center;
+}
+
+#buddypress table thead th {
+    padding: 1.2rem 1.6rem;
+    font-size: 1.3rem;
+    letter-spacing: .16rem;
+    text-transform: uppercase;
+    text-align: left;
+    background: var(--bp-bh-soft);
+    border: 0;
+}
+
+#buddypress table tbody td,
+#buddypress table tbody th {
+    padding: 1.2rem 1.6rem;
+    border: 0;
+    border-top: .1rem solid var(--bp-bh-border);
+    background: transparent;
+}
+
+#buddypress table tbody tr:nth-child(even) td,
+#buddypress table tbody tr:nth-child(even) th,
+#buddypress table.profile-fields tr:nth-child(odd) td {
+    background: transparent;
+}
+
+#buddypress table.profile-fields td.label {
+    width: 30%;
+    font-weight: 600;
+}
+
+#buddypress table tr.unread td,
+#buddypress table tr.unread th {
+    background: var(--bp-bh-primary-soft);
+}
+
+/* --------------------------------------------------------------------------
+*  Messages
+*  -------------------------------------------------------------------------- */
+#buddypress #message-threads {
+    margin: 0 0 2.4rem;
+    padding: 0;
+    border: .1rem solid var(--bp-bh-border);
+    border-radius: var(--bloghash-normal-radius);
+    list-style: none;
+    overflow: hidden;
+}
+
+#buddypress #message-threads li {
+    padding: 1.4rem 1.6rem;
+    background: transparent;
+    border-bottom: .1rem solid var(--bp-bh-border);
+}
+
+#buddypress #message-threads li:last-child {
+    border-bottom: 0;
+}
+
+#buddypress #message-threads li.unread {
+    background: var(--bp-bh-primary-soft);
+}
+
+#buddypress #message-threads li .thread-subject .subject {
+    font-weight: 700;
+}
+
+#buddypress #bp-message-thread-list li.selected,
+#buddypress #bp-message-thread-list li.current {
+    background: var(--bp-bh-soft);
+}
+
+#buddypress .message-content,
+#buddypress .message-metadata {
+    font-size: 1.5rem;
+}
+
+#buddypress .bp-messages-content #thread-preview .preview-message {
+    padding: 1.6rem;
+    background: var(--bp-bh-soft);
+    border-radius: var(--bloghash-normal-radius);
+}
+
+/* --------------------------------------------------------------------------
+*  Pagination
+*  -------------------------------------------------------------------------- */
+#buddypress .bp-pagination {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+    margin: 0 0 2rem;
+    padding: 0;
+    border: 0;
+    font-size: 1.4rem;
+    color: var(--bp-bh-muted);
+    background: transparent;
+}
+
+#buddypress .bp-pagination .pagination-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    float: none;
+}
+
+#buddypress .bp-pagination .page-numbers {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 4rem;
+    height: 4rem;
+    padding: 0 1.2rem;
+    color: inherit;
+    background: transparent;
+    border: .1rem solid var(--bp-bh-border);
+    border-radius: var(--bloghash-normal-radius);
+    transition: var(--bloghash-transition-primary);
+}
+
+#buddypress .bp-pagination .page-numbers:hover,
+#buddypress .bp-pagination .page-numbers.current {
+    color: #fff;
+    background: var(--bp-bh-primary);
+    border-color: var(--bp-bh-primary);
+}
+
+#buddypress .bp-pagination .page-numbers.dots {
+    border-color: transparent;
+    background: transparent;
+    color: inherit;
+}
+
+/* --------------------------------------------------------------------------
+*  Registration / login pages
+*  -------------------------------------------------------------------------- */
+#buddypress #register-page .register-section,
+#buddypress #activate-page,
+#buddypress #signup-form {
+    margin-bottom: 2.4rem;
+}
+
+#buddypress #signup-form .submit {
+    margin-top: 2rem;
+}
+
+#buddypress .register-section h2,
+#buddypress .register-section .bp-heading {
+    margin-top: 2.4rem;
+    font-size: 2rem;
+}
+
+/* --------------------------------------------------------------------------
+*  Tooltips, dialogs, dropdowns
+*  -------------------------------------------------------------------------- */
+#buddypress [data-bp-tooltip]:after {
+    padding: .6rem 1rem;
+    font-family: inherit;
+    font-size: 1.2rem;
+    color: #fff;
+    background: var(--bloghash-secondary, #111827);
+    border-radius: var(--bloghash-normal-radius);
+    box-shadow: none;
+}
+
+#buddypress .bp-dropdown,
+#buddypress .dropdown-menu,
+#buddypress ul.bp-priority-dropdown {
+    background: var(--bloghash-white, #fff);
+    border: .1rem solid var(--bp-bh-border);
+    border-radius: var(--bloghash-normal-radius);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+}
+
+#buddypress .item-body > .bp-feedback:last-child,
+#buddypress #item-body > .bp-feedback:last-child {
+    margin-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+*  Widgets (BP sidebar widgets render outside #buddypress).
+*  -------------------------------------------------------------------------- */
+.widget.buddypress .item-options,
+.widget.widget_bp_core_members_widget .item-options,
+.widget.widget_bp_groups_widget .item-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 0 0 1.6rem;
+    padding: 0;
+    font-size: 1.4rem;
+}
+
+.widget.buddypress .item-options a.selected,
+.widget.buddypress .item-options a:hover {
+    color: var(--bloghash-primary, #F43676);
+}
+
+.widget.buddypress ul.item-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.widget.buddypress ul.item-list li {
+    padding: 1rem 0;
+    border-bottom: .1rem solid rgba(185, 185, 185, 0.4);
+}
+
+.widget.buddypress ul.item-list li:last-child {
+    border-bottom: 0;
+}
+
+.widget.buddypress .avatar {
+    border-radius: 50%;
+}
+
+/* --------------------------------------------------------------------------
+*  Dark mode
+*  -------------------------------------------------------------------------- */
+[data-darkmode="dark"] #buddypress {
+    --bp-bh-border: rgba(255, 255, 255, 0.15);
+    --bp-bh-soft: rgba(255, 255, 255, 0.06);
+    --bp-bh-muted: rgba(255, 255, 255, 0.65);
+}
+
+[data-darkmode="dark"] #buddypress input[type=text],
+[data-darkmode="dark"] #buddypress input[type=email],
+[data-darkmode="dark"] #buddypress input[type=password],
+[data-darkmode="dark"] #buddypress input[type=url],
+[data-darkmode="dark"] #buddypress input[type=tel],
+[data-darkmode="dark"] #buddypress input[type=number],
+[data-darkmode="dark"] #buddypress input[type=search],
+[data-darkmode="dark"] #buddypress input[type=date],
+[data-darkmode="dark"] #buddypress textarea,
+[data-darkmode="dark"] #buddypress select,
+[data-darkmode="dark"] #buddypress #whats-new,
+[data-darkmode="dark"] #buddypress .bp-dir-search-form,
+[data-darkmode="dark"] #buddypress .bp-feedback,
+[data-darkmode="dark"] #buddypress .activity-list .activity-item,
+[data-darkmode="dark"] #buddypress .bp-list > li,
+[data-darkmode="dark"] #buddypress .bp-dropdown,
+[data-darkmode="dark"] #buddypress .dropdown-menu {
+    color: var(--bloghash-secondary, #fff);
+    background-color: var(--bloghash-white, #1b1b1b);
+}
+
+[data-darkmode="dark"] #buddypress select,
+[data-darkmode="dark"] #buddypress .standard-form select {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+}
+
+[data-darkmode="dark"] #buddypress .bp-dir-search-form input[type=search],
+[data-darkmode="dark"] #buddypress .bp-dir-search-form input[type=text] {
+    background: transparent;
+}
+
+[data-darkmode="dark"] #buddypress .activity-list .activity-item,
+[data-darkmode="dark"] #buddypress .bp-list > li {
+    box-shadow: none;
+}
+
+/* --------------------------------------------------------------------------
+*  Responsive
+*  -------------------------------------------------------------------------- */
+@media screen and (max-width: 48.875em) {
+    #buddypress .activity-list li.activity-item,
+    #buddypress .activity-list .activity-item,
+    #buddypress .bp-list > li {
+        padding: 1.6rem;
+    }
+
+    #buddypress .bp-navs ul,
+    #buddypress .bp-navs ol {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    #buddypress .bp-navs ul::-webkit-scrollbar,
+    #buddypress .bp-navs ol::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Single member / group navs: one horizontally scrollable row instead of wrapping rows. */
+    #buddypress nav.bp-navs > ul,
+    #buddypress #object-nav > ul,
+    #buddypress #subnav > ul {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    #buddypress nav.bp-navs > ul > li,
+    #buddypress #object-nav > ul > li,
+    #buddypress #subnav > ul > li {
+        display: block;
+        flex: 0 0 auto;
+        float: none;
+        border: 0;
+    }
+
+    /* Activity item: slightly smaller avatar column. */
+    #buddypress .activity-list li.activity-item,
+    #buddypress .activity-list .activity-item {
+        grid-template-columns: 4.4rem minmax(0, 1fr);
+        column-gap: 1.2rem;
+    }
+
+    #buddypress .activity-list .activity-item .activity-avatar,
+    #buddypress .activity-list .activity-item .activity-avatar img {
+        width: 4.4rem;
+        height: 4.4rem;
+    }
+
+    #buddypress .group-item-actions {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    #buddypress .group-item-actions .user-list ul,
+    #buddypress .group-item-actions .moderators-lists ul {
+        justify-content: flex-start;
+    }
+
+    #buddypress .activity-update-form #whats-new-avatar {
+        text-align: left;
+    }
+
+    #buddypress .subnav-filters {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    #buddypress .subnav-filters .subnav-search {
+        flex-wrap: nowrap;
+        flex-basis: 100%;
+    }
+
+    #buddypress .subnav-filters .subnav-search .dir-search,
+    #buddypress .subnav-filters .subnav-search .bp-search {
+        min-width: 0;
+        max-width: none;
+    }
+
+    #buddypress .subnav-filters .component-filters,
+    #buddypress .subnav-filters .component-filters .select-wrap,
+    #buddypress .subnav-filters .component-filters select {
+        width: 100%;
+    }
+
+    #buddypress .bp-navs li a {
+        white-space: nowrap;
+    }
+
+    #buddypress .bp-dir-search-form,
+    #buddypress .bp-messages-search-form {
+        max-width: 100%;
+    }
+
+    #buddypress .activity-list .acomment-content,
+    #buddypress .activity-list .acomment-options {
+        margin-left: 0;
+    }
+
+    #buddypress .activity-update-form #whats-new-options {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+/* ==========================================================================
+*  Accent budget
+*  Primary (pink) is kept for: the active tab, hover/focus, main submit buttons and
+*  positive calls to action. Everything else (counts, names, secondary actions,
+*  favourites, load more) is neutral so the screens stay calm.
+*  ========================================================================== */
+
+/* Counts / badges. */
+#buddypress .bp-navs li .count,
+#buddypress .bp-navs li.selected .count,
+#buddypress .bp-navs li.current .count {
+    color: var(--bloghash-secondary, #111827);
+    background: var(--bp-bh-tint);
+    border: .1rem solid var(--bp-bh-line);
+    font-weight: 600;
+}
+
+#buddypress .bp-navs li.selected a .count,
+#buddypress .bp-navs li.current a .count {
+    color: var(--bp-bh-primary);
+    background: var(--bp-bh-primary-soft);
+    border-color: var(--bp-bh-primary);
+}
+
+/* Names and titles read as text, not as links. */
+#buddypress .activity-header a:not(.view),
+#buddypress .activity-header .activity-time-since a,
+#buddypress .acomment-meta a:first-child,
+#buddypress .bp-list .list-title a,
+#buddypress .group-member a {
+    color: inherit;
+    font-weight: 600;
+}
+
+#buddypress .activity-header a:not(.view):hover,
+#buddypress .acomment-meta a:first-child:hover,
+#buddypress .bp-list .list-title a:hover,
+#buddypress .group-member a:hover {
+    color: var(--bp-bh-primary);
+}
+
+#buddypress .activity-header a.view,
+#buddypress .activity-header .time-since,
+#buddypress .acomment-meta .time-since,
+#buddypress .acomment-meta a.activity-time-since {
+    color: var(--bp-bh-muted);
+    font-weight: 400;
+}
+
+/* Directory / profile relationship and membership actions: one size, neutral by default. */
+#buddypress .bp-list .action a,
+#buddypress .bp-list .action .button,
+#buddypress .bp-list .action a.button,
+#buddypress .bp-list .action button,
+#buddypress .generic-button .button,
+#buddypress .generic-button a.button,
+#buddypress .generic-button a,
+#buddypress .generic-button button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.4rem;
+    padding: .4rem 1.4rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+    color: var(--bloghash-secondary, #111827);
+    background: transparent;
+    border: .1rem solid var(--bp-bh-line-strong);
+    border-radius: var(--bloghash-normal-radius);
+}
+
+#buddypress .bp-list .action a:hover,
+#buddypress .bp-list .action .button:hover,
+#buddypress .bp-list .action a.button:hover,
+#buddypress .bp-list .action button:hover,
+#buddypress .generic-button .button:hover,
+#buddypress .generic-button a:hover,
+#buddypress .generic-button button:hover {
+    color: var(--bloghash-secondary, #111827);
+    background: var(--bp-bh-tint);
+    border-color: var(--bloghash-secondary, #111827);
+}
+
+/* Leaving / removing: neutral, with a red hint on hover. */
+#buddypress .bp-list .action a.is_friend:hover,
+#buddypress .bp-list .action a.leave-group:hover,
+#buddypress .bp-list .action a.pending_friend:hover,
+#buddypress .generic-button a.is_friend:hover,
+#buddypress .generic-button a.leave-group:hover,
+#buddypress .generic-button a.reject:hover,
+#buddypress .generic-button a.pending_friend:hover {
+    color: var(--bp-bh-danger);
+    background: transparent;
+    border-color: var(--bp-bh-danger);
+}
+
+/* Positive actions: soft accent, solid only on hover. */
+#buddypress .bp-list .action a.not_friends,
+#buddypress .bp-list .action a.join-group,
+#buddypress .bp-list .action a.request-membership,
+#buddypress .bp-list .action a.accept-invite,
+#buddypress .bp-list .action a.accept,
+#buddypress .generic-button a.not_friends,
+#buddypress .generic-button a.join-group,
+#buddypress .generic-button a.request-membership,
+#buddypress .generic-button a.accept-invite,
+#buddypress .generic-button a.accept {
+    color: var(--bp-bh-primary);
+    background: var(--bp-bh-primary-soft);
+    border-color: transparent;
+}
+
+#buddypress .bp-list .action a.not_friends:hover,
+#buddypress .bp-list .action a.join-group:hover,
+#buddypress .bp-list .action a.request-membership:hover,
+#buddypress .bp-list .action a.accept-invite:hover,
+#buddypress .bp-list .action a.accept:hover,
+#buddypress .generic-button a.not_friends:hover,
+#buddypress .generic-button a.join-group:hover,
+#buddypress .generic-button a.request-membership:hover,
+#buddypress .generic-button a.accept-invite:hover,
+#buddypress .generic-button a.accept:hover {
+    color: #fff;
+    background: var(--bp-bh-primary);
+    border-color: var(--bp-bh-primary);
+}
+
+/* Activity action pills (comment, favourite, delete): soft accent on hover and when active. */
+#buddypress .activity-list .activity-meta.action .button:hover,
+#buddypress .activity-list .activity-meta.action .button:focus,
+#buddypress .activity-list .activity-meta.action .button.unfav,
+#buddypress .activity-list .activity-meta.action .button.fav.active,
+#buddypress .activity-list .activity-meta.action .button.unfav:hover {
+    color: var(--bp-bh-primary);
+    background: var(--bp-bh-primary-soft);
+    border-color: var(--bp-bh-primary);
+}
+
+#buddypress .activity-list .activity-meta.action .button:hover span,
+#buddypress .activity-list .activity-meta.action .button:focus span,
+#buddypress .activity-list .activity-meta.action .button:hover:before,
+#buddypress .activity-list .activity-meta.action .button:focus:before,
+#buddypress .activity-list .activity-meta.action .button.unfav span,
+#buddypress .activity-list .activity-meta.action .button.fav.active span {
+    color: var(--bp-bh-primary);
+}
+
+#buddypress .activity-list .activity-meta.action .button.delete-activity:hover,
+#buddypress .activity-list .activity-meta.action .button[class*="delete"]:hover {
+    color: var(--bp-bh-danger);
+    background: transparent;
+    border-color: var(--bp-bh-danger);
+}
+
+#buddypress .activity-list .activity-meta.action .button.delete-activity:hover span,
+#buddypress .activity-list .activity-meta.action .button[class*="delete"]:hover span,
+#buddypress .activity-list .activity-meta.action .button[class*="delete"]:hover:before {
+    color: var(--bp-bh-danger);
+}
+
+/* "Load more" is a secondary action. */
+#buddypress .activity-list .load-more a,
+#buddypress .activity-list .load-newest a {
+    color: var(--bloghash-secondary, #111827);
+    background: transparent;
+    border: .1rem solid var(--bp-bh-line-strong);
+}
+
+#buddypress .activity-list .load-more a:hover,
+#buddypress .activity-list .load-newest a:hover {
+    color: var(--bloghash-secondary, #111827);
+    background: var(--bp-bh-tint);
+    border-color: var(--bloghash-secondary, #111827);
+}
+
+/* ==========================================================================
+*  Messages
+*  ========================================================================== */
+#buddypress #message-threads {
+    margin: 0 0 2.4rem;
+    padding: 0;
+    list-style: none;
+    border: .1rem solid var(--bp-bh-line);
+    border-radius: var(--bloghash-normal-radius);
+    background: transparent;
+}
+
+#buddypress #message-threads .thread-item {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin: 0;
+    padding: 1.2rem 1.6rem;
+    background: transparent;
+    border-bottom: .1rem solid var(--bp-bh-line);
+    transition: var(--bloghash-transition-primary);
+}
+
+#buddypress #message-threads .thread-item:last-child {
+    border-bottom: 0;
+}
+
+#buddypress #message-threads .thread-item:hover,
+#buddypress #message-threads .thread-item.selected {
+    background: var(--bp-bh-tint);
+}
+
+#buddypress #message-threads .thread-item.unread {
+    background: var(--bp-bh-tint);
+    box-shadow: inset .3rem 0 0 var(--bp-bh-primary);
+}
+
+#buddypress #message-threads .thread-cb {
+    flex: 0 0 auto;
+    width: auto;
+}
+#buddypress #message-threads .thread-from,
+#buddypress #message-threads .thread-to {
+    display: flex;
+    flex: 0 0 17rem;
+    align-items: center;
+    gap: 1rem;
+    min-width: 0;
+    width: auto;
+}
+#buddypress #message-threads .thread-from a.user-link,
+#buddypress #message-threads .thread-to a.user-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-width: 0;
+    color: inherit;
+}
+#buddypress #message-threads .thread-from .avatar,
+#buddypress #message-threads .thread-to .avatar {
+    flex: 0 0 auto;
+    width: 3.6rem;
+    height: 3.6rem;
+    border-radius: 50%;
+}
+#buddypress #message-threads .thread-from .user-name,
+#buddypress #message-threads .thread-to .user-name {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#buddypress #message-threads .thread-content {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto;
+}
+
+#buddypress #message-threads .thread-subject {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#buddypress #message-threads .thread-subject .subject {
+    font-weight: 600;
+    color: inherit;
+}
+
+#buddypress #message-threads .thread-item.unread .thread-subject .subject {
+    font-weight: 700;
+}
+
+#buddypress #message-threads .thread-subject .subject:hover {
+    color: var(--bp-bh-primary);
+}
+
+#buddypress #message-threads .thread-subject .thread-count {
+    color: var(--bp-bh-muted);
+    font-weight: 400;
+}
+
+#buddypress #message-threads .excerpt {
+    margin: .2rem 0 0;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--bp-bh-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#buddypress #message-threads .thread-date {
+    flex: 0 0 auto;
+    width: auto;
+    font-size: 1.3rem;
+    color: var(--bp-bh-muted);
+}
+
+/* Active conversation. */
+#buddypress .preview-pane-header,
+#buddypress #thread-preview .message-title.preview-thread-title,
+#buddypress #thread-preview h2.preview-thread-title {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+}
+
+#buddypress #thread-preview .message-title.preview-thread-title,
+#buddypress #thread-preview h2.preview-thread-title {
+    margin: 0 0 1.2rem;
+    padding-bottom: 1.2rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: inherit;
+    border-bottom: .1rem solid var(--bp-bh-line);
+}
+
+#buddypress .message-title .messages-title {
+    font-weight: 400;
+    color: var(--bp-bh-muted);
+}
+
+#buddypress .preview-pane-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+    margin-bottom: 1.6rem;
+}
+
+#buddypress dl.thread-participants {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0;
+}
+
+#buddypress dl.thread-participants dt {
+    margin: 0;
+    font-weight: 600;
+}
+
+#buddypress dl.thread-participants dd,
+#buddypress ul.participants-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#buddypress ul.participants-list {
+    display: flex;
+    gap: .6rem;
+}
+
+#buddypress ul.participants-list li {
+    margin: 0;
+    list-style: none;
+}
+
+#buddypress ul.participants-list .avatar.mini {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+}
+
+#buddypress .preview-pane-header .actions {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+}
+
+#buddypress .preview-message {
+    margin: 0 0 1.2rem;
+    padding: 1.4rem 1.8rem;
+    background: var(--bp-bh-tint);
+    border: 0;
+    border-radius: var(--bloghash-normal-radius);
+}
+
+/* Icon-only buttons (delete, star, view, close): quiet by default. */
+#buddypress button.bp-icons,
+#buddypress a.bp-icons,
+#buddypress .message-action-delete,
+#buddypress #close-notice {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.6rem;
+    min-width: 0;
+    height: 3.6rem;
+    min-height: 0;
+    padding: 0;
+    color: var(--bp-bh-muted);
+    background: transparent;
+    border: .1rem solid transparent;
+    border-radius: var(--bloghash-normal-radius);
+}
+
+#buddypress button.bp-icons:hover,
+#buddypress a.bp-icons:hover,
+#buddypress .message-action-star:hover,
+#buddypress .message-action-view:hover,
+#buddypress #close-notice:hover {
+    color: var(--bp-bh-primary);
+    background: var(--bp-bh-tint);
+    border-color: transparent;
+}
+
+#buddypress .message-action-delete:hover {
+    color: var(--bp-bh-danger);
+    background: var(--bp-bh-tint);
+    border-color: transparent;
+}
+
+/* Site-wide notice. */
+#buddypress #message.bp-sitewide-notice,
+#buddypress .bp-sitewide-notice,
+#buddypress .bp-feedback.bp-sitewide-notice {
+    border-left-color: var(--bloghash-secondary, #111827);
+}
+
+#buddypress .bp-sitewide-notice .bp-icon {
+    background: var(--bloghash-secondary, #111827);
+}
+
+/* Slightly tighter parent tabs so long member navs fit more often. */
+#buddypress #object-nav > ul > li > a,
+#buddypress nav.main-navs > ul > li > a {
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+}
+
+/* Friendship requests list: same tile language as the directories. */
+#buddypress ul.friends-request-list > li {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+}
+
+#buddypress ul.friends-request-list .item-avatar {
+    flex: 0 0 7rem;
+    float: none;
+    width: 7rem;
+    margin: 0;
+}
+
+#buddypress ul.friends-request-list .item {
+    flex: 1 1 auto;
+    min-width: 0;
+    float: none;
+    width: auto;
+    margin: 0;
+}
+
+#buddypress ul.friends-request-list .item-title,
+#buddypress ul.friends-request-list .item-title a {
+    margin: 0 0 .2rem;
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: inherit;
+}
+
+#buddypress ul.friends-request-list .item-title a:hover {
+    color: var(--bp-bh-primary);
+}
+
+#buddypress ul.friends-request-list .friends-meta.action {
+    display: flex;
+    flex: 0 0 auto;
+    gap: .8rem;
+    float: none;
+    width: auto;
+    margin: 0 0 0 auto;
+}
+
+#buddypress ul.friends-request-list .generic-button {
+    margin: 0;
+}
+
+#buddypress .generic-button button.accept,
+#buddypress .bp-list .action button.accept {
+    color: var(--bp-bh-primary);
+    background: var(--bp-bh-primary-soft);
+    border-color: var(--bp-bh-primary);
+}
+
+#buddypress .generic-button button.accept:hover,
+#buddypress .bp-list .action button.accept:hover {
+    color: #fff;
+    background: var(--bp-bh-primary);
+}
+
+#buddypress .generic-button button.reject:hover,
+#buddypress .bp-list .action button.reject:hover {
+    color: var(--bp-bh-danger);
+    background: transparent;
+    border-color: var(--bp-bh-danger);
+}
+
+/* Notice dismiss icon. */
+#buddypress .bp-feedback a.bp-tooltip,
+#buddypress .bp-sitewide-notice a.bp-tooltip {
+    color: var(--bp-bh-muted);
+}
+
+#buddypress .bp-feedback a.bp-tooltip:hover,
+#buddypress .bp-sitewide-notice a.bp-tooltip:hover {
+    color: var(--bp-bh-danger);
+}
+
+/* Notifications table. */
+#buddypress table.notifications td a,
+#buddypress table.notifications .notification-description a {
+    color: inherit;
+    font-weight: 500;
+}
+
+#buddypress table.notifications td a:hover {
+    color: var(--bp-bh-primary);
+}
+
+#buddypress table.notifications .actions a,
+#buddypress table.notifications td.actions a,
+#buddypress table.notifications .notification-actions a {
+    color: var(--bp-bh-muted);
+}
+
+#buddypress table.notifications .actions a:hover,
+#buddypress table.notifications .notification-actions a:hover,
+#buddypress table.notifications .actions a.mark-read:hover {
+    color: var(--bp-bh-primary);
+}
+
+#buddypress table.notifications .actions a.delete:hover,
+#buddypress table.notifications .actions a[class*="delete"]:hover,
+#buddypress table.notifications .notification-actions a.delete:hover {
+    color: var(--bp-bh-danger);
+}
+
+#buddypress table.notifications tr.unread td,
+#buddypress table.notifications tr.unread th {
+    background: var(--bp-bh-tint);
+}
+
+/* Group invitations list. */
+#buddypress ul.invites > li .wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.6rem;
+}
+
+#buddypress ul.invites > li .item-avatar {
+    flex: 0 0 7rem;
+    float: none;
+    width: 7rem;
+    margin: 0;
+}
+
+#buddypress ul.invites > li .item {
+    flex: 1 1 auto;
+    min-width: 0;
+    float: none;
+    width: auto;
+    margin: 0;
+}
+
+#buddypress ul.invites > li .list-title {
+    margin: 0 0 .2rem;
+    font-size: 1.7rem;
+}
+
+#buddypress ul.invites > li p.meta,
+#buddypress ul.invites > li p.desc {
+    margin: .4rem 0 0;
+    font-size: 1.4rem;
+    color: var(--bp-bh-muted);
+}
+
+#buddypress ul.invites > li p:empty {
+    display: none;
+}
+
+#buddypress ul.invites > li ul.groups-meta.action {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .8rem;
+    margin: 1.2rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+#buddypress ul.invites > li ul.groups-meta.action > li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Titles in any list read as text; accept buttons always carry a visible border. */
+#buddypress .item-title a,
+#buddypress .list-title a,
+#buddypress h2.list-title a {
+    color: inherit;
+    font-weight: 600;
+}
+
+#buddypress .item-title a:hover,
+#buddypress .list-title a:hover {
+    color: var(--bp-bh-primary);
+}
+
+#buddypress .bp-list .action .accept,
+#buddypress .generic-button .accept,
+#buddypress .groups-meta .accept a,
+#buddypress li.accept a {
+    border-style: solid;
+    border-width: .1rem;
+}
+
+/* Group description accent is neutral. */
+#buddypress .group-description {
+    border-left-color: var(--bp-bh-line-strong);
+}
+
+#buddypress .generic-button a.button.accept,
+#buddypress .bp-list .action a.button.accept,
+#buddypress .generic-button button.button.accept {
+    border-color: var(--bp-bh-primary);
+}
+
+#buddypress .generic-button a.button.accept:hover,
+#buddypress .bp-list .action a.button.accept:hover,
+#buddypress .generic-button button.button.accept:hover {
+    color: #fff;
+    background: var(--bp-bh-primary);
+}
+
+/* Names keep full contrast in both colour schemes (headers use a muted text colour). */
+#buddypress .activity-header a:not(.view),
+#buddypress .acomment-meta a:first-child {
+    color: var(--bloghash-secondary, inherit);
+}
+
+#buddypress .activity-header a:not(.view):hover,
+#buddypress .acomment-meta a:first-child:hover {
+    color: var(--bp-bh-primary);
+}
+/* Tiles and lists keep left-aligned text at every width. */
+#buddypress ul.members-list .item,
+#buddypress ul.members-list .item-block,
+#buddypress ul.members-list .item-meta,
+#buddypress ul.groups-list .item,
+#buddypress ul.groups-list .item-block,
+#buddypress ul.groups-list .item-meta,
+#buddypress ul.friends-request-list .item,
+/* Tiles and lists keep left-aligned text at every width. */
+#buddypress ul.members-group-list .item,
+#buddypress ul.members-group-list .item-block,
+#buddypress ul.members-group-list .item-meta {
+    text-align: left;
+}
+
+@media screen and (max-width: 48.875em) {
+    /* Messages: sender + date on the first row, subject and excerpt below. */
+    #buddypress #message-threads .thread-item {
+        flex-wrap: wrap;
+        row-gap: .4rem;
+    }
+#buddypress #message-threads .thread-from,
+#buddypress #message-threads .thread-to {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    #buddypress #message-threads .thread-date {
+        order: 2;
+        margin-left: auto;
+    }
+
+    #buddypress #message-threads .thread-content {
+        order: 3;
+        flex: 1 1 100%;
+        padding-left: 3.4rem;
+    }
+
+    /* Site-wide notice: keep text clear of the dismiss icon. */
+    #buddypress .bp-feedback.bp-sitewide-notice {
+        position: relative;
+        padding-right: 4.4rem;
+    }
+
+    #buddypress ul.friends-request-list > li,
+    #buddypress ul.invites > li .wrap {
+        flex-wrap: wrap;
+    }
+
+    #buddypress ul.friends-request-list .friends-meta.action {
+        flex: 1 1 100%;
+        margin-left: 0;
+    }
+}
+#buddypress .bp-list .list-title,
+#buddypress .bp-list .list-title a,
+#buddypress .bp-list .item-title,
+#buddypress .bp-list .action,
+#buddypress ul.members-list .action,
+#buddypress ul.groups-list .action,
+#buddypress ul.members-group-list .action {
+    text-align: left;
+}
+#buddypress ul.members-list .list-wrap .action,
+#buddypress ul.groups-list .list-wrap .action,
+#buddypress ul.members-group-list .list-wrap .action {
+    justify-content: flex-start;
+}
+
+/* ==========================================================================
+*  Sub-tab consistency and spacing rhythm
+*  ========================================================================== */
+
+/* Third-level tabs (Upload / Take photo) use the same square neutral chips as child tabs. */
+#buddypress ul.avatar-nav-items {
+    gap: .6rem;
+    margin: 0 0 2.4rem;
+    border-bottom: 0;
+}
+
+#buddypress ul.avatar-nav-items li a,
+#buddypress ul.avatar-nav-items li span {
+    padding: .7rem 1.4rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: inherit;
+    background: transparent;
+    border: .1rem solid var(--bp-bh-line);
+    border-radius: 0;
+}
+
+#buddypress ul.avatar-nav-items li a:hover {
+    color: inherit;
+    background: var(--bp-bh-tint);
+    border-color: var(--bp-bh-line-strong);
+}
+
+#buddypress ul.avatar-nav-items li.current a,
+#buddypress ul.avatar-nav-items li.current span {
+    font-weight: 600;
+    color: var(--bloghash-secondary, #111827);
+    background: var(--bp-bh-tint);
+    border-color: var(--bp-bh-line-strong);
+}
+
+/* Notices are regular text. */
+#buddypress .bp-feedback p,
+#buddypress .bp-feedback p em {
+    font-style: normal;
+}
+/* Message senders / recipients read as text. */
+#buddypress #message-threads .thread-from a,
+#buddypress #message-threads .thread-from .user-name,
+#buddypress #message-threads .thread-from .num-recipients,
+/* Message senders / recipients read as text. */
+#buddypress #message-threads .thread-to a,
+#buddypress #message-threads .thread-to .user-name,
+#buddypress #message-threads .thread-to .num-recipients {
+    color: inherit;
+}
+#buddypress #message-threads .thread-from .num-recipients,
+#buddypress #message-threads .thread-to .num-recipients {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--bp-bh-muted);
+}
+
+/* Active conversation is one padded card. */
+#buddypress #thread-preview {
+    margin: 2rem 0 0;
+    padding: 2rem;
+    background: transparent;
+    border: .1rem solid var(--bp-bh-line);
+    border-radius: var(--bloghash-normal-radius);
+}
+
+#buddypress #thread-preview .preview-content {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+#buddypress #thread-preview .preview-pane-header {
+    margin-bottom: 1.6rem;
+    padding: 0;
+}
+
+/* Vertical rhythm: tab rows, filter rows and headings share the same gaps. */
+#buddypress .bp-subnavs,
+#buddypress .subnav-filters,
+#buddypress ul.subnav-filters {
+    margin-bottom: 2.4rem;
+}
+
+#buddypress .bp-navs {
+    margin-bottom: 2rem;
+}
+
+#buddypress #item-body > h2:first-child,
+#buddypress #item-body > h3:first-child,
+#buddypress .item-body > h2:first-child,
+#buddypress .bp-screen-title {
+    margin-top: 0;
+}
+
+#buddypress #message-threads .thread-to {
+    flex-wrap: wrap;
+    flex-basis: 21rem;
+    row-gap: 0;
+}
+
+#buddypress #message-threads .thread-from .user-name,
+#buddypress #message-threads .thread-to .user-name {
+    white-space: nowrap;
+}
+
+#buddypress .bp-feedback,
+#buddypress .bp-feedback *,
+#buddypress .bp-help-text,
+#buddypress p.info,
+#buddypress p.warning,
+#buddypress p.error {
+    font-style: normal;
+}
+
+/* Table cells wrap at word boundaries only (the page-wide anywhere-wrap would split short words). */
+#buddypress table td,
+#buddypress table th {
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
+@media screen and (max-width: 48.875em) {
+    #buddypress ul.subnav-filters > li.bp-search,
+    #buddypress .subnav-filters > ul > li.bp-search {
+        flex: 1 1 100%;
+        max-width: none;
+        margin-left: 0;
+    }
+
+    #buddypress ul.subnav-filters {
+        flex-wrap: wrap;
+        gap: 1.2rem;
+    }
+}
+/* Member rows without a .list-wrap (group member lists): avatar left, details right at every width. */
+#buddypress ul.members-list > li:not(:has(.list-wrap)),
+#buddypress ul.members-group-list > li:not(:has(.list-wrap)) {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    text-align: left;
+}
+#buddypress ul.members-list > li:not(:has(.list-wrap)) > .item-avatar,
+#buddypress ul.members-group-list > li:not(:has(.list-wrap)) > .item-avatar {
+    flex: 0 0 7rem;
+    float: none;
+    width: 7rem;
+    margin: 0;
+}
+#buddypress ul.members-list > li:not(:has(.list-wrap)) > .item,
+#buddypress ul.members-group-list > li:not(:has(.list-wrap)) > .item {
+    flex: 1 1 auto;
+    min-width: 0;
+    float: none;
+    width: auto;
+    margin: 0;
+    text-align: left;
+}
+#buddypress ul.members-list > li:not(:has(.list-wrap)) > .action,
+#buddypress ul.members-group-list > li:not(:has(.list-wrap)) > .action {
+    flex: 0 0 auto;
+    float: none;
+    margin: 0;
+}
+
+@media screen and (max-width: 48.875em) {
+#buddypress ul.members-list > li:not(:has(.list-wrap)),
+#buddypress ul.members-group-list > li:not(:has(.list-wrap)) {
+        flex-wrap: wrap;
+    }
+#buddypress ul.members-list > li:not(:has(.list-wrap)) > .action,
+#buddypress ul.members-group-list > li:not(:has(.list-wrap)) > .action {
+        flex: 1 1 100%;
+    }
+}
+
+/* ==========================================================================
+*  Accept / Reject semantics
+*  Accept is positive (green), Reject is negative (red outline). The labels stay
+*  visible, so meaning never depends on colour alone. #buddypress#buddypress
+*  doubles the id weight so these win over the earlier generic button rules.
+*  ========================================================================== */
+#buddypress {
+    --bp-bh-success: #1a7f4b;
+    --bp-bh-success-soft: rgba(26, 127, 75, 0.1);
+}
+
+[data-darkmode="dark"] #buddypress {
+    --bp-bh-success: #4cc38a;
+    --bp-bh-success-soft: rgba(76, 195, 138, 0.14);
+}
+
+/* The wrapping list item is not a button. */
+#buddypress#buddypress li.accept.generic-button,
+#buddypress#buddypress li.reject.generic-button {
+    padding: 0;
+    background: transparent;
+    border: 0;
+}
+
+#buddypress#buddypress a.accept,
+#buddypress#buddypress button.accept,
+#buddypress#buddypress li.accept > a,
+#buddypress#buddypress .generic-button a.accept,
+#buddypress#buddypress .bp-list .action a.accept {
+    color: var(--bp-bh-success);
+    background: var(--bp-bh-success-soft);
+    border: .1rem solid var(--bp-bh-success);
+}
+
+#buddypress#buddypress a.accept:hover,
+#buddypress#buddypress a.accept:focus,
+#buddypress#buddypress button.accept:hover,
+#buddypress#buddypress button.accept:focus,
+#buddypress#buddypress li.accept > a:hover,
+#buddypress#buddypress .generic-button a.accept:hover,
+#buddypress#buddypress .bp-list .action a.accept:hover {
+    color: #fff;
+    background: var(--bp-bh-success);
+    border-color: var(--bp-bh-success);
+}
+
+#buddypress#buddypress a.reject,
+#buddypress#buddypress button.reject,
+#buddypress#buddypress li.reject > a,
+#buddypress#buddypress .generic-button a.reject,
+#buddypress#buddypress .bp-list .action a.reject {
+    color: var(--bp-bh-danger);
+    background: transparent;
+    border: .1rem solid var(--bp-bh-danger);
+}
+
+#buddypress#buddypress a.reject:hover,
+#buddypress#buddypress a.reject:focus,
+#buddypress#buddypress button.reject:hover,
+#buddypress#buddypress button.reject:focus,
+#buddypress#buddypress li.reject > a:hover,
+#buddypress#buddypress .generic-button a.reject:hover,
+#buddypress#buddypress .bp-list .action a.reject:hover {
+    color: #fff;
+    background: var(--bp-bh-danger);
+    border-color: var(--bp-bh-danger);
+}
+
+/* Invitation title and member count are separated. */
+#buddypress ul.invites > li .list-title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: .4rem 1rem;
+}
+
+#buddypress ul.invites > li .list-title .small,
+#buddypress ul.invites > li .list-title span {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--bp-bh-muted);
+}
+
+/* Password helper buttons are secondary; "Save Changes" stays the primary action. */
+#buddypress#buddypress .standard-form button.wp-generate-pw,
+#buddypress#buddypress .standard-form button.wp-hide-pw,
+#buddypress#buddypress .standard-form button.wp-cancel-pw {
+    color: var(--bloghash-secondary, #111827);
+    background: transparent;
+    border: .1rem solid var(--bp-bh-line-strong);
+}
+
+#buddypress#buddypress .standard-form button.wp-generate-pw:hover,
+#buddypress#buddypress .standard-form button.wp-hide-pw:hover,
+#buddypress#buddypress .standard-form button.wp-cancel-pw:hover {
+    color: var(--bloghash-secondary, #111827);
+    background: var(--bp-bh-tint);
+    border-color: var(--bloghash-secondary, #111827);
+}
+
+#buddypress ul.invites > li .list-title,
+#buddypress ul.invites > li .item > * {
+    float: none;
+    width: auto;
+    max-width: 100%;
+}
+
+/* ==========================================================================
+*  Better Messages (live chat for BuddyPress)
+*  Colours come from CSS variables set in class-bloghash-buddypress.php.
+*  ========================================================================== */
+.bm-wrap-main,
+.bm-wrap-main :where(button, input, textarea, select, p, span, div, a, h1, h2, h3, h4) {
+    font-family: inherit;
+}
+
+#buddypress .bm-wrap-main {
+    margin: 0 0 2.4rem;
+}
+
+#buddypress .bm-wrap-main .bm-card {
+    border-radius: var(--bloghash-normal-radius);
+    box-shadow: none;
+}
+
+#buddypress .bm-wrap-main button,
+#buddypress .bm-wrap-main a {
+    text-shadow: none;
+}
+
+/* Keep theme button rules (min-height, padding, pill radius) away from the chat UI. */
+#buddypress .bm-wrap-main button:not(.bm-btn-accent) {
+    min-height: 0;
+    box-shadow: none;
+}
+
+/* The page-wide long-word wrapping would shrink chat bubbles; the chat handles its own wrapping. */
+#buddypress .bm-wrap-main,
+#buddypress .bm-wrap-main * {
+    overflow-wrap: revert;
+    word-break: revert;
+}
+
+/* Narrow screens: the chat sits inside the theme card, so give bubbles more of the row. */
+@media screen and (max-width: 48.875em) {
+    #buddypress .bm-wrap-main .bm-msg-stack__bubbles {
+        max-width: 88%;
+    }
+
+    #buddypress .bm-wrap-main .bm-card {
+        border-radius: var(--bloghash-normal-radius);
+    }
+}
+
+@media screen and (max-width: 48.875em) {
+    /* Let the chat use the card's side padding so conversations have room on phones. */
+    #buddypress .bm-wrap-main {
+        margin-left: -1.6rem;
+        margin-right: -1.6rem;
+    }
+}
+
+/* Site-wide notice marker uses a neutral that works in light and dark. */
+#buddypress #message.bp-sitewide-notice,
+#buddypress .bp-sitewide-notice,
+#buddypress .bp-feedback.bp-sitewide-notice {
+    border-left-color: var(--bp-bh-line-strong);
+}
+
+#buddypress .bp-sitewide-notice .bp-icon {
+    background: var(--bp-bh-line-strong);
+}
+
+/* "Created / joined the group" preview: a compact horizontal card. */
+#buddypress .activity-list .bp-group-activity-preview {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+}
+
+#buddypress .activity-list .bp-group-short-description {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 1.6rem;
+    margin: 0;
+    padding: 1.6rem;
+    text-align: left;
+    background: var(--bp-bh-tint);
+    border: 0;
+    border-radius: var(--bloghash-normal-radius);
+}
+
+#buddypress .activity-list .bp-group-avatar-content {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0;
+    padding: 0;
+    width: 7rem;
+}
+
+#buddypress .activity-list .bp-group-avatar-content img,
+#buddypress .activity-list .bp-group-avatar-content .avatar {
+    display: block;
+    width: 7rem;
+    height: 7rem;
+    margin: 0;
+    object-fit: cover;
+    border-radius: var(--bloghash-normal-radius);
+}
+
+#buddypress .activity-list .bp-group-short-description-title {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+    padding: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: left;
+}
+
+#buddypress .activity-list .bp-group-short-description-title a {
+    color: inherit;
+}
+
+#buddypress .activity-list .bp-group-short-description-title a:hover {
+    color: var(--bp-bh-primary);
+}
+
+#buddypress .activity-list .bp-group-short-description .bp-profile-button {
+    grid-column: 3;
+    grid-row: 1;
+    margin: 0;
+    padding: 0;
+}
+
+#buddypress .activity-list .bp-group-short-description .bp-profile-button a.button {
+    min-height: 3.6rem;
+    padding: .6rem 1.6rem;
+    font-size: 1.3rem;
+}
+
+@media screen and (max-width: 48.875em) {
+    #buddypress .activity-list .bp-group-short-description {
+        grid-template-columns: 5.6rem minmax(0, 1fr);
+        padding: 1.2rem;
+        column-gap: 1.2rem;
+        row-gap: 1.2rem;
+    }
+
+    #buddypress .activity-list .bp-group-avatar-content,
+    #buddypress .activity-list .bp-group-avatar-content img,
+    #buddypress .activity-list .bp-group-avatar-content .avatar {
+        width: 5.6rem;
+        height: 5.6rem;
+    }
+
+    #buddypress .activity-list .bp-group-short-description .bp-profile-button {
+        grid-column: 1 / -1;
+        grid-row: 2;
+    }
+}
+
+/* Member preview cards (friendship, new member, new photo, profile update) match the group card. */
+#buddypress .activity-list .bp-member-activity-preview {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+}
+
+#buddypress .activity-list .bp-member-short-description {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "title action" "nick action";
+    align-items: center;
+    column-gap: 1.6rem;
+    row-gap: .2rem;
+    margin: 0;
+    padding: 1.6rem;
+    text-align: left;
+    background: var(--bp-bh-tint);
+    border: 0;
+    border-radius: var(--bloghash-normal-radius);
+}
+
+#buddypress .activity-list .bp-member-short-description:has(.bp-member-avatar-content) {
+    grid-template-columns: 7rem minmax(0, 1fr) auto;
+    grid-template-areas: "avatar title action" "avatar nick action";
+}
+
+#buddypress .activity-list .bp-member-avatar-content {
+    grid-area: avatar;
+    width: 7rem;
+    margin: 0;
+    padding: 0;
+}
+
+#buddypress .activity-list .bp-member-avatar-content img,
+#buddypress .activity-list .bp-member-avatar-content .avatar {
+    display: block;
+    width: 7rem;
+    height: 7rem;
+    margin: 0;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+#buddypress .activity-list .bp-member-short-description-title,
+#buddypress .activity-list .bp-member-nickname {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    overflow-wrap: anywhere;
+}
+
+#buddypress .activity-list .bp-member-short-description-title {
+    grid-area: title;
+    align-self: end;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+#buddypress .activity-list .bp-member-nickname {
+    grid-area: nick;
+    align-self: start;
+    font-size: 1.4rem;
+    color: var(--bp-bh-muted);
+}
+
+#buddypress .activity-list .bp-member-short-description-title a {
+    color: inherit;
+}
+
+#buddypress .activity-list .bp-member-short-description-title a:hover {
+    color: var(--bp-bh-primary);
+}
+
+#buddypress .activity-list .bp-member-nickname a {
+    color: var(--bp-bh-muted);
+}
+
+#buddypress .activity-list .bp-member-nickname a:hover {
+    color: var(--bp-bh-primary);
+}
+
+#buddypress .activity-list .bp-member-short-description .bp-profile-button {
+    grid-area: action;
+    margin: 0;
+    padding: 0;
+}
+
+#buddypress .activity-list .bp-member-short-description .bp-profile-button a.button {
+    min-height: 3.6rem;
+    padding: .6rem 1.6rem;
+    font-size: 1.3rem;
+}
+
+@media screen and (max-width: 48.875em) {
+    #buddypress .activity-list .bp-member-short-description,
+    #buddypress .activity-list .bp-member-short-description:has(.bp-member-avatar-content) {
+        padding: 1.2rem;
+        column-gap: 1.2rem;
+        row-gap: .2rem;
+    }
+
+    #buddypress .activity-list .bp-member-short-description {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas: "title" "nick" "action";
+    }
+
+    #buddypress .activity-list .bp-member-short-description:has(.bp-member-avatar-content) {
+        grid-template-columns: 5.6rem minmax(0, 1fr);
+        grid-template-areas: "avatar title" "avatar nick" "action action";
+    }
+
+    #buddypress .activity-list .bp-member-avatar-content,
+    #buddypress .activity-list .bp-member-avatar-content img,
+    #buddypress .activity-list .bp-member-avatar-content .avatar {
+        width: 5.6rem;
+        height: 5.6rem;
+    }
+
+    #buddypress .activity-list .bp-member-short-description .bp-profile-button {
+        margin-top: .8rem;
+    }
+}
+
+/* Group / member preview cards that include a cover image. */
+#buddypress .activity-list .bp-group-activity-preview:has([class*="preview-cover"]),
+#buddypress .activity-list .bp-member-activity-preview:has([class*="preview-cover"]) {
+    overflow: hidden;
+    background: var(--bp-bh-tint);
+    border-radius: var(--bloghash-normal-radius);
+}
+
+#buddypress .activity-list [class*="preview-cover"] {
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+}
+
+#buddypress .activity-list [class*="preview-cover"] a {
+    display: block;
+}
+
+#buddypress .activity-list [class*="preview-cover"] img {
+    display: block;
+    width: 100%;
+    height: 14rem;
+    margin: 0;
+    object-fit: cover;
+    border-radius: 0;
+}
+
+#buddypress .activity-list .bp-group-activity-preview:has([class*="preview-cover"]) .bp-group-short-description,
+#buddypress .activity-list .bp-member-activity-preview:has([class*="preview-cover"]) .bp-member-short-description {
+    background: transparent;
+    border-radius: 0;
+}
+
+#buddypress .activity-list .bp-group-avatar-content.has-cover-image,
+#buddypress .activity-list .bp-member-avatar-content.has-cover-image {
+    margin: 0;
+    transform: none;
+}
+
+/* Lists, quotes and media inside posts keep their markers and spacing. */
+#buddypress .activity-inner ul,
+#buddypress .acomment-content ul {
+    margin: 0 0 1.2rem 2.4rem;
+    padding: 0;
+    list-style: disc;
+}
+
+#buddypress .activity-inner ol,
+#buddypress .acomment-content ol {
+    margin: 0 0 1.2rem 2.4rem;
+    padding: 0;
+    list-style: decimal;
+}
+
+#buddypress .activity-inner li,
+#buddypress .acomment-content li {
+    margin: 0 0 .4rem;
+}
+
+#buddypress .activity-inner img.alignleft,
+#buddypress .activity-inner img.alignright {
+    margin-bottom: 1.2rem;
+}
+
+/* ==========================================================================
+*  Conversation view (single message thread), styled like a chat app.
+*  The sender's own messages are aligned right by an inline rule added in
+*  class-bloghash-buddypress.php (the markup has no "mine" class).
+*  ========================================================================== */
+#buddypress #bp-message-thread-header.message-thread-header {
+    margin: 0;
+    padding: 1.6rem 2rem;
+    background: var(--bloghash-white, #fff);
+    border: .1rem solid var(--bp-bh-line);
+    border-bottom: 0;
+    border-radius: var(--bloghash-normal-radius) var(--bloghash-normal-radius) 0 0;
+}
+
+#buddypress #bp-message-thread-header #message-subject.single-thread-title {
+    margin: 0 0 1rem;
+    padding: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: inherit;
+    background: transparent;
+    border: 0;
+}
+
+#buddypress #bp-message-thread-header .single-message-thread-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+}
+
+#buddypress ul#bp-message-thread-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+    max-height: 56rem;
+    margin: 0;
+    padding: 2rem;
+    overflow-y: auto;
+    list-style: none;
+    background: var(--bp-bh-tint);
+    border: .1rem solid var(--bp-bh-line);
+    border-radius: 0;
+}
+
+/* Short conversations sit at the bottom of the pane, like a chat. */
+#buddypress ul#bp-message-thread-list:before {
+    content: '';
+    display: block;
+    margin-top: auto;
+}
+
+#buddypress ul#bp-message-thread-list > li {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0;
+    padding: 0 0 0 5rem;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+#buddypress ul#bp-message-thread-list .message-metadata {
+    display: flex;
+    align-items: baseline;
+    gap: .8rem;
+    margin: 0 0 .4rem;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+#buddypress ul#bp-message-thread-list .message-metadata a.user-link {
+    display: contents;
+    color: inherit;
+}
+
+#buddypress ul#bp-message-thread-list .message-metadata a.user-link .avatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3.6rem;
+    height: 3.6rem;
+    border-radius: 50%;
+}
+
+#buddypress ul#bp-message-thread-list .message-metadata strong {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+#buddypress ul#bp-message-thread-list .message-metadata time.activity {
+    font-size: 1.2rem;
+    color: var(--bp-bh-muted);
+}
+
+#buddypress ul#bp-message-thread-list .message-metadata .actions {
+    display: flex;
+    margin: 0 0 0 .2rem;
+    opacity: 0;
+    transition: var(--bloghash-transition-primary);
+}
+
+#buddypress ul#bp-message-thread-list > li:hover .message-metadata .actions,
+#buddypress ul#bp-message-thread-list .message-metadata .actions:focus-within {
+    opacity: 1;
+}
+
+#buddypress ul#bp-message-thread-list .message-content {
+    max-width: min(72%, 52rem);
+    margin: 0;
+    padding: 1.2rem 1.6rem;
+    font-size: 1.5rem;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+    background: var(--bloghash-white, #fff);
+    border: .1rem solid var(--bp-bh-line);
+    border-radius: .4rem 1.6rem 1.6rem 1.6rem;
+}
+
+#buddypress ul#bp-message-thread-list .message-content p {
+    margin: 0 0 .8rem;
+}
+
+#buddypress ul#bp-message-thread-list .message-content > :last-child {
+    margin-bottom: 0;
+}
+
+/* Reply composer. */
+#buddypress form#send-reply.send-reply {
+    margin: 0;
+    padding: 1.6rem 2rem 2rem;
+    background: var(--bloghash-white, #fff);
+    border: .1rem solid var(--bp-bh-line);
+    border-top: 0;
+    border-radius: 0 0 var(--bloghash-normal-radius) var(--bloghash-normal-radius);
+}
+
+#buddypress form#send-reply .message-box,
+#buddypress form#send-reply .message-metadata,
+#buddypress form#send-reply .message-content {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+#buddypress form#send-reply .avatar-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0 0 1rem;
+    font-size: 1.4rem;
+    color: var(--bp-bh-muted);
+}
+
+#buddypress form#send-reply .avatar-box .avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+}
+
+#buddypress form#send-reply .submit {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.2rem;
+}
+
+@media screen and (max-width: 48.875em) {
+    #buddypress ul#bp-message-thread-list {
+        max-height: 48rem;
+        padding: 1.2rem;
+    }
+
+    #buddypress ul#bp-message-thread-list .message-content {
+        max-width: 90%;
+    }
+
+    #buddypress #bp-message-thread-header.message-thread-header,
+    #buddypress form#send-reply.send-reply {
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
+    }
+}
+
+#buddypress ul#bp-message-thread-list .message-metadata {
+    flex-wrap: wrap;
+}
+
+#buddypress ul#bp-message-thread-list .message-metadata strong {
+    white-space: nowrap;
+}
+
+/* Native scrollbars follow the dark scheme in the conversation pane. */
+[data-darkmode="dark"] #buddypress ul#bp-message-thread-list {
+    color-scheme: dark;
+}
+
+/* Conversation stars: one icon per message (star or unstar), always visible when starred. */
+#buddypress ul#bp-message-thread-list .message-metadata .actions .bp-hide,
+#buddypress ul#bp-message-thread-list .message-metadata .actions button.bp-icons.bp-hide {
+    display: none;
+}
+
+#buddypress ul#bp-message-thread-list .message-metadata .actions:has(.message-action-unstar:not(.bp-hide)) {
+    opacity: 1;
+}
+
+#buddypress ul#bp-message-thread-list .message-metadata .actions .message-action-unstar:not(.bp-hide) {
+    color: #e0a800;
+}
+
+#buddypress ul#bp-message-thread-list .message-metadata .actions .message-action-unstar:not(.bp-hide):hover {
+    color: var(--bp-bh-muted);
+}
+
+/* Tooltips keep contrast in both colour schemes. */
+#buddypress [data-bp-tooltip]:after {
+    color: #fff;
+    background: #111827;
+}
+
+[data-darkmode="dark"] #buddypress [data-bp-tooltip]:after {
+    color: #0f172a;
+    background: #f1f5f9;
+}

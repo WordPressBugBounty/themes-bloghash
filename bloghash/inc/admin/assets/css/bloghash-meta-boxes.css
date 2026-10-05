@@ -17,12 +17,24 @@
 
 #side-sortables .bloghash-meta-box-field select {
   min-width: 100%;
+  min-height: 32px;
+  line-height: 2;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
 
 #side-sortables .bloghash-meta-box-field:last-child {
   margin-bottom: 0;
+}
+
+#side-sortables .bloghash-meta-box-field .bloghash-checkbox-wrapper {
+  vertical-align: middle;
+}
+
+#side-sortables .bloghash-meta-box-field .components-panel__row label {
+  max-width: 100%;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 #side-sortables .bloghash-checkbox-row {

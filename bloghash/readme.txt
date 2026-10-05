@@ -1,12 +1,12 @@
 === BlogHash ===
 Contributors: Peregrinethemes
-Tags: two-columns, right-sidebar, left-sidebar, footer-widgets, blog, news, entertainment, custom-background, custom-menu, custom-logo, post-formats, sticky-post, editor-style, threaded-comments, translation-ready, custom-colors, featured-images, full-width-template, microformats, theme-options, flexible-header, wide-blocks
+Tags: two-columns, right-sidebar, left-sidebar, footer-widgets, blog, news, entertainment, custom-background, custom-menu, custom-logo, post-formats, sticky-post, editor-style, threaded-comments, translation-ready, custom-colors, featured-images, full-width-template, microformats, theme-options, flexible-header, wide-blocks, buddypress
 Requires at least: 5.4
 Tested up to: 7.1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.0.30
+Stable tag: 1.0.31
 
 A lightweight and highly customizable multi-purpose theme that makes it easy for anyone to create their perfect website.
 
@@ -23,6 +23,9 @@ BlogHash is the perfect pick for bloggers seeking a lightweight, customizable th
 4. Navigate to Appearance » Customize to access theme options.
 
 == Changelog ==
+
+= 1.0.31 =
+* BuddyPress plugin support added.
 
 = 1.0.30 =
 * Hardened category/term lookups in breadcrumbs and post meta to prevent errors when a term is missing or invalid.

@@ -23,9 +23,13 @@ do_action( 'bloghash_before_singular_container' );
 ?>
 
 <?php
-if ( '' !== get_the_content() ) : 
-do_action( 'bloghash_before_container' );
-?>
+// A page with no content (for example a custom homepage built from hooked sections) skips the content area,
+// unless a plugin renders the page body itself (BuddyPress, bbPress, Elementor). See bloghash_page_has_plugin_body().
+$bloghash_show_page_body = '' !== get_the_content() || bloghash_page_has_plugin_body();
+
+if ( apply_filters( 'bloghash_show_empty_page_body', $bloghash_show_page_body ) ) :
+	do_action( 'bloghash_before_container' );
+	?>
 <div class="bloghash-container">
 
 	<?php do_action( 'bloghash_before_content_area', 'before_post_archive' ); ?>
@@ -56,7 +60,7 @@ do_action( 'bloghash_before_container' );
 
 </div><!-- END .bloghash-container -->
 <?php
-do_action( 'bloghash_after_container' );
+	do_action( 'bloghash_after_container' );
 endif;
 ?>
 

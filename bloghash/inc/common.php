@@ -1139,3 +1139,50 @@ if ( ! function_exists( 'bloghash_display_notices' ) ) :
 		return defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG || defined( 'WP_DEBUG' ) && WP_DEBUG;
 	}
 endif;
+
+if ( ! function_exists( 'bloghash_page_has_plugin_body' ) ) :
+	/**
+	 * Checks whether the current page gets its body from a plugin instead of from the post content.
+	 *
+	 * Pages like these (BuddyPress components, bbPress, Elementor pages without saved post content,
+	 * Elementor Pro Single Page templates) have an empty post_content, so the content area must still be output.
+	 *
+	 * @since 1.0.31
+	 *
+	 * @param  int $post_id Optional. The page ID. Defaults to the queried object.
+	 * @return boolean
+	 */
+	function bloghash_page_has_plugin_body( $post_id = 0 ) {
+
+		$post_id  = $post_id ? $post_id : get_queried_object_id();
+		$has_body = false;
+
+		if ( function_exists( 'is_buddypress' ) && is_buddypress() ) {
+			$has_body = true;
+		} elseif ( function_exists( 'is_bbpress' ) && is_bbpress() ) {
+			$has_body = true;
+		} elseif ( $post_id && class_exists( '\Elementor\Plugin' ) && isset( \Elementor\Plugin::$instance->documents ) ) {
+			$document = \Elementor\Plugin::$instance->documents->get( $post_id );
+
+			if ( $document && $document->is_built_with_elementor() ) {
+				$has_body = true;
+			}
+		}
+
+		// Elementor Pro Theme Builder: a "Single" template applies to this page.
+		if ( ! $has_body && class_exists( '\ElementorPro\Modules\ThemeBuilder\Module' ) ) {
+			$module = \ElementorPro\Modules\ThemeBuilder\Module::instance();
+
+			if ( method_exists( $module, 'get_conditions_manager' ) ) {
+				$conditions = $module->get_conditions_manager();
+
+				if ( $conditions && method_exists( $conditions, 'get_documents_for_location' ) ) {
+					$documents = $conditions->get_documents_for_location( 'single' );
+					$has_body  = ! empty( $documents );
+				}
+			}
+		}
+
+		return (bool) apply_filters( 'bloghash_page_has_plugin_body', $has_body, $post_id );
+	}
+endif;

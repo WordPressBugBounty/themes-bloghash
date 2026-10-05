@@ -392,6 +392,7 @@ body:not(.wp-customizer) input[type=submit],
     box-shadow: none !important;
     padding: 2px 8px;
     font-size: 13px;
+    min-height: 32px;
 }
 
 .control-section-bloghash-section-hiding.open .customize-control input[type=text]:not(.wp-color-picker):focus::-webkit-input-placeholder,
